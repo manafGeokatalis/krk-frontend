@@ -1,8 +1,10 @@
+import { ReactNode } from 'react';
+import Footer from './guest-partials/Footer';
 import NavBar from './guest-partials/NavBar';
-import Section1 from './guest-partials/Section1';
 
 type Props = {
   title?: string;
+  children?: ReactNode;
 }
 
 function GuestLayout(props: Props) {
@@ -11,7 +13,8 @@ function GuestLayout(props: Props) {
     <>
       <NavBar />
       <div className="px-20 bg-ggray !text-white">
-        <Section1 />
+        {props.children}
+        <Footer />
       </div>
     </>
   )

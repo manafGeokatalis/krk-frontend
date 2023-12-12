@@ -6,6 +6,7 @@ import { RecoilRoot } from 'recoil'
 import { ThemeProvider } from '@emotion/react'
 import { createTheme } from '@mui/material/styles'
 import axios from 'axios'
+import Notification from './components/Notification.tsx'
 
 const theme = createTheme({
   palette: {
@@ -45,6 +46,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RecoilRoot>
       <ThemeProvider theme={theme}>
+        <Notification />
         <App />
       </ThemeProvider>
     </RecoilRoot>
