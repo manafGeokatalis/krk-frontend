@@ -61,7 +61,7 @@ function Profile() {
     try {
       await axios.post('/auth/logout');
       localStorage.removeItem('token');
-      setUserData(null);
+      location.replace('/');
     } catch (error: any) {
       console.log(error.message);
     }

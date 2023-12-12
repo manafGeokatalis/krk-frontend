@@ -2,7 +2,7 @@ import { Button, Typography } from '@mui/material';
 import logo from '../../assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { user } from '../../utils/Recoils';
 import { AccountCircle } from '@mui/icons-material';
 import { ucwords } from '../../utils/Helpers';
@@ -13,7 +13,7 @@ import ConfirmDialog from '../../components/ConfirmDialog';
 function NavBar() {
   const [subMenuInformasi, setSubMenuInformasi] = useState(false);
   const [subUser, setSubUser] = useState(false);
-  const [dataUser, setDataUser] = useRecoilState<any>(user);
+  const dataUser = useRecoilValue<any>(user);
   const [loading, setLoading] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const navigate = useNavigate();
@@ -23,8 +23,7 @@ function NavBar() {
     try {
       await axios.post('/auth/logout');
       localStorage.removeItem('token');
-      setDataUser(null);
-      setLoading(false);
+      location.replace('/');
     } catch (error: any) {
       setLoading(false);
       console.log(error.message);

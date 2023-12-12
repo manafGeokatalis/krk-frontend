@@ -29,10 +29,8 @@ function Section1() {
     setSubmitting(true);
     setError('');
     try {
-      const login = await axios.post('/auth/login', form);
-      setUserData(login?.data?.data);
-      setSubmitting(false);
-      navigate('/permohonan');
+      await axios.post('/auth/login', form);
+      location.replace('/permohonan');
     } catch (error: any) {
       setError(error?.response?.data?.message ?? 'Data login tidak benar')
       setUserData(null);

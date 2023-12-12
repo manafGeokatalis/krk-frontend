@@ -2,7 +2,6 @@ import GuestLayout from '../../layouts/GuestLayout'
 import kerenka from '../../assets/kerenka.svg'
 import { Button, Card, CardContent, Typography } from '@mui/material'
 import GButton from '../../components/GButton'
-import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { notification } from '../../utils/Recoils'
 import { useRecoilState } from 'recoil'
@@ -39,9 +38,9 @@ function EmailVerification() {
                 <Typography className='!font-heebo !text-justify !font-light'>Untuk dapat melakukan permohonan pengajuan KRK pada aplikasi ini, silahkan melakukan konfirmasi alamat email dengan membuka tautan yang telah kami kirimkan secara otomatis pada alamat email yang anda gunakan.</Typography>
                 <div className="flex flex-col gap-1">
                   <div className="flex justify-center">
-                    <Link to={'/'}>
+                    <a href={'/'}>
                       <GButton>Kembali ke Halaman Utama</GButton>
-                    </Link>
+                    </a>
                   </div>
                   <Button variant='text' color='warning' className='!normal-case hover:!bg-transparent hover:!text-gyellow-600' onClick={resendEmail} disabled={sending}>{!sending ? 'Belum mendapatkan email? Klik untuk mengirim ulang' : 'Mengirim ulang email verifikasi'}</Button>
                 </div>

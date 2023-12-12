@@ -5,14 +5,12 @@ import { useState } from 'react';
 import GButton from '../../components/GButton';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { notification, user } from '../../utils/Recoils';
+import { notification } from '../../utils/Recoils';
 import AggrementDialog from './partials/AggrementDialog';
 import { createNotifcation, isEmail } from '../../utils/Helpers';
-import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [loading, setLoading] = useState(false);
-  const [_, setUser] = useRecoilState(user);
   const [form, setForm] = useState({
     name: '',
     id_number: '',
@@ -32,7 +30,6 @@ function Register() {
     confirm_password: '',
   });
   const [agrementDialog, setAgrementDialog] = useState(false);
-  const navigate = useNavigate();
   const [_notif, setN] = useRecoilState(notification);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,10 +58,8 @@ function Register() {
   const submitData = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('/auth/register', form);
-      setUser(res?.data?.data);
-      setLoading(false);
-      navigate('/permohonan');
+      await axios.post('/auth/register', form);
+      location.replace('/permohonan');
     } catch (error: any) {
       const message = error.response?.data?.message;
       setLoading(false);
