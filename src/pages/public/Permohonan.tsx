@@ -77,10 +77,10 @@ function Permohonan() {
                     <TableCell className="!border-b-0 !border-t !border-t-white !border-r !border-r-white" align="center">{formatDate(v.createdAt, 'DD MM YYYY', 'long')}</TableCell>
                     <TableCell className="!border-b-0 !border-t !border-t-white !border-r !border-r-white" align="center">{v.staff?.name ?? '-'}</TableCell>
                     <TableCell className="!border-b-0 !border-t !border-t-white" align="center">{v.registration_number}</TableCell>
-                    <TableCell className="!border-b-0 !border-t !border-t-white !border-l !border-l-white" align="center">
+                    <TableCell className="!border-b-0 !border-t !border-t-white !border-l !border-l-white w-0" align="center">
                       <Link to={`/permohonan/${v.uuid}`}>
                         <Button size="small" variant="contained" className={"!py-0.5 !rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap " + (v.permohonan_progresses[v.permohonan_progresses.length - 1]?.step === 11 ? '!bg-ggray-100' : v.permohonan_progresses[v.permohonan_progresses.length - 1]?.step === 9 ? '!bg-ggreen-500' : '!bg-gblue-500')}>
-                          {v.permohonan_progresses[v.permohonan_progresses.length - 1]?.step !== 11 ? v.permohonan_progresses[v.permohonan_progresses.length - 1]?.desc : 'KRK DITOLAK'}
+                          {v.permohonan_progresses.length == 0 ? '0. Permohonan Telah Diajukan' : v.permohonan_progresses[v.permohonan_progresses.length - 1]?.step !== 11 ? v.permohonan_progresses[v.permohonan_progresses.length - 1]?.desc : 'KRK DITOLAK'}
                         </Button>
                       </Link>
                     </TableCell>

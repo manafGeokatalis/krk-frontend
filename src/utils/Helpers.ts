@@ -103,3 +103,11 @@ const handleDownload = (response: AxiosResponse<Blob>, filename: string): void =
   document.body.appendChild(link);
   link.click();
 };
+
+export function getExtension(filename: string): string | undefined {
+  const parts = filename.split('.');
+  if (parts.length > 1) {
+    return parts[parts.length - 1];
+  }
+  return undefined;
+}

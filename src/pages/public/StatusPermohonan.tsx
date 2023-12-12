@@ -5,7 +5,7 @@ import { Done, Download, WarningRounded } from "@mui/icons-material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { notification } from "../../utils/Recoils";
-import { createNotifcation, downloadFile, formatDate } from "../../utils/Helpers";
+import { createNotifcation, downloadFile, formatDate, getExtension } from "../../utils/Helpers";
 import axios from "axios";
 import GButton from "../../components/GButton";
 import ConfirmDialog from "../../components/ConfirmDialog";
@@ -66,7 +66,7 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
                           <CircularProgress size={25} variant="determinate" value={downloadProgress} />
                         }
                         <GButton color="error" className="!flex !gap-2" onClick={() => downloadFile(`/download/${event.file}`, {
-                          filename: `${data.registration_number}-${event.file}`,
+                          filename: `KerenkaMaBar[${data.registration_number}].${getExtension(event.file)}`,
                           onProgress(progress) {
                             setDownloadProgress(progress);
                             if (progress == 100) {

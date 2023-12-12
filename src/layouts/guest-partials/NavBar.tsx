@@ -44,7 +44,7 @@ function NavBar() {
           Informasi
           {subMenuInformasi &&
             <ul className='absolute  flex flex-col bg-gdarkgray-500 border border-ggray-200 rounded-xl z-50 right-0 shadow-lg shadow-gdarkgray-500 overflow-hidden'>
-              <Link to={'pantau'}>
+              <Link to={'/pantau'}>
                 <li className='py-3 px-10 whitespace-nowrap text-center hover:bg-gray-300 hover:text-gdarkgray-500'>
                   Pantau Permohonan
                 </li>
