@@ -3,8 +3,8 @@ import AuthLayout from "../../../layouts/AuthLayout";
 import { useEffect, useState } from "react";
 import GButton from "../../../components/GButton";
 import axios from "axios";
-import { useRecoilState } from "recoil";
-import { notification } from "../../../utils/Recoils";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { notification, user } from "../../../utils/Recoils";
 import { createNotifcation } from "../../../utils/Helpers";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -40,6 +40,7 @@ function UserForm() {
   });
   const [isSubmit, setIsSubmit] = useState(false);
   const [_n, setN] = useRecoilState(notification);
+  const userData = useRecoilValue(user);
 
   useEffect(() => {
     if (params?.uuid) {
@@ -92,23 +93,25 @@ function UserForm() {
             <FormInput inputlabel="Email" type="email" name="email" value={form.email} onChange={handleChange} required disabled={isSubmit} />
             <FormInput inputlabel="Password" type="password" name="password" value={form.password} onChange={handleChange} disabled={isSubmit} required={!params?.uuid} />
             <FormInput inputlabel="Ulang Password" type="password" name="confirm_password" value={form.confirm_password} onChange={handleChange} disabled={isSubmit} required={!params?.uuid} />
-            <div className={"flex gap-10 items-center"}>
-              <InputLabel className='!font-quicksand w-3/12 !text-white'>Role</InputLabel>
-              <div className={"flex gap-2 w-full items-center"}>
-                <span className='font-semibold font-quicksand mr-2'>:</span>
-                <Select size="small" variant="outlined" color="secondary" name="role" value={form.role} onChange={handleChange} fullWidth sx={{
-                  "&.MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "white",
+            {userData === 'SUPERADMIN' &&
+              <div className={"flex gap-10 items-center"}>
+                <InputLabel className='!font-quicksand w-3/12 !text-white'>Role</InputLabel>
+                <div className={"flex gap-2 w-full items-center"}>
+                  <span className='font-semibold font-quicksand mr-2'>:</span>
+                  <Select size="small" variant="outlined" color="secondary" name="role" value={form.role} onChange={handleChange} fullWidth sx={{
+                    "&.MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "white",
+                      },
                     },
-                  },
-                }}>
-                  <MenuItem value="PUBLIC">Public</MenuItem>
-                  <MenuItem value="ADMIN">Admin</MenuItem>
-                  <MenuItem value="SUPERADMIN">SuperAdmin</MenuItem>
-                </Select>
+                  }}>
+                    <MenuItem value="PUBLIC">Public</MenuItem>
+                    <MenuItem value="ADMIN">Admin</MenuItem>
+                    <MenuItem value="SUPERADMIN">SuperAdmin</MenuItem>
+                  </Select>
+                </div>
               </div>
-            </div>
+            }
             <div className="flex justify-between">
               <GButton type="button" color="secondary" onClick={() => navigate(-1)}>Batal</GButton>
               <GButton type="submit" color="success" disabled={isSubmit}>Simpan</GButton>
