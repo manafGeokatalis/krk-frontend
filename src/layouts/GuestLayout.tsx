@@ -8,7 +8,7 @@ type Props = {
 }
 
 function GuestLayout(props: Props) {
-  document.title = props.title || 'Selamat Datang';
+  document.title = `${(props.title || 'Selamat Datang')} - ${import.meta.env.VITE_APP_NAME}`;
   return (
     <>
       <NavBar />

@@ -23,8 +23,8 @@ function Permohonan() {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [search, setSearch] = useState('');
-  const [downloadProgress, setDownloadProgress] = useState(0);
-  const [process, setProcess] = useState(false);
+  const [downloadProgress, setDownloadProgress] = useState<any>({});
+  const [process, setProcess] = useState<any>({});
   const [confirm, setConfirm] = useState({
     show: false,
     title: '',
@@ -66,7 +66,7 @@ function Permohonan() {
   }
 
   const downloadForm = (dta: any) => {
-    setProcess(true);
+    setProcess({ ...process, [dta.uuid]: true });
     const filename = (`KerenkaMaBarForm[${dta.registration_number}]`);
     const wb = new excel.Workbook();
     const sheet = wb.addWorksheet(dta.registration_number);
@@ -114,7 +114,7 @@ function Permohonan() {
       anchor.download = `${filename}.xlsx`;
       anchor.dispatchEvent(new MouseEvent('click'));
       window.URL.revokeObjectURL(url);
-      setProcess(false);
+      setProcess({ ...process, [dta.uuid]: false });
     });
   }
 
@@ -161,26 +161,26 @@ function Permohonan() {
                             <Button size="small" variant="contained" color="info" className="!py-0.5 !rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => downloadFile(`/download/permohonan/${v.uuid}/berkas`, {
                               filename: `KerenkaMaBarBerkas[${v.registration_number}].zip`,
                               onProgress(progress) {
-                                setDownloadProgress(progress);
+                                setDownloadProgress({ ...downloadProgress, [v.uuid]: progress });
                                 if (progress == 100) {
                                   setTimeout(() => {
-                                    setDownloadProgress(0);
+                                    setDownloadProgress({ ...downloadProgress, [v.uuid]: 0 });
                                   }, 1000);
                                 }
                               },
-                            })} disabled={downloadProgress > 0}>Berkas</Button>
-                            {downloadProgress > 0 &&
-                              <LinearProgress color="error" variant="determinate" value={downloadProgress} className="mt-1" />
+                            })} disabled={downloadProgress[v.uuid] > 0}>Berkas</Button>
+                            {downloadProgress[v.uuid] > 0 &&
+                              <LinearProgress color="primary" variant="determinate" value={downloadProgress[v.uuid]} className="mt-1" />
                             }
                           </div>
-                          <Button size="small" variant="contained" color="warning" className="!py-0.5 !rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => downloadForm(v)} disabled={process}>Form</Button>
+                          <Button size="small" variant="contained" color="warning" className="!py-0.5 !rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => downloadForm(v)} disabled={process[v.uuid]}>Form</Button>
                           <Button size="small" variant="contained" color="error" className="!py-0.5 !rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => setConfirm({
                             ...confirm,
                             show: true,
                             title: `Hapus Permohonan ${v.name}?`,
                             message: `<center>Data permohonan ${v.name} akan terhapus permanen dan tidak dapat dikembalikan</center>`,
                             uuid: v.uuid
-                          })} disabled={process}>Hapus</Button>
+                          })}>Hapus</Button>
                         </div>
                       </TableCell>
                     </TableRow>

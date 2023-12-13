@@ -8,7 +8,7 @@ type Props = {
 }
 
 function AuthLayout({ title = 'Permohonan', children }: Props) {
-  document.title = title;
+  document.title = `${title || 'Beranda'} - ${import.meta.env.VITE_APP_NAME}`;
 
   return (
     <div className="flex bg-ggray-500 text-white">

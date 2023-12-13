@@ -3,6 +3,7 @@ import kerenka from '../../../assets/kerenka.svg'
 import compas_icon from '../../../assets/compas_icon.svg'
 import document_icon from '../../../assets/document_icon.svg'
 import map_icon from '../../../assets/map_icon.svg'
+import { Link } from "react-router-dom"
 
 function Section3() {
   return (
@@ -19,30 +20,36 @@ function Section3() {
         </div>
       </div>
       <div className="py-5 grid grid-cols-3 gap-28">
-        <Card className="!rounded-2xl !shadow-sm !bg-ggray-500 !drop-shadow-2xl !shadow-gdarkgray-400">
-          <CardContent className="!p-8 h-full">
-            <div className="flex flex-col gap-4 items-center justify-center h-full text-center">
-              <img src={compas_icon} alt="compas_icon" className="w-16" />
-              <Typography variant="h4" className="!font-quicksand">Tetang KRK</Typography>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="!rounded-2xl !shadow-sm !bg-ggray-500 !drop-shadow-2xl !shadow-gdarkgray-400">
-          <CardContent className="!p-8 h-full">
-            <div className="flex flex-col gap-4 items-center justify-center h-full text-center">
-              <img src={document_icon} alt="compas_icon" className="h-16" />
-              <Typography variant="h4" className="!font-quicksand">Petunjuk<br />Permohonan KRK</Typography>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="!rounded-2xl !shadow-sm !bg-ggray-500 !drop-shadow-2xl !shadow-gdarkgray-400">
-          <CardContent className="!p-8 h-full">
-            <div className="flex flex-col gap-4 items-center justify-center h-full text-center">
-              <img src={map_icon} alt="compas_icon" className="h-16" />
-              <Typography variant="h4" className="!font-quicksand">Tentang<br />Tata Ruang</Typography>
-            </div>
-          </CardContent>
-        </Card>
+        <Link to={'/tentang-krk'}>
+          <Card className="!rounded-2xl !shadow-sm !bg-ggray-500 !drop-shadow-xl !shadow-gdarkgray-400 hover:!drop-shadow-none !transition-all !duration-200 h-56">
+            <CardContent className="!p-8 h-full">
+              <div className="flex flex-col gap-4 items-center justify-center h-full text-center">
+                <img src={compas_icon} alt="compas_icon" className="w-16" />
+                <Typography variant="h4" className="!font-quicksand">Tetang KRK</Typography>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+        <Link to={'/petunjuk-permohonan'}>
+          <Card className="!rounded-2xl !shadow-sm !bg-ggray-500 !drop-shadow-2xl !shadow-gdarkgray-400 hover:!drop-shadow-none !transition-all !duration-200 h-56">
+            <CardContent className="!p-8 h-full">
+              <div className="flex flex-col gap-4 items-center justify-center h-full text-center">
+                <img src={document_icon} alt="compas_icon" className="h-16" />
+                <Typography variant="h4" className="!font-quicksand">Petunjuk<br />Permohonan KRK</Typography>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+        <Link to={'/tentang-tataruang'}>
+          <Card className="!rounded-2xl !shadow-sm !bg-ggray-500 !drop-shadow-2xl !shadow-gdarkgray-400 hover:!drop-shadow-none !transition-all !duration-200 h-56">
+            <CardContent className="!p-8 h-full">
+              <div className="flex flex-col gap-4 items-center justify-center h-full text-center">
+                <img src={map_icon} alt="compas_icon" className="h-16" />
+                <Typography variant="h4" className="!font-quicksand">Tentang<br />Tata Ruang</Typography>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
       </div>
     </div >
   )

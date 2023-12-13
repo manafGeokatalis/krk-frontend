@@ -40,7 +40,7 @@ function UserForm() {
   });
   const [isSubmit, setIsSubmit] = useState(false);
   const [_n, setN] = useRecoilState(notification);
-  const userData = useRecoilValue(user);
+  const userData = useRecoilValue<any>(user);
 
   useEffect(() => {
     if (params?.uuid) {
@@ -93,7 +93,7 @@ function UserForm() {
             <FormInput inputlabel="Email" type="email" name="email" value={form.email} onChange={handleChange} required disabled={isSubmit} />
             <FormInput inputlabel="Password" type="password" name="password" value={form.password} onChange={handleChange} disabled={isSubmit} required={!params?.uuid} />
             <FormInput inputlabel="Ulang Password" type="password" name="confirm_password" value={form.confirm_password} onChange={handleChange} disabled={isSubmit} required={!params?.uuid} />
-            {userData === 'SUPERADMIN' &&
+            {userData?.role === 'SUPERADMIN' &&
               <div className={"flex gap-10 items-center"}>
                 <InputLabel className='!font-quicksand w-3/12 !text-white'>Role</InputLabel>
                 <div className={"flex gap-2 w-full items-center"}>
@@ -107,7 +107,7 @@ function UserForm() {
                   }}>
                     <MenuItem value="PUBLIC">Public</MenuItem>
                     <MenuItem value="ADMIN">Admin</MenuItem>
-                    <MenuItem value="SUPERADMIN">SuperAdmin</MenuItem>
+                    <MenuItem value="SUPERADMIN">Super Admin</MenuItem>
                   </Select>
                 </div>
               </div>
