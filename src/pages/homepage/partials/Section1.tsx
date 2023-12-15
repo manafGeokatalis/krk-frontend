@@ -46,23 +46,19 @@ function Section1() {
           <Typography variant='h1' className='!font-quicksand !text-center !leading-tight !font-thin !text-xl'>Sistem Permohonan Online KRK (Keterangan Rencana Kota)<br />Kabupaten Manggarai Barat</Typography>
         </div>
         <hr className='w-full' />
-        {userData?.role === 'PUBLIC' &&
-          <>
-            {userData ?
-              <Link to={'/permohonan/petunjuk'}>
-                <GButton color='primary'>+ Ajukan Permohonan PKKPR</GButton>
-              </Link>
-              : <>
-                <ConfirmDialog show={confirm} title={'Silahkan Log in'} message={`Silahkan log in terlebih dahulu sebelum melakukan permohonan penerbitan dokumen KRK. Apabila belum memiliki akun, anda dapat membuat akun baru terlebih dahulu`} rejectLable='Sudah Punya Akun' acceptLable='Buat Akun Baru' onClose={() => {
-                  setConfirm(false);
-                  navigate('/');
-                }} onSubmit={() => {
-                  navigate('/register');
-                  setConfirm(false);
-                }} />
-                <GButton color='primary' onClick={() => setConfirm(true)}>+ Ajukan Permohonan PKKPR</GButton>
-              </>
-            }
+        {userData && userData?.role === 'PUBLIC' ?
+          <Link to={'/permohonan/petunjuk'}>
+            <GButton color='primary'>+ Ajukan Permohonan PKKPR</GButton>
+          </Link>
+          : <>
+            <ConfirmDialog show={confirm} title={'Silahkan Log in'} message={`Silahkan log in terlebih dahulu sebelum melakukan permohonan penerbitan dokumen KRK. Apabila belum memiliki akun, anda dapat membuat akun baru terlebih dahulu`} rejectLable='Sudah Punya Akun' acceptLable='Buat Akun Baru' onClose={() => {
+              setConfirm(false);
+              navigate('/');
+            }} onSubmit={() => {
+              navigate('/register');
+              setConfirm(false);
+            }} />
+            <GButton color='primary' onClick={() => setConfirm(true)}>+ Ajukan Permohonan PKKPR</GButton>
           </>
         }
       </div>
