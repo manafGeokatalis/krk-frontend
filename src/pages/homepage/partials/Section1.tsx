@@ -87,7 +87,9 @@ function Section1() {
                 <div className="flex justify-center">
                   <div className="flex flex-col gap-2">
                     <GButton type='submit' color='success' disabled={submitting}>Masuk</GButton>
-                    <p className='text-white text-sm font-quicksand hover:text-gray-300'>Lupa Password?</p>
+                    <Link to={`/lupa-password`}>
+                      <p className='text-white text-sm font-quicksand hover:text-gray-300'>Lupa Password?</p>
+                    </Link>
                   </div>
                 </div>
                 <div className="px-20">
