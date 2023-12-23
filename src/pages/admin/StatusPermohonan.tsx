@@ -182,12 +182,12 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
   }
 
   const updateStatus = async () => {
-    if (file) {
-      uploadFile();
-    }
     setIsSubmit(true);
     try {
       const res: any = await axios.post(`/permohonan/${params.uuid}/update-status`, status.filter((obj: any) => obj.checked === true));
+      if (file) {
+        await uploadFile();
+      }
       getData();
       setN(createNotifcation(res?.data?.message));
       setIsSubmit(false);
