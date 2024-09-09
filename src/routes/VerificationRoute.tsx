@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import HomePage from "../pages/homepage/Index"
 import PetunjukPermohonan from "../pages/public/PetunjukPermohonan"
 import TentangKRK from "../pages/TentangKRK"
-import TentangTataRuang from "../pages/TentangTataRuang"
+// import TentangTataRuang from "../pages/TentangTataRuang"
 import EmailVerification from "../pages/homepage/EmailVerification"
 
 function VerificationRoute() {

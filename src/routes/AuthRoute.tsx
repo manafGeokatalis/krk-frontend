@@ -12,7 +12,7 @@ import Profile from "../pages/Profile"
 import UsersList from '../pages/admin/users/List';
 import UserForm from "../pages/admin/users/Form"
 import TentangKRK from "../pages/TentangKRK"
-import TentangTataRuang from "../pages/TentangTataRuang"
+// import TentangTataRuang from "../pages/TentangTataRuang"
 
 function AuthRoutes() {
   const userData: any = useRecoilValue(user);

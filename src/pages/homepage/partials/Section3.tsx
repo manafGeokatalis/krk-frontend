@@ -2,7 +2,6 @@ import { Card, CardContent, Typography } from "@mui/material"
 import kerenka from '../../../assets/kerenka.svg'
 import compas_icon from '../../../assets/compas_icon.svg'
 import document_icon from '../../../assets/document_icon.svg'
-import map_icon from '../../../assets/map_icon.svg'
 import search_icon  from '../../../assets/search_icon.svg'
 
 

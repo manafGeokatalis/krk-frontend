@@ -1,7 +1,7 @@
 import home from '../../assets/icons/home_yellow.svg';
 import document from '../../assets//icons/document_yellow.svg';
 import compass from '../../assets/icons/compass_yellow.svg';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 
