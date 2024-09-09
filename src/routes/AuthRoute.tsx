@@ -32,7 +32,7 @@ function AuthRoutes() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/pantau" element={<Navigate to={'/permohonan'} />} />
         <Route path="/tentang-krk" element={<TentangKRK />} />
-        <Route path="/tentang-tataruang" element={<TentangTataRuang />} />
+        {/* <Route path="/tentang-tataruang" element={<TentangTataRuang />} /> */}
         <Route path="*" element={<Navigate to={'/'} />} />
       </Routes>
     </BrowserRouter>

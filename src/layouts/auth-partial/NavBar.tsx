@@ -46,9 +46,9 @@ function NavBar() {
           <Link to={'/tentang-krk'}>
             <button className={'w-full font-quicksand p-3 transition-all duration-200 ' + (location.pathname === '/tentang-krk' ? 'bg-white text-gdarkgray-800' : 'hover:bg-ggray-300 hover:text-gdarkgray-800')}>Tentang KRK</button>
           </Link>
-          <Link to={'/tentang-tataruang'}>
+          {/* <Link to={'/tentang-tataruang'}>
             <button className={'w-full font-quicksand p-3 transition-all duration-200 ' + (location.pathname === '/tentang-tataruang' ? 'bg-white text-gdarkgray-800' : 'hover:bg-ggray-300 hover:text-gdarkgray-800')}>Tentang Tata Ruang Wilayah</button>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

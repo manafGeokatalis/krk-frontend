@@ -4,7 +4,8 @@ import { Link } from "react-router-dom"
 
 function Section2() {
   return (
-    <Link to={'/pantau'}>
+    <div className="hidden md:flex  justify-center items-center w-full">
+      <Link className="max-w-[1500px] md:w-[1500px] px-4 md:px-0" to={'/pantau'}>
       <div className='flex items-center py-5'>
         <Card className="!bg-gdarkgray-500 !rounded-3xl !w-full hover:!bg-gdarkgray-600 !transition-all !duration-200">
           <CardContent className="!p-14">
@@ -19,6 +20,7 @@ function Section2() {
         </Card>
       </div>
     </Link>
+    </div>
   )
 }
 

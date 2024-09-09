@@ -22,7 +22,7 @@ function VerificationRoute() {
         <Route path="/profile" element={<Navigate to={'/verifikasi-email'} />} />
         <Route path="/pantau" element={<Navigate to={'/permohonan'} />} />
         <Route path="/tentang-krk" element={<TentangKRK />} />
-        <Route path="/tentang-tataruang" element={<TentangTataRuang />} />
+        {/* <Route path="/tentang-tataruang" element={<TentangTataRuang />} /> */}
         <Route path="/verifikasi-email" element={<EmailVerification />} />
         <Route path="*" element={<Navigate to={'/'} />} />
       </Routes>

@@ -4,9 +4,10 @@ import GButton from '../../../components/GButton'
 
 function Section5() {
   return (
-    <div className="py-16 flex flex-col gap-20 items-center justify-center">
-      <hr className='w-full max-w-5xl' />
-      <div className="flex gap-20">
+   <div className='flex items-center justify-center'>
+     <div className="py-16 max-w-[1500px] w-full md:w-[1500px] px-4 md:px-4 flex flex-col gap-20 items-center justify-center">
+      <hr className='w-full ' />
+      <div className="flex gap-20 flex-col md:flex-row">
         <div className="full rounded-3xl overflow-hidden shadow-lg drop-shadow-2xl shadow-gdarkgray-500 w-full">
           <img src={mabstart_image} alt="mabstar_image" className='w-full' />
         </div>
@@ -19,6 +20,7 @@ function Section5() {
         </div>
       </div>
     </div>
+   </div>
   )
 }
 

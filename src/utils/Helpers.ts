@@ -59,11 +59,14 @@ export function createNotifcation(message = '', type = 'success') {
 }
 
 export function ucwords(input: string, capitalizeOnlyFirstChar: boolean = false): string {
-  if (capitalizeOnlyFirstChar) {
-    return input.charAt(0).toUpperCase() + input.slice(1);
-  } else {
-    return input.replace(/\b\w/g, (char) => char.toUpperCase());
+  if(input){
+    if (capitalizeOnlyFirstChar) {
+      return input.charAt(0).toUpperCase() + input.slice(1);
+    } else {
+      return input.replace(/\b\w/g, (char) => char.toUpperCase());
+    }
   }
+  return ''
 }
 
 interface DownloadOptions {

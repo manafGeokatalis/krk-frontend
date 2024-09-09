@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import NavBar from "./auth-partial/NavBar";
+import BottomNavigation from "./auth-partial/BottomNavigation";
 import { Typography } from "@mui/material";
 
 type Props = {
@@ -12,9 +13,11 @@ function AuthLayout({ title = 'Permohonan', children }: Props) {
 
   return (
     <div className="flex bg-ggray-500 text-white">
+      <div className="hidden md:flex">
       <NavBar />
-      <div className="w-full pl-80 flex flex-col min-h-screen relative">
-        <div className="flex-1 pr-8">
+      </div>
+      <div className="w-full px-4 md:pl-80 flex flex-col min-h-screen relative">
+        <div>
           {children}
         </div>
         <div className="flex justify-between items-center pr-8 py-5 mt-20">
@@ -29,6 +32,7 @@ function AuthLayout({ title = 'Permohonan', children }: Props) {
           </div>
         </div>
       </div>
+      <BottomNavigation/>
     </div>
   )
 }

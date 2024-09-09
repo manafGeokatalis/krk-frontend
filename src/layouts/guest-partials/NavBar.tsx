@@ -1,5 +1,6 @@
 import { Button, Typography } from '@mui/material';
 import logo from '../../assets/logo.png';
+import logoLodokMabar from '../../assets/lodok_mabar_logo.svg'
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -9,8 +10,11 @@ import { ucwords } from '../../utils/Helpers';
 import GButton from '../../components/GButton';
 import axios from 'axios';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import { Menu, Close } from '@mui/icons-material';
+
 
 function NavBar() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [subMenuInformasi, setSubMenuInformasi] = useState(false);
   const [subUser, setSubUser] = useState(false);
   const dataUser = useRecoilValue<any>(user);
@@ -30,19 +34,30 @@ function NavBar() {
     }
   }
 
+
   return (
-    <div className="px-24 py-4 bg-gdarkgray-500 text-white flex justify-between items-center">
+    <div className=" py-4 bg-gdarkgray-500 flex  justify-center items-center">
+      <div className='max-w-[1500px] md:w-[1500px] px-4 md:px-0   text-white flex justify-between'>
       <Link to={'/'}>
         <div className="flex gap-4 items-center">
+          <img className='hidden md:flex' alt="logo-lodok-mabar" src={logoLodokMabar}/>
           <img src={logo} alt="logo" style={{ width: '50px', height: 'auto' }} />
-          <Typography variant='h3' className='!text-lg !leading-tight !font-quicksand'>Dinas Cipta Karya, Tata Ruang, Perumahan dan Kawasan Permukiman<br />Kabupaten Manggarai Barat</Typography>
+          <Typography variant='h3' className='!text-lg hidden md:flex !leading-tight !font-quicksand'>Dinas Cipta Karya, Tata Ruang, Perumahan dan Kawasan Permukiman<br />Kabupaten Manggarai Barat</Typography>
+          <Typography variant='h3' className='!text-lg flex md:hidden !leading-tight !font-quicksand'>Dinas Cipta Karya, Tata Ruang, Perumahan dan Kawasan Permukiman Kabupaten Manggarai Barat</Typography>
+
         </div>
       </Link>
-      <ul className="flex gap-10 items-center">
+      {/* Hamburger Menu Icon for Mobile */}
+      <div className="md:hidden flex items-center">
+          <button onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <Close /> : <Menu />}
+          </button>
+        </div>
+      <ul className={`md:flex gap-10 items-center ${menuOpen ? 'flex flex-col absolute top-16 left-0 w-full md:w-0 bg-gdarkgray-500 z-50 p-4' : 'hidden'} md:static md:flex-row md:gap-10 md:bg-transparent`}>
         <li className='text-white font-quicksand relative cursor-pointer' onMouseEnter={() => setSubMenuInformasi(true)} onMouseLeave={() => setSubMenuInformasi(false)}>
           Informasi
           {subMenuInformasi &&
-            <ul className='absolute  flex flex-col bg-gdarkgray-500 border border-ggray-200 rounded-xl z-50 right-0 shadow-lg shadow-gdarkgray-500 overflow-hidden'>
+            <ul className='absolute  flex flex-col bg-gdarkgray-500 border border-ggray-200 rounded-xl z-50 -right-[100px]  md:right-0 shadow-lg shadow-gdarkgray-500 overflow-hidden'>
               <Link to={'/pantau'}>
                 <li className='py-3 px-10 whitespace-nowrap text-center hover:bg-gray-300 hover:text-gdarkgray-500'>
                   Pantau Permohonan
@@ -54,9 +69,9 @@ function NavBar() {
               <Link to={'/tentang-krk'}>
                 <li className='py-3 px-10 whitespace-nowrap text-center hover:bg-gray-300 hover:text-gdarkgray-500'>Tentang KRK</li>
               </Link>
-              <Link to={'/tentang-tataruang'}>
+              {/* <Link to={'/tentang-tataruang'}>
                 <li className='py-3 px-10 whitespace-nowrap text-center hover:bg-gray-300 hover:text-gdarkgray-500'>Tentang Tata Ruang</li>
-              </Link>
+              </Link> */}
             </ul>
           }
         </li>
@@ -77,15 +92,15 @@ function NavBar() {
             </>
           }
         </li>
-        {dataUser !== null &&
+        {dataUser && dataUser !== null &&
           <li className='text-white font-quicksand flex gap-2 items-center cursor-pointer relative z-50' onClick={() => setSubUser(true)} onMouseLeave={() => setSubUser(false)}>
             <span className='hover:text-gblue-300'>{dataUser.name}</span>
             <AccountCircle />
             {subUser &&
               <div className="flex flex-col absolute top-6 right-0 bg-gdarkgray-500 py-7 px-20 rounded-xl shadow-xl border border-x-ggray-300">
                 <div className='text-center'>
-                  <Typography className='!whitespace-nowrap !font-quicksand !font-bold !text-xl'>{dataUser.name.toUpperCase()}</Typography>
-                  <span className='font-heebo !font-light text-sm'>{ucwords(dataUser.role.toLowerCase())}</span>
+                  <Typography className='!whitespace-nowrap !font-quicksand !font-bold !text-xl'>{dataUser?.name?.toUpperCase()}</Typography>
+                  <span className='font-heebo !font-light text-sm'>{ucwords(dataUser?.role?.toLowerCase())}</span>
                 </div>
                 <div className="flex flex-col gap-7 items-center !whitespace-nowrap mt-10">
                   <Link to={'/permohonan'}>
@@ -99,6 +114,7 @@ function NavBar() {
           </li>
         }
       </ul>
+      </div>
     </div>
   )
 }

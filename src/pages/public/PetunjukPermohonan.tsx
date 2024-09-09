@@ -66,7 +66,7 @@ function PetunjukPermohonan({ title = 'Informasi Layanan Permohonan KRK' }: Prop
         <div className="flex justify-center">
           {userData ?
             <Link to={'/permohonan/tambah'}>
-              <GButton className="flex gap-1 items-center !text-lg !px-10"><Add className="!w-4" /> <span>Ajukan Permohonan PKKPR</span></GButton>
+              <GButton className="flex gap-1 items-center !text-lg !px-10"><Add className="!w-4" /> <span>Ajukan Permohonan KRK</span></GButton>
             </Link>
             : <>
               <ConfirmDialog show={confirm} title={'Silahkan Log in'} message={`Silahkan log in terlebih dahulu sebelum melakukan permohonan penerbitan dokumen KRK. Apabila belum memiliki akun, anda dapat membuat akun baru terlebih dahulu`} rejectLable='Sudah Punya Akun' acceptLable='Buat Akun Baru' onClose={() => {
@@ -76,7 +76,7 @@ function PetunjukPermohonan({ title = 'Informasi Layanan Permohonan KRK' }: Prop
                 navigate('/register');
                 setConfirm(false);
               }} />
-              <GButton color='primary' onClick={() => setConfirm(true)}>+ Ajukan Permohonan PKKPR</GButton>
+              <GButton color='primary' onClick={() => setConfirm(true)}>+ Ajukan Permohonan KRK</GButton>
             </>
           }
         </div>
