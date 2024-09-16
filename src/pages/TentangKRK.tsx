@@ -6,10 +6,10 @@ type Props = {}
 function TentangKRK({ }: Props) {
   return (
     <AuthLayout title='Tentang KRK'>
-      <div className="flex justify-between gap-3 mt-12 items-center">
+      <div className="flex justify-between gap-3 mt-12 pl-10 items-center">
         <Typography variant="h4" className="!font-quicksand !font-semibold">Tentang KRK</Typography>
       </div>
-      <div className="w-full max-w-5xl mt-10 text-xl text-justify font-heebo bg-gdarkgray-500 rounded-xl shadow-lg p-10">
+      <div className="w-full mt-10 text-xl text-justify font-heebo p-10">
         <p>Menurut ketentuan yang tercantum dalam Pasal 14 ayat (3) Peraturan Pemerintah Nomor 36 Tahun 2005, Sertifikat Izin Rencana (KRK) diterbitkan oleh pemerintah daerah berdasarkan peta lokasi tempat bangunan gedung yang akan dibangun oleh pemiliknya. Dalam implementasinya, kewenangan untuk menerbitkan KRK seringkali didelegasikan oleh pemerintah daerah setempat kepada instansi terkait atau dinas yang memiliki tanggung jawab terkait.</p>
         <p className="mt-5">Merujuk pada Pasal 14 ayat (4) PP 36/2005, KRK berisi:</p>
         <ol className="list-decimal ml-12">

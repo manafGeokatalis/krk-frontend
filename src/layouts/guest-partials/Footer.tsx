@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material'
 import kerenka from '../../assets/kerenka.svg'
 import logo from '../../assets/logo.png'
+import { Link } from "react-router-dom"
 
 function Footer() {
   return (
@@ -14,8 +15,14 @@ function Footer() {
           <div className="flex gap-7 w-full">
             <div className="flex flex-col gap-3 w-full">
               <img src={kerenka} alt="kerenka" className='w-48' />
+              <Link to={'/tentang-krk'}>
               <Typography className='!font-quicksand'>Tentang KRK</Typography>
-              <Typography className='!font-quicksand'>Petunjuk Permoohonan KRK</Typography>
+
+              </Link>
+              <Link to={'/petunjuk-permohonan'}>
+                <Typography className='!font-quicksand'>Petunjuk Permohonan KRK</Typography>
+
+              </Link>
             </div>
             <div className="flex flex-col gap-3 w-full">
               <div className="flex gap-4 items-center">

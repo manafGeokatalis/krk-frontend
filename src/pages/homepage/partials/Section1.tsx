@@ -92,8 +92,8 @@ function Section1() {
           <div className="w-full max-w-md order-1 md:order-2">
             <Card className='!bg-transparent md:!bg-gdarkgray !rounded-xl py-4'>
               <div className='md:hidden flex justify-center flex-col items-center'>
-              <img className='w-24' src={logoLodokMabar} alt='lodok-mabar-logo'/>
-              <img src={kerenka} alt="kerenka-logo" className='w-56 mt-4' />
+                <img className='w-24' src={logoLodokMabar} alt='lodok-mabar-logo'/>
+                <img src={kerenka} alt="kerenka-logo" className='w-56 mt-4' />
               </div>
               <Box component={'form'} onSubmit={submitLogin}>
                 {error !== '' && <Alert color='error' variant='filled' icon={<Error className='!w-5 !h-5' />}>{error}</Alert>}
@@ -104,7 +104,7 @@ function Section1() {
                         borderColor: "white",
                       },
                     }} />
-                    <FormControl  variant="outlined" color='secondary' disabled={submitting}   required sx={{
+                  <FormControl  variant="outlined" color='secondary' disabled={submitting}   required sx={{
                       "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
                         borderColor: "white",
                       },

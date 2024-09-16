@@ -10,7 +10,8 @@ import ListAttributes from "../../../components/ListAttributes"
 import GButton from "../../../components/GButton"
 import { Add } from "@mui/icons-material"
 import ConfirmDialog from "../../../components/ConfirmDialog"
-
+import ListUserDesktop from "./components/ListUserDesktop"
+import ListUserMobile from "./components/ListUserMobile"
 let tm: any;
 function UsersList() {
   const [data, setData] = useState<any>([]);
@@ -67,19 +68,39 @@ function UsersList() {
   return (
     <AuthLayout title="Daftar User">
       <ConfirmDialog show={confirm.show} title={confirm.title} message={confirm.message} onClose={() => setConfirm({ ...confirm, show: false })} onSubmit={deleteData} color="error" />
-      <div className="flex justify-between gap-3 mt-12 items-center">
+      <div className=" hidden md:flex justify-between gap-3 mt-12 items-center">
         <Typography variant="h4" className="!font-quicksand !font-semibold">Daftar User</Typography>
         <Link to={'/users/tambah'}>
           <GButton className="flex gap-1 items-center"><Add className="!w-4" /> <span>Tambah Data</span></GButton>
         </Link>
       </div>
-      <div className="flex flex-col gap-5 font-heebo  mt-20">
+      <div className="flex md:hidden mt-12 justify-center">
+      <Typography variant="h4" className="!font-quicksand !font-semibold">USER</Typography>
+
+      </div>
+      <div className="flex flex-col gap-5 font-heebo mt-10  md:mt-20">
         <div className="flex flex-col gap-2">
           <ListAttributes onChange={e => {
             setPerPage(e.perPage);
             setSearch(e.search);
           }} />
-          <div className="rounded-2xl overflow-hidden border">
+          <div className="hidden md:flex w-full flex-col">
+            <ListUserDesktop
+                data={data}
+                paginate={paginate}
+                setConfirm={setConfirm}
+                setPage={setPage}
+              />
+          </div>
+          <div className="flex md:hidden">
+            <ListUserMobile
+            data={data}
+            paginate={paginate}
+            setConfirm={setConfirm}
+            setPage={setPage}
+              />
+          </div>
+          {/* <div className="rounded-2xl overflow-hidden border">
             <TableContainer>
               <Table size="small">
                 <TableHead className="bg-gdarkgray-500">
@@ -118,7 +139,7 @@ function UsersList() {
           </div>
           <div className="flex justify-center mt-3">
             <Pagination color='secondary' variant="outlined" count={paginate.totalPages} page={paginate.currentPage} onChange={(_, p) => setPage(p)} />
-          </div>
+          </div> */}
         </div>
       </div>
     </AuthLayout>

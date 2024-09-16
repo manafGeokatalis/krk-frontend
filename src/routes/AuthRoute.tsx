@@ -12,6 +12,7 @@ import Profile from "../pages/Profile"
 import UsersList from '../pages/admin/users/List';
 import UserForm from "../pages/admin/users/Form"
 import TentangKRK from "../pages/TentangKRK"
+import Statistik from "../pages/admin/statistik/Statistik"
 // import TentangTataRuang from "../pages/TentangTataRuang"
 
 function AuthRoutes() {
@@ -32,6 +33,7 @@ function AuthRoutes() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/pantau" element={<Navigate to={'/permohonan'} />} />
         <Route path="/tentang-krk" element={<TentangKRK />} />
+        <Route path="/statistik" element={<Statistik/>}/>
         {/* <Route path="/tentang-tataruang" element={<TentangTataRuang />} /> */}
         <Route path="*" element={<Navigate to={'/'} />} />
       </Routes>
