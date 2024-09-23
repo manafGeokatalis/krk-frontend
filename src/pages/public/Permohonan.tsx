@@ -1,4 +1,4 @@
-import { Button, Pagination, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material"
+import { Typography } from "@mui/material"
 import AuthLayout from "../../layouts/AuthLayout"
 import GButton from "../../components/GButton"
 import { Add } from "@mui/icons-material"
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 import { notification } from "../../utils/Recoils"
-import { createNotifcation, formatDate } from "../../utils/Helpers"
+import { createNotifcation } from "../../utils/Helpers"
 import axios from "axios"
 import ListAttributes from "../../components/ListAttributes"
 import DesktopView from "./components/DesktopView"
@@ -58,14 +58,14 @@ function Permohonan() {
         </Link>
       </div>
       <div className='md:hidden flex justify-center mt-6 flex-col items-center'>
-        <img className='w-24' src={logoLodokMabar} alt='lodok-mabar-logo'/>
+        <img className='w-24' src={logoLodokMabar} alt='lodok-mabar-logo' />
         <img src={kerenka} alt="kerenka-logo" className='w-56 mt-4' />
         <div className="mt-8">
           <div className="text-xl text-center">
-          Cara Mengajukan<br/> Permohonan KRK Baru
+            Cara Mengajukan<br /> Permohonan KRK Baru
           </div>
           <div className="px-6 text-justify mt-4 text-sm">
-          Permohonan penerbitan dokumen KRK baru tidak dapat dilakukan pada perangkat handphone. Silahkan mengakses web Kerenka pada PC/Laptop.
+            Permohonan penerbitan dokumen KRK baru tidak dapat dilakukan pada perangkat handphone. Silahkan mengakses web Kerenka pada PC/Laptop.
           </div>
         </div>
       </div>
@@ -75,11 +75,11 @@ function Permohonan() {
             setPerPage(e.perPage);
             setSearch(e.search);
           }} />
-          <DesktopView data={data} paginate={paginate} setPage={setPage}/>
+          <DesktopView data={data} paginate={paginate} setPage={setPage} />
         </div>
         <div className="flex md:hidden flex-col">
           <div className="text-center flex justify-center text-xl">PERMOHONAN ANDA</div>
-          <MobileView data={data}/>
+          <MobileView data={data} />
         </div>
       </div>
     </AuthLayout>

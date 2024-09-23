@@ -1,9 +1,9 @@
 import AuthLayout from "../../../layouts/AuthLayout"
-import { Button, LinearProgress, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
+import { Typography } from "@mui/material"
 import StatistikDesktop from "./components/StatistikDesktop"
 import StatistikMobile from "./components/StatistikMobile"
-export default function Statistik(){
-    return(
+export default function Statistik() {
+    return (
         <>
             <AuthLayout title="Permohonan KRK">
                 <div className="hidden md:flex justify-between gap-3 mt-12 items-center">
@@ -13,10 +13,10 @@ export default function Statistik(){
                     <Typography variant="h4" className="!font-quicksand !font-semibold">Statistik Pengguna</Typography>
                 </div>
                 <div className="hidden md:flex">
-                    <StatistikDesktop/>
+                    <StatistikDesktop />
                 </div>
                 <div className="flex md:hidden">
-                    <StatistikMobile/>
+                    <StatistikMobile />
                 </div>
             </AuthLayout>
         </>

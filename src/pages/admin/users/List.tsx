@@ -1,10 +1,10 @@
-import { Button, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
+import { Typography } from "@mui/material"
 import AuthLayout from "../../../layouts/AuthLayout"
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 import { notification } from "../../../utils/Recoils"
-import { createNotifcation, formatDate, ucwords } from "../../../utils/Helpers"
+import { createNotifcation } from "../../../utils/Helpers"
 import axios from "axios"
 import ListAttributes from "../../../components/ListAttributes"
 import GButton from "../../../components/GButton"
@@ -75,7 +75,7 @@ function UsersList() {
         </Link>
       </div>
       <div className="flex md:hidden mt-12 justify-center">
-      <Typography variant="h4" className="!font-quicksand !font-semibold">USER</Typography>
+        <Typography variant="h4" className="!font-quicksand !font-semibold">USER</Typography>
 
       </div>
       <div className="flex flex-col gap-5 font-heebo mt-10  md:mt-20">
@@ -86,19 +86,19 @@ function UsersList() {
           }} />
           <div className="hidden md:flex w-full flex-col">
             <ListUserDesktop
-                data={data}
-                paginate={paginate}
-                setConfirm={setConfirm}
-                setPage={setPage}
-              />
+              data={data}
+              paginate={paginate}
+              setConfirm={setConfirm}
+              setPage={setPage}
+            />
           </div>
           <div className="flex md:hidden">
             <ListUserMobile
-            data={data}
-            paginate={paginate}
-            setConfirm={setConfirm}
-            setPage={setPage}
-              />
+              data={data}
+              paginate={paginate}
+              setConfirm={setConfirm}
+              setPage={setPage}
+            />
           </div>
           {/* <div className="rounded-2xl overflow-hidden border">
             <TableContainer>

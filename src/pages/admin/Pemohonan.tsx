@@ -1,12 +1,10 @@
-import { Button, LinearProgress, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
+import { Typography } from "@mui/material"
 import AuthLayout from "../../layouts/AuthLayout"
-import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 import { notification } from "../../utils/Recoils"
-import { createNotifcation, downloadFile, formatDate, ucwords } from "../../utils/Helpers"
+import { createNotifcation, downloadFile, ucwords } from "../../utils/Helpers"
 import axios from "axios"
-import ListAttributes from "../../components/ListAttributes"
 import excel from 'exceljs';
 import ConfirmDialog from "../../components/ConfirmDialog"
 import DesktopView from "./components/DesktopView"
@@ -127,37 +125,37 @@ function Permohonan() {
         <Typography variant="h4" className="!font-quicksand !font-semibold">Permohonan KRK</Typography>
       </div>
       <div className="flex md:hidden justify-center mt-12">
-      <Typography variant="h4" className="!font-quicksand !font-semibold">Daftar Permohonan</Typography>
+        <Typography variant="h4" className="!font-quicksand !font-semibold">Daftar Permohonan</Typography>
 
       </div>
       <div className="hidden md:flex flex-col gap-5 font-heebo  mt-14">
-          <DesktopView
-            data={data}
-            setSearch={setSearch}
-            setPerPage={setPerPage}
-            downloadFile={downloadFile}
-            downloadForm={downloadForm}
-            downloadProgress={downloadProgress}
-            paginate={paginate}
-            process={process}
-            setConfirm={setConfirm}
-            setDownloadProgress={setDownloadProgress}
-            setPage={setPage}
-          />
+        <DesktopView
+          data={data}
+          setSearch={setSearch}
+          setPerPage={setPerPage}
+          downloadFile={downloadFile}
+          downloadForm={downloadForm}
+          downloadProgress={downloadProgress}
+          paginate={paginate}
+          process={process}
+          setConfirm={setConfirm}
+          setDownloadProgress={setDownloadProgress}
+          setPage={setPage}
+        />
       </div>
       <div className="flex md:hidden mt-10 w-full">
-        <MobileView  
-            data={data}
-            setSearch={setSearch}
-            setPerPage={setPerPage}
-            downloadFile={downloadFile}
-            downloadForm={downloadForm}
-            downloadProgress={downloadProgress}
-            paginate={paginate}
-            process={process}
-            setConfirm={setConfirm}
-            setDownloadProgress={setDownloadProgress}
-            setPage={setPage}/>
+        <MobileView
+          data={data}
+          setSearch={setSearch}
+          setPerPage={setPerPage}
+          downloadFile={downloadFile}
+          downloadForm={downloadForm}
+          downloadProgress={downloadProgress}
+          paginate={paginate}
+          process={process}
+          setConfirm={setConfirm}
+          setDownloadProgress={setDownloadProgress}
+          setPage={setPage} />
       </div>
     </AuthLayout>
   )
