@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil';
 import { notification } from '../../utils/Recoils';
 import AggrementDialog from './partials/AggrementDialog';
 import { createNotifcation, isEmail } from '../../utils/Helpers';
+import logoLodokMabar from '../../assets/lodok_mabar_logo.svg'
 
 function Register() {
   const [loading, setLoading] = useState(false);
@@ -76,16 +77,20 @@ function Register() {
     <>
       <AggrementDialog onClose={() => setAgrementDialog(false)} show={agrementDialog} process={loading} onSubmit={submitData} />
       <GuestLayout title='Buat Akun Baru'>
-        <div className="flex w-full justify-center p-16 pb-20">
+        <div className="flex w-full justify-center p-4 md:p-16 pb-20">
           <div className='w-full max-w-xl flex flex-col gap-5'>
-            <div className="flex flex-col gap-2 items-center">
+            <div className="md:flex hidden flex-col gap-2 items-center">
               <img src={kerenka} alt="kerenka-logo" className='w-full max-w-md' />
               <Typography variant='h3' className='!font-quicksand !text-center !leading-tight !font-thin !text-xl'>Sistem Permohonan Online KRK (Keterangan Rencana Kota)<br />Kabupaten Manggarai Barat</Typography>
             </div>
-            <Card className='!bg-gdarkgray-500 !rounded-xl'>
+            <div className="flex md:hidden flex-col gap-2 items-center">
+              <img className='w-24' src={logoLodokMabar} alt='lodok-mabar-logo' />
+              <img src={kerenka} alt="kerenka-logo" className='w-56 mt-4' />
+            </div>
+            <Card className='!bg-ggray md:!bg-gdarkgray-500 !rounded-xl'>
               <form onSubmit={handleSubmit}>
                 <CardContent className='flex flex-col gap-3 !p-7'>
-                  <Typography variant='h4' className='!font-quicksand !text-center !pb-2'>Formulir pembuatan akun</Typography>
+                  <Typography variant='h4' className='hidden md:flex !font-quicksand !text-center !pb-2'>Formulir pembuatan akun</Typography>
                   <TextField variant='outlined' color='secondary' label='Nama' name='name' value={form.name} onChange={handleInput} required />
                   <TextField variant='outlined' color='secondary' label='Nomor Identitas' name='id_number' value={form.id_number} onChange={handleInput} required />
                   <TextField variant='outlined' color='secondary' label='Alamat Sesuai KTP' name='address' value={form.address} onChange={handleInput} required />
@@ -94,7 +99,7 @@ function Register() {
                   <TextField type='password' variant='outlined' color='secondary' label='Password' name='password' value={form.password} onChange={handleInput} required error={errors.password != ''} helperText={errors.password} />
                   <TextField type='password' variant='outlined' color='secondary' label='Konfirmasi Password' name='confirm_password' value={form.confirm_password} onChange={handleInput} required error={errors.confirm_password != ''} helperText={errors.confirm_password} />
                   <div className="flex justify-center pt-3">
-                    <GButton type='submit'>KIRIM</GButton>
+                    <GButton className='w-full md:w-0' type='submit'>KIRIM</GButton>
                   </div>
                 </CardContent>
               </form>

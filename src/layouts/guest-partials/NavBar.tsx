@@ -38,82 +38,82 @@ function NavBar() {
   return (
     <div className=" py-4 bg-gdarkgray-500 flex  justify-center items-center">
       <div className='max-w-[1500px] md:w-[1500px] px-4 md:px-0   text-white flex justify-between'>
-      <Link to={'/'}>
-        <div className="flex gap-4 items-center">
-          <img className='hidden md:flex' alt="logo-lodok-mabar" src={logoLodokMabar}/>
-          <img src={logo} alt="logo" style={{ width: '50px', height: 'auto' }} />
-          <Typography variant='h3' className='!text-lg hidden md:flex !leading-tight !font-quicksand'>Dinas Cipta Karya, Tata Ruang, Perumahan dan Kawasan Permukiman<br />Kabupaten Manggarai Barat</Typography>
-          <Typography variant='h3' className='!text-lg flex md:hidden !leading-tight !font-quicksand'>Dinas Cipta Karya, Tata Ruang, Perumahan dan Kawasan Permukiman Kabupaten Manggarai Barat</Typography>
+        <Link to={'/'}>
+          <div className="flex gap-4 items-center">
+            <img className='hidden md:flex' alt="logo-lodok-mabar" src={logoLodokMabar} />
+            <img src={logo} alt="logo" style={{ width: '50px', height: 'auto' }} />
+            <Typography variant='h3' className='!text-lg hidden md:flex !leading-tight !font-quicksand'>Dinas Cipta Karya, Tata Ruang, Perumahan dan Kawasan Permukiman<br />Kabupaten Manggarai Barat</Typography>
+            <Typography variant='h3' className='!text-lg flex md:hidden !leading-tight !font-quicksand'>Dinas Cipta Karya, Tata Ruang, Perumahan dan Kawasan Permukiman Kabupaten Manggarai Barat</Typography>
 
-        </div>
-      </Link>
-      {/* Hamburger Menu Icon for Mobile */}
-      <div className="md:hidden flex items-center">
+          </div>
+        </Link>
+        {/* Hamburger Menu Icon for Mobile */}
+        <div className="hidden items-center">
           <button onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <Close /> : <Menu />}
           </button>
         </div>
-      <ul className={`md:flex gap-10 items-center ${menuOpen ? 'flex flex-col absolute top-16 left-0 w-full md:w-0 bg-gdarkgray-500 z-50 p-4' : 'hidden'} md:static md:flex-row md:gap-10 md:bg-transparent`}>
-        <li className='text-white font-quicksand relative cursor-pointer' onMouseEnter={() => setSubMenuInformasi(true)} onMouseLeave={() => setSubMenuInformasi(false)}>
-          Informasi
-          {subMenuInformasi &&
-            <ul className='absolute  flex flex-col bg-gdarkgray-500 border border-ggray-200 rounded-xl z-50 -right-[100px]  md:right-0 shadow-lg shadow-gdarkgray-500 overflow-hidden'>
-              <Link to={'/pantau'}>
-                <li className='py-3 px-10 whitespace-nowrap text-center hover:bg-gray-300 hover:text-gdarkgray-500'>
-                  Pantau Permohonan
-                </li>
-              </Link>
-              <Link to={'/petunjuk-permohonan'}>
-                <li className='py-3 px-10 whitespace-nowrap text-center hover:bg-gray-300 hover:text-gdarkgray-500'>Petunjuk Permohonan KRK</li>
-              </Link>
-              <Link to={'/tentang-krk'}>
-                <li className='py-3 px-10 whitespace-nowrap text-center hover:bg-gray-300 hover:text-gdarkgray-500'>Tentang KRK</li>
-              </Link>
-              {/* <Link to={'/tentang-tataruang'}>
+        <ul className={`md:flex gap-10 items-center ${menuOpen ? 'flex flex-col absolute top-16 left-0 w-full md:w-0 bg-gdarkgray-500 z-50 p-4' : 'hidden'} md:static md:flex-row md:gap-10 md:bg-transparent`}>
+          <li className='text-white font-quicksand relative cursor-pointer' onMouseEnter={() => setSubMenuInformasi(true)} onMouseLeave={() => setSubMenuInformasi(false)}>
+            Informasi
+            {subMenuInformasi &&
+              <ul className='absolute  flex flex-col bg-gdarkgray-500 border border-ggray-200 rounded-xl z-50 -right-[100px]  md:right-0 shadow-lg shadow-gdarkgray-500 overflow-hidden'>
+                <Link to={'/pantau'}>
+                  <li className='py-3 px-10 whitespace-nowrap text-center hover:bg-gray-300 hover:text-gdarkgray-500'>
+                    Pantau Permohonan
+                  </li>
+                </Link>
+                <Link to={'/petunjuk-permohonan'}>
+                  <li className='py-3 px-10 whitespace-nowrap text-center hover:bg-gray-300 hover:text-gdarkgray-500'>Petunjuk Permohonan KRK</li>
+                </Link>
+                <Link to={'/tentang-krk'}>
+                  <li className='py-3 px-10 whitespace-nowrap text-center hover:bg-gray-300 hover:text-gdarkgray-500'>Tentang KRK</li>
+                </Link>
+                {/* <Link to={'/tentang-tataruang'}>
                 <li className='py-3 px-10 whitespace-nowrap text-center hover:bg-gray-300 hover:text-gdarkgray-500'>Tentang Tata Ruang</li>
               </Link> */}
-            </ul>
-          }
-        </li>
-        <li className='text-white font-quicksand'>
-          {dataUser ?
-            <Link to={'/permohonan'}>
-              Dashboard
-            </Link>
-            : <>
-              <ConfirmDialog show={confirm} title={'Silahkan Log in'} message={`Silahkan log in terlebih dahulu sebelum melakukan permohonan penerbitan dokumen KRK. Apabila belum memiliki akun, anda dapat membuat akun baru terlebih dahulu`} rejectLable='Sudah Punya Akun' acceptLable='Buat Akun Baru' onClose={() => {
-                setConfirm(false);
-                navigate('/');
-              }} onSubmit={() => {
-                navigate('/register');
-                setConfirm(false);
-              }} />
-              <Button className='!text-white !font-quicksand !capitalize hover:!bg-inherit' onClick={() => setConfirm(true)}>Dashboard</Button>
-            </>
-          }
-        </li>
-        {dataUser && dataUser !== null &&
-          <li className='text-white font-quicksand flex gap-2 items-center cursor-pointer relative z-50' onClick={() => setSubUser(true)} onMouseLeave={() => setSubUser(false)}>
-            <span className='hover:text-gblue-300'>{dataUser.name}</span>
-            <AccountCircle />
-            {subUser &&
-              <div className="flex flex-col absolute top-6 right-0 bg-gdarkgray-500 py-7 px-20 rounded-xl shadow-xl border border-x-ggray-300">
-                <div className='text-center'>
-                  <Typography className='!whitespace-nowrap !font-quicksand !font-bold !text-xl'>{dataUser?.name?.toUpperCase()}</Typography>
-                  <span className='font-heebo !font-light text-sm'>{ucwords(dataUser?.role?.toLowerCase())}</span>
-                </div>
-                <div className="flex flex-col gap-7 items-center !whitespace-nowrap mt-10">
-                  <Link to={'/permohonan'}>
-                    <GButton color='secondary'>Buka Dashboard</GButton>
-                  </Link>
-                  <hr className='w-full border-ggray-100' />
-                  <GButton color='error' disabled={loading} onClick={logout}>Keluar</GButton>
-                </div>
-              </div>
+              </ul>
             }
           </li>
-        }
-      </ul>
+          <li className='text-white font-quicksand'>
+            {dataUser ?
+              <Link to={'/permohonan'}>
+                Dashboard
+              </Link>
+              : <>
+                <ConfirmDialog show={confirm} title={'Silahkan Log in'} message={`Silahkan log in terlebih dahulu sebelum melakukan permohonan penerbitan dokumen KRK. Apabila belum memiliki akun, anda dapat membuat akun baru terlebih dahulu`} rejectLable='Sudah Punya Akun' acceptLable='Buat Akun Baru' onClose={() => {
+                  setConfirm(false);
+                  navigate('/');
+                }} onSubmit={() => {
+                  navigate('/register');
+                  setConfirm(false);
+                }} />
+                <Button className='!text-white !font-quicksand !capitalize hover:!bg-inherit' onClick={() => setConfirm(true)}>Dashboard</Button>
+              </>
+            }
+          </li>
+          {dataUser && dataUser !== null &&
+            <li className='text-white font-quicksand flex gap-2 items-center cursor-pointer relative z-50' onClick={() => setSubUser(true)} onMouseLeave={() => setSubUser(false)}>
+              <span className='hover:text-gblue-300'>{dataUser.name}</span>
+              <AccountCircle />
+              {subUser &&
+                <div className="flex flex-col absolute top-6 right-0 bg-gdarkgray-500 py-7 px-20 rounded-xl shadow-xl border border-x-ggray-300">
+                  <div className='text-center'>
+                    <Typography className='!whitespace-nowrap !font-quicksand !font-bold !text-xl'>{dataUser?.name?.toUpperCase()}</Typography>
+                    <span className='font-heebo !font-light text-sm'>{ucwords(dataUser?.role?.toLowerCase())}</span>
+                  </div>
+                  <div className="flex flex-col gap-7 items-center !whitespace-nowrap mt-10">
+                    <Link to={'/permohonan'}>
+                      <GButton color='secondary'>Buka Dashboard</GButton>
+                    </Link>
+                    <hr className='w-full border-ggray-100' />
+                    <GButton color='error' disabled={loading} onClick={logout}>Keluar</GButton>
+                  </div>
+                </div>
+              }
+            </li>
+          }
+        </ul>
       </div>
     </div>
   )
