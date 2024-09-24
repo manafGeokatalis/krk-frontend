@@ -256,21 +256,22 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
         </div>
         <div className="flex flex-col gap-3">
           {rejected &&
-            <div className="w-full rounded-md bg-gyellow-500 text-gdarkgray-500 p-9 flex gap-7 items-center font-quicksand mb-3">
+            <div className="w-full rounded-md bg-gyellow-500 text-gdarkgray-500 p-9 flex gap-7 items-center font-quicksand mb-3 flex-col md:flex-row">
               <WarningRounded className="!w-20 !h-20" />
               <div className="flex flex-col gap-1 w-full">
-                <div className="flex justify-between">
+                <div className="flex flex-col md:flex-row md:justify-between">
                   <Typography variant="h5" className="!font-quicksand !font-semibold">Permohonan dokumen KRK ini terhenti/ditolak</Typography>
                   <span className="text-right font-heebo font-light">Diupdate  tanggal {data.permohonan_progresses.filter((obj: any) => obj.step === 11)[0]?.processed_on ? formatDate(data.permohonan_progresses.filter((obj: any) => obj.step === 11)[0]?.processed_on, 'DD MM YYYY', 'long') : null}</span>
                 </div>
-                <div>
+                <div className="mt-6 md:mt-0">
                   <Typography variant="h6" className="!font-quicksand !font-bold">Alasan Perhentian/Penolakan :</Typography>
                   <Typography className="!font-light !font-heebo">{data?.permohonan_progresses.filter((obj: any) => obj.step === 11)[0]?.desc ?? '-'}</Typography>
                 </div>
               </div>
             </div>
           }
-          <TimeLine events={status} />
+          {!rejected ? (<TimeLine events={status} />) : (<></>)}
+
           <div className="flex justify-end">
             <GButton color="success" onClick={updateStatus} disabled={isSubmit || !fileReady || rejected}>Simpan</GButton>
           </div>

@@ -2,6 +2,7 @@ import ListAttributes from "../../../components/ListAttributes"
 import { Button, LinearProgress, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { Link } from "react-router-dom"
 import { formatDate } from "../../../utils/Helpers"
+import ButtonPermohonan from "../../public/components/ButtonPermohonan"
 
 interface DesktopViewProps {
   data: any,
@@ -43,11 +44,12 @@ export default function DesktopView({ data, setSearch, setPerPage, setDownloadPr
                   <TableCell className="!border-b-0 !border-t !border-t-white !border-r !border-r-white" align="center">{formatDate(v.createdAt, 'DD MM YYYY', 'long')}</TableCell>
                   <TableCell className="!border-b-0 !border-t !border-t-white !border-r !border-r-white" align="center">{v.registration_number}</TableCell>
                   <TableCell className="!border-b-0 !border-t !border-t-white !border-r !border-r-white w-0" align="center">
-                    <Link to={`/permohonan/${v.uuid}`}>
+                    {/* <Link to={`/permohonan/${v.uuid}`}>
                       <Button size="small" variant="contained" className={"!py-0.5 !rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap " + (v.permohonan_progresses[v.permohonan_progresses.length - 1]?.step === 11 ? '!bg-ggray-100' : v.permohonan_progresses[v.permohonan_progresses.length - 1]?.step === 9 ? '!bg-ggreen-500' : '!bg-gblue-500')}>
                         {v.permohonan_progresses.length == 0 ? '0. Permohonan Telah Diajukan' : v.permohonan_progresses[v.permohonan_progresses.length - 1]?.step !== 11 ? v.permohonan_progresses[v.permohonan_progresses.length - 1]?.desc : 'KRK DITOLAK'}
                       </Button>
-                    </Link>
+                    </Link> */}
+                    <ButtonPermohonan progress={v.permohonan_progresses} uuid={v.uuid} />
                   </TableCell>
                   <TableCell className="!border-b-0 !border-t !border-t-white !border-l !border-l-white w-0" align="center">
                     <div className="flex gap-1">
