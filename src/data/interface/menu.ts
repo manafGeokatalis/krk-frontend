@@ -1,6 +1,6 @@
-import { SvgIconComponent } from "@mui/icons-material"
 export interface MenuItem {
-    path:string,
-    label:string,
-    icon:SvgIconComponent
-  }
+  path: string,
+  label: string,
+  iconDefault: React.FC<{}>
+  iconActive: React.FC<{}>
+}

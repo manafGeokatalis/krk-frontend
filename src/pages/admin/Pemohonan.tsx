@@ -125,7 +125,7 @@ function Permohonan() {
         <Typography variant="h4" className="!font-quicksand !font-semibold">Permohonan KRK</Typography>
       </div>
       <div className="flex md:hidden justify-center mt-12">
-        <Typography variant="h4" className="!font-quicksand !font-semibold">Daftar Permohonan</Typography>
+        <Typography variant="h5" className="!font-quicksand !font-semibold">Daftar Permohonan</Typography>
 
       </div>
       <div className="hidden md:flex flex-col gap-5 font-heebo  mt-14">

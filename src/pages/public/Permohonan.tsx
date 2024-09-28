@@ -51,7 +51,7 @@ function Permohonan() {
 
   return (
     <AuthLayout title="Permohonan KRK">
-      <div className="flex justify-between gap-3 mt-12 items-center hidden md:flex">
+      <div className="flex justify-between gap-3 mt-12 pl-4 md:pl-10 md:pr-10 items-center hidden md:flex">
         <Typography variant="h4" className="!font-quicksand !font-semibold">Permohonan KRK</Typography>
         <Link className="hidden md:flex" to={'/permohonan/petunjuk'}>
           <GButton className="flex gap-1 items-center"><Add className="!w-4" /> <span>Ajukan Permohonan Baru</span></GButton>
@@ -64,12 +64,12 @@ function Permohonan() {
           <div className="text-xl text-center">
             Cara Mengajukan<br /> Permohonan KRK Baru
           </div>
-          <div className="px-6 text-justify mt-4 text-sm">
+          <div className="px-3 text-justify mt-4 text-sm">
             Permohonan penerbitan dokumen KRK baru tidak dapat dilakukan pada perangkat handphone. Silahkan mengakses web Kerenka pada PC/Laptop.
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-5 font-heebo  mt-20">
+      <div className="flex flex-col gap-5 font-heebo mt-8  md:mt-20 md:p-10">
         <div className="flex flex-col gap-2 hidden md:flex">
           <ListAttributes onChange={e => {
             setPerPage(e.perPage);

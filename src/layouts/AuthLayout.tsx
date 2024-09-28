@@ -14,10 +14,10 @@ function AuthLayout({ title = 'Permohonan', children }: Props) {
   return (
     <div className="flex bg-ggray-500 text-white">
       <div className="hidden md:flex">
-      <NavBar />
+        <NavBar />
       </div>
       <div className="w-full  md:pl-72 flex flex-col min-h-screen relative">
-        <Header/>
+        <Header />
         <div className="px-4">
           <div>
             {children}
@@ -34,9 +34,9 @@ function AuthLayout({ title = 'Permohonan', children }: Props) {
             </div>
           </div>
         </div>
-        
+
       </div>
-      <BottomNavigation/>
+      <BottomNavigation />
     </div>
   )
 }

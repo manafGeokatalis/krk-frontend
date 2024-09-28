@@ -54,10 +54,10 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
                 <Done color="primary" className="!w-3 !h-3 !stroke-[5] !stroke-gblue-500" />
               }
             </div>
-            <div className={"ml-4 w-full rounded-lg px-3 py-2 flex justify-between " + (event.checked ? 'bg-white text-gblue-500' : 'text-white bg-gdarkgray-500')}>
-              <p>{event.title}</p>
-              <div className="flex flex-col gap-1 justify-end text-right">
-                <p className="text-sm">{event.date ? `Diproses tanggal ${formatDate(event.date, 'DD MM YYYY', 'long')}` : null}</p>
+            <div className={"ml-4 w-full rounded-lg px-3 py-2 flex flex-col md:justify-between " + (event.checked ? 'bg-white text-gblue-500' : 'text-white bg-gdarkgray-500')}>
+              <p className="order-2 md:order-1">{event.title}</p>
+              <div className="order-1 md:order-2 flex flex-col gap-1 md:justify-end md:text-right">
+                <p className="text-[10px] md:text-[12px]">{event.date ? `Diproses tanggal ${formatDate(event.date, 'DD MM YYYY', 'long')}` : null}</p>
                 {(status.filter((obj: any) => obj.checked === true).length === 10 && index === 9) &&
                   <div className="flex gap-1 justify-end items-center">
                     {event?.file !== null &&
@@ -138,10 +138,12 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
 
   return (
     <AuthLayout title={title}>
-      <div className="flex justify-between gap-3 mt-12 items-center">
-        <Typography variant="h4" className="!font-quicksand !font-semibold">{title}</Typography>
+      <div className="flex justify-between gap-3 mt-6 md:mt-12 pl-4 md:pl-10 items-center">
+        <Typography variant="h4" className="hidden md:flex !font-quicksand !font-semibold">{title}</Typography>
+        <Typography variant="h5" className="flex md:hidden !font-quicksand !font-semibold">{title}</Typography>
+
       </div>
-      <div className="flex flex-col gap-5 mt-4">
+      <div className="flex flex-col md:text-xl text-[12px] gap-5 mt-4 px-4 mt-6 md:mt-4 md:p-10">
         <div>
           <table className="!font-light">
             <tbody>

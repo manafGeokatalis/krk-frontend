@@ -1,6 +1,5 @@
 import ListAttributes from "../../../components/ListAttributes"
 import { Button, LinearProgress, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
-import { Link } from "react-router-dom"
 import { formatDate } from "../../../utils/Helpers"
 import ButtonPermohonan from "../../public/components/ButtonPermohonan"
 
