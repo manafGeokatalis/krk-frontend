@@ -14,7 +14,7 @@ import UserForm from "../pages/admin/users/Form"
 import TentangKRK from "../pages/TentangKRK"
 import Statistik from "../pages/admin/statistik/Statistik"
 // import TentangTataRuang from "../pages/TentangTataRuang"
-
+import PermohonanDitolak from "../pages/admin/PermohonanDitolak"
 function AuthRoutes() {
   const userData: any = useRecoilValue(user);
   return (
@@ -30,10 +30,11 @@ function AuthRoutes() {
         <Route path="/permohonan/tambah" element={<Form />} />
         <Route path="/permohonan/:uuid" element={userData.role === 'PUBLIC' ? <StatusPermohonan /> : <StatusPermohonanAdmin />} />
         <Route path="/permohonan/:uuid/edit" element={<Form />} />
+        <Route path="/permohonan/ditolak/:uuid" element={<PermohonanDitolak />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/pantau" element={<Navigate to={'/permohonan'} />} />
         <Route path="/tentang-krk" element={<TentangKRK />} />
-        <Route path="/statistik" element={<Statistik/>}/>
+        <Route path="/statistik" element={<Statistik />} />
         {/* <Route path="/tentang-tataruang" element={<TentangTataRuang />} /> */}
         <Route path="*" element={<Navigate to={'/'} />} />
       </Routes>

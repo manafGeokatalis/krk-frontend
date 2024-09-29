@@ -8,6 +8,7 @@ import { notification } from "../../utils/Recoils";
 import { createNotifcation, downloadFile, formatDate, getExtension } from "../../utils/Helpers";
 import axios from "axios";
 import GButton from "../../components/GButton";
+import { Link, useNavigate } from "react-router-dom";
 
 type Props = {
   title?: string;
@@ -37,6 +38,8 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
     { title: '8. Verifikasi hasil Pengecekan Mandiri', date: null, checked: false, file: null },
     { title: '9. Dokumen KRK telah terbit', date: null, checked: false, file: null },
   ])
+  const navigate = useNavigate();
+
 
   const TimeLine = ({ events }: { events: Array<any> }) => {
     return (
@@ -212,6 +215,12 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
     }
   }
 
+  const handleToRejectPage = async () => {
+
+  }
+
+
+
   return (
     <AuthLayout title={title}>
       <input ref={fileField} type="file" onChange={(e) => {
@@ -229,7 +238,7 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
           }
         }
       }} className="hidden" accept=".pdf" />
-      <div className="flex justify-center gap-3 mt-12 items-center">
+      <div className="flex md:items-left md:justify-left justify-center gap-3 mt-12 items-center">
         <Typography variant="h4" className="hidden md:flex !font-quicksand !font-semibold">{title}</Typography>
         <Typography variant="h5" className="flex md:hidden !font-quicksand !font-semibold">{title}</Typography>
 
@@ -274,32 +283,51 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
           }
           {!rejected ? (<TimeLine events={status} />) : (<></>)}
 
-          <div className="flex justify-end">
-            <GButton color="success" onClick={updateStatus} disabled={isSubmit || !fileReady || rejected}>Simpan</GButton>
-          </div>
-          <div className="flex flex-col gap-5">
-            <div className="flex flex-col gap-1">
-              <Typography className="!font-quicksand" fontSize={25}>Penolakan permohonan</Typography>
-              <Typography className="!font-heebo !font-light">Apabila proses penerbitan KRK tidak dapat dilanjutkan karena alasan tertentu. Maka dilakukan penolakan permohonan.</Typography>
+
+          {/* ACTION SECTION DESKTOP */}
+          <div className="hidden md:flex md:flex-col">
+            <div className="flex justify-end">
+              <GButton color="success" onClick={updateStatus} disabled={isSubmit || !fileReady || rejected}>Simpan</GButton>
             </div>
-            <div className="flex flex-col gap-2">
-              {!rejected ?
-                <>
-                  <Typography className="!font-quicksand !font-semibold" fontSize={19}>Alasan Penolakan KRK (Wajib diisi):</Typography>
-                  <TextField type="text" multiline rows={4} sx={{
-                    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "white",
-                    },
-                  }} value={reject} onChange={e => setReject(e.target.value)} disabled={status.filter((obj: any, key: number) => obj.file !== null && key === 9).length > 0} />
-                  <div className="flex justify-center mt-2">
-                    <GButton color="error" type="submit" disabled={reject == '' || isSubmit} onClick={sendReject}>Tolak Pengajuan KRK</GButton>
+            <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-1">
+                <Typography className="!font-quicksand" fontSize={25}>Penolakan permohonan</Typography>
+                <Typography className="!font-heebo !font-light">Apabila proses penerbitan KRK tidak dapat dilanjutkan karena alasan tertentu. Maka dilakukan penolakan permohonan.</Typography>
+              </div>
+              <div className="flex flex-col gap-2">
+                {!rejected ?
+                  <>
+                    <Typography className="!font-quicksand !font-semibold" fontSize={19}>Alasan Penolakan KRK (Wajib diisi):</Typography>
+                    <TextField type="text" multiline rows={4} sx={{
+                      "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                    }} value={reject} onChange={e => setReject(e.target.value)} disabled={status.filter((obj: any, key: number) => obj.file !== null && key === 9).length > 0} />
+                    <div className="flex justify-center mt-2">
+                      <GButton color="error" type="submit" disabled={reject == '' || isSubmit} onClick={sendReject}>Tolak Pengajuan KRK</GButton>
+                    </div>
+                  </>
+                  : <div className="flex justify-center mt-3">
+                    <GButton color="success" onClick={updateStatus}>Lanjutkan Permohonan KRK</GButton>
                   </div>
-                </>
-                : <div className="flex justify-center mt-3">
-                  <GButton color="success" onClick={updateStatus}>Lanjutkan Permohonan KRK</GButton>
-                </div>
-              }
+                }
+              </div>
             </div>
+          </div>
+
+          {/* ACTION SECTION MOBILE */}
+          <div className="flex md:hidden">
+            {!rejected ? (<div className="flex flex-col w-full gap-4">
+              <Link to={`/permohonan/ditolak/${params.uuid}`}>
+                <GButton className="w-full" color="error" type="submit" onClick={handleToRejectPage}>Tolak Permohonan</GButton>
+              </Link>
+              <GButton className="w-full" color="success" type="submit" onClick={updateStatus} disabled={isSubmit || !fileReady || rejected}>Simpan</GButton>
+              <GButton className="w-full" color="secondary" type="submit" onClick={() => navigate(-1)} >Batal</GButton>
+
+            </div>) : (<div className="flex justify-center mt-3 w-full">
+              <GButton className="w-full" color="success" onClick={updateStatus}>Lanjutkan Permohonan KRK</GButton>
+            </div>)}
+
           </div>
         </div>
       </div>
