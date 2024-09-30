@@ -298,7 +298,7 @@ function DialogFeedback({ show, onClose, onSubmit, alreadyFeedback }: DialogFeed
           <div className="text-center text-sm md:text-md">Anda harus  beri rating dan ulasan terhadap layanan kami sebelum dapat<br /> mendownload dokumen KRK</div>
           <div className='font-semibold mt-4 mb-4'>Beri Rating</div>
           <div >
-            <Rating name="size-large" defaultValue={0} value={rating} size="large" onChange={(event, newValue) => { setRating(newValue) }} />
+            <Rating name="size-large" defaultValue={0} value={rating} size="large" onChange={(_, newValue) => { setRating(newValue) }} />
           </div>
           <div className='p-6 w-full'>
             <div className='w-full flex items-left text-sm md:text-md'>
