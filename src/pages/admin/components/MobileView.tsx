@@ -33,7 +33,7 @@ export default function MobileView({ data, setDownloadProgress, downloadProgress
                             </div>
                             <div className="flex justify-center items-center mt-2 flex-col">
                                 <div className="text-lg text-[#F4BF37]">
-                                    {v.lokasi_kelurahan.name}, {v.fungsi_bangunan}
+                                    {v?.lokasi_kelurahan?.name}, {v?.fungsi_bangunan}
                                 </div>
                                 <ButtonPermohonan progress={v.permohonan_progresses} uuid={v.uuid} />
                                 <div className="mt-6 flex flex-col gap-2 w-full">

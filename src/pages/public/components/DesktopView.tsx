@@ -28,7 +28,7 @@ export default function DesktopView({ data, paginate, setPage }: DesktopViewProp
           <TableBody>
             {data.length > 0 ? data.map((v: any, i: number) => {
               return <TableRow key={i}>
-                <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{v.lokasi_kelurahan.name}, {v.fungsi_bangunan}</TableCell>
+                <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{v?.lokasi_kelurahan?.name}, {v?.fungsi_bangunan}</TableCell>
                 <TableCell className="!border-b-0 !border-t !border-t-white !border-r !border-r-white" align="center">{formatDate(v.createdAt, 'DD MM YYYY', 'long')}</TableCell>
                 <TableCell className="!border-b-0 !border-t !border-t-white !border-r !border-r-white" align="center">{v.staff?.name ?? '-'}</TableCell>
                 <TableCell className="!border-b-0 !border-t !border-t-white" align="center">{v.registration_number}</TableCell>

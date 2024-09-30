@@ -14,14 +14,14 @@ export default function MobileView({ data }: any) {
                                     {formatDate(v.createdAt, 'DD MM YYYY', 'long')}
                                 </div>
                                 <div>
-                                    {v.registration_number}
+                                    {v?.registration_number}
                                 </div>
                             </div>
                             <div className="flex justify-center items-center mt-2 flex-col">
                                 <div className="text-lg text-[#F4BF37]">
-                                    {v.lokasi_kelurahan.name}, {v.fungsi_bangunan}
+                                    {v?.lokasi_kelurahan?.name}, {v?.fungsi_bangunan}
                                 </div>
-                                <ButtonPermohonan progress={v.permohonan_progresses} uuid={v.uuid} />
+                                <ButtonPermohonan progress={v?.permohonan_progresses} uuid={v?.uuid} />
                             </div>
                         </div>
                     )) : <></>}

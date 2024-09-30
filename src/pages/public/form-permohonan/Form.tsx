@@ -11,6 +11,12 @@ import ConfirmDialog from '../../../components/ConfirmDialog';
 import { useRecoilState } from 'recoil';
 import { notification } from '../../../utils/Recoils';
 import { createNotifcation } from '../../../utils/Helpers';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Rating from '@mui/material/Rating';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 type Props = {}
 const errorMessage = [
@@ -43,9 +49,86 @@ const errorMessage = [
   }
 ];
 
+interface DialogFeedbackProps {
+  show: boolean;
+  onClose: () => void;
+  onSubmit: () => void;
+}
+function DialogFeedback({ show, onClose }: DialogFeedbackProps) {
+  const [open, setOpen] = useState(show)
+  const [rating, setRating] = useState<number | null>(0)
+  const [feedback, setFeedback] = useState('')
+  const [userAlreadyFeedback, setUserAlreadyFeedback] = useState(false)
+  const [_n, setN] = useRecoilState(notification);
+
+  async function checkUserAlreadyFeedback() {
+    const res: any = await axios.get('/feedback/check');
+    if (res?.data?.data) {
+      setUserAlreadyFeedback(true)
+    }
+
+  }
+
+  async function submitFeedback() {
+    const res: any = await axios.post('/feedback', {
+      "feedback": feedback,
+      "rating": rating
+    });
+    if (res?.data?.data) {
+      onClose()
+      setN(createNotifcation('Feedback berhasil di submit'));
+    }
+  }
+
+  useEffect(() => {
+    setOpen(show)
+    checkUserAlreadyFeedback()
+  }, [show])
+
+  function submitButton() {
+    submitFeedback()
+    // 
+
+    // console.log(rating)
+    // console.log(feedback)
+
+  }
+
+  return (
+    <>
+      <Dialog open={open} maxWidth={'md'} fullWidth={true}>
+        <DialogContent className='!bg-black w-full flex justify-center flex-col items-center'>
+          <DialogTitle className='w-full flex justify-center !text-[30px]'>Ulas Pelayanan Web KRK</DialogTitle>
+          <div>Silahkan beri rating layanan kami</div>
+          <div className='font-semibold mt-4 mb-4'>Beri Rating</div>
+          <div >
+            <Rating name="size-large" defaultValue={0} value={rating} size="large" onChange={(event, newValue) => { setRating(newValue) }} />
+          </div>
+          <div className='p-6 w-full'>
+            <div className='w-full flex items-left'>
+              Ulas pengalaman permohonan KRK :
+            </div>
+            <div className='w-full mt-2'>
+              <TextareaAutosize value={feedback} onChange={e => setFeedback(e.target.value)} className='bg-black w-full text-white p-3 border border-white' maxRows={4} minRows={4} />
+            </div>
+          </div>
+          <DialogActions className='gap-8 flex flex-row'>
+            {userAlreadyFeedback ? (<GButton variant='contained' color='secondary' onClick={onClose}>
+              Tutup
+            </GButton>) : (<></>)}
+            <GButton variant='contained' color='success' disabled={rating == 0 && feedback.length == 0} onClick={submitButton}>
+              Submit
+            </GButton>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}
+
 function Form({ }: Props) {
   const params = useParams();
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<any>();
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<any>({
     form: {},
@@ -60,6 +143,8 @@ function Form({ }: Props) {
   const [_n, setN] = useRecoilState(notification);
   const navigate = useNavigate();
   const [isCopied, setIsCopied] = useState(false);
+
+  const [openDialogFeedback, setOpenDialogFeedback] = useState(true)
 
   useEffect(() => {
     if (params?.uuid) {
@@ -124,6 +209,8 @@ function Form({ }: Props) {
   if (data) {
     return (
       <AuthLayout title={params?.uuid ? `Ubah Permohonan` : `Permohonan Baru`}>
+        <DialogFeedback show={openDialogFeedback} onClose={() => setOpenDialogFeedback(!openDialogFeedback)} onSubmit={() => console.log('a')
+        } />
         <div className="flex justify-between gap-3 mt-12 items-center">
           <Typography variant="h4" className="!font-quicksand !font-semibold">Permohonan KRK</Typography>
         </div>
@@ -140,7 +227,7 @@ function Form({ }: Props) {
             </div>
             <Typography mb={1} className='!font-quicksand !font-semibold'>Silahkan pantau terus proses penerbitan dokumen KRK yang anda ajukan langsung dari aplikasi</Typography>
             <div className="flex justify-center">
-              <Link to={`/permohonan/${data?.uuid}`}>
+              <Link to={`/permohonan/${data?.uuid}?`}>
                 <GButton color='success'>Selesai</GButton>
               </Link>
             </div>
