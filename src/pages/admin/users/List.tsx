@@ -68,17 +68,18 @@ function UsersList() {
   return (
     <AuthLayout title="Daftar User">
       <ConfirmDialog show={confirm.show} title={confirm.title} message={confirm.message} onClose={() => setConfirm({ ...confirm, show: false })} onSubmit={deleteData} color="error" />
-      <div className=" hidden md:flex justify-between gap-3 mt-12 items-center">
+      <div className=" hidden md:flex justify-between gap-3 mt-4 md:mt-12 items-center">
         <Typography variant="h4" className="!font-quicksand !font-semibold">Daftar User</Typography>
         <Link to={'/users/tambah'}>
           <GButton className="flex gap-1 items-center"><Add className="!w-4" /> <span>Tambah Data</span></GButton>
         </Link>
       </div>
-      <div className="flex md:hidden mt-12 justify-center">
-        <Typography variant="h4" className="!font-quicksand !font-semibold">USER</Typography>
+      <div className="flex md:hidden mt-4 md:mt-12 justify-center">
+        <Typography variant="h4" className="hidden md:flex !font-quicksand !font-semibold">USER</Typography>
+        <Typography variant="h5" className="flex md:hidden !font-quicksand !font-semibold">User</Typography>
 
       </div>
-      <div className="flex flex-col gap-5 font-heebo mt-10  md:mt-20">
+      <div className="flex flex-col gap-5 font-heebo mt-4  md:mt-20">
         <div className="flex flex-col gap-2">
           <ListAttributes onChange={e => {
             setPerPage(e.perPage);

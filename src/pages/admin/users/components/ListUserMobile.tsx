@@ -1,7 +1,9 @@
 
 import { Link } from "react-router-dom"
 import { formatDate } from "../../../../utils/Helpers"
-
+import DrawerFilterMobile from "./DrawerFilterMobile"
+import { AscSort, DescSort } from '../../../../components/icons/sort';
+import { useState } from "react";
 
 interface ListUserMobileProps {
     data: any,
@@ -31,9 +33,20 @@ function BadgeSecondary({ label }: { label: string }) {
 }
 
 export default function ListUserMobile({ data }: ListUserMobileProps) {
+    const [sortBy, setSortBy] = useState('ASC')
+
+    const handleSortChange = () => {
+        console.log(sortBy)
+        if (sortBy == 'ASC') {
+            setSortBy('DESC')
+        } else {
+            setSortBy('ASC')
+        }
+    }
     return (
         <>
-            <div className="px-4 flex flex-col gap-2 w-full mt-4">
+            <div className="px-4 flex flex-col gap-2 w-full mt-4 ">
+                <div className="flex flex-row gap-2 items-center"><DrawerFilterMobile /> <div className="inline-block flex items-center justify-center h-9 w-9 cursor-pointer rounded-full bg-[#4D4D4D] shadow-lg" onClick={() => handleSortChange()}>{sortBy == 'ASC' ? <AscSort /> : <DescSort className="w-[1rem]" />}</div></div>
                 {data.map((user: any, i: any) => {
                     return (
                         <div className="bg-[#4D4D4D] py-2 px-4 w-full rounded-lg" key={i}>
