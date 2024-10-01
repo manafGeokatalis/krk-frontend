@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
@@ -28,7 +27,7 @@ function DrawerFilterMobile() {
             </div>
             <List>
                 {['Nama', 'Tanggal', 'Jenis Akun'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
+                    <ListItem key={index} disablePadding>
                         <ListItemButton>
                             <div className='bg-[#4D4D4D] rounded-xl text-white p-3 flex items-center justify-center w-full'>
                                 <ListItemText className='flex items-center justify-center' primary={text} />
