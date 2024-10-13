@@ -43,12 +43,11 @@ axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('to
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <Notification />
-        <App />
-      </ThemeProvider>
-    </RecoilRoot>
-  </React.StrictMode>,
+  <RecoilRoot>
+    <ThemeProvider theme={theme}>
+      <Notification />
+      <App />
+    </ThemeProvider>
+  </RecoilRoot>
+  ,
 )

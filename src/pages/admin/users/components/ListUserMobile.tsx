@@ -3,51 +3,102 @@ import { Link } from "react-router-dom"
 import { formatDate } from "../../../../utils/Helpers"
 import DrawerFilterMobile from "./DrawerFilterMobile"
 import { AscSort, DescSort } from '../../../../components/icons/sort';
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { OrderType } from "../../../../data/interface/user";
+import { useRef } from "react";
 interface ListUserMobileProps {
     data: any,
     paginate: any,
+    page: number,
     setPage: React.Dispatch<React.SetStateAction<any>>,
-    setConfirm: React.Dispatch<React.SetStateAction<any>>
+    setConfirm: React.Dispatch<React.SetStateAction<any>>,
+    orderBy: string,
+    handleChangeOrderBy: (orderBy: string) => void,
+    order: string,
+    handleChangeOrder: (order: OrderType) => void,
+    search: string,
+    handleChangeSearch: (search: string) => void,
+    fetchData: () => void
 }
 
-function BadgeSuccess({ label }: { label: string }) {
-    return (
-        <>
-            <div className="py-1 font-semibold px-4 text-xs rounded-2xl bg-[#D9FFED] text-[#33B679]">
-                {label}
-            </div>
-        </>
-    )
-}
 
-function BadgeSecondary({ label }: { label: string }) {
-    return (
-        <>
-            <div className="py-1 font-semibold px-4 text-xs rounded-2xl bg-[#EFEFEF] text-[#4D4D4D]">
-                {label}
-            </div>
-        </>
-    )
-}
 
-export default function ListUserMobile({ data }: ListUserMobileProps) {
-    const [sortBy, setSortBy] = useState('ASC')
+export default function ListUserMobile({ data, setPage, page, orderBy, handleChangeOrderBy, handleChangeOrder, order, search, handleChangeSearch, fetchData }: ListUserMobileProps) {
+
+    const [dataUser, setDataUser] = useState<any>([])
+    const [debouncedSearch, setDebouncedSearch] = useState(search);
+    const loadingRef = useRef<boolean>(false);
+    const loadingBreakpoint = 768;
 
     const handleSortChange = () => {
-        console.log(sortBy)
-        if (sortBy == 'ASC') {
-            setSortBy('DESC')
+        setPage(1)
+        setDataUser([])
+        if (order === 'asc') {
+            handleChangeOrder('desc');
         } else {
-            setSortBy('ASC')
+            handleChangeOrder('asc');
         }
-    }
+    };
+
+    useEffect(() => {
+        setDataUser([])
+        const handler = setTimeout(() => {
+            setPage(1)
+            fetchData()
+        }, 500); // Debounce delay of 500ms
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [debouncedSearch]); // Trigger the effect when debouncedSearch changes
+
+    const handleSearchChange = (value: string) => {
+        handleChangeSearch(value);
+        setDebouncedSearch(value);
+    };
+
+    // Infinite scroll logic
+    const handleScroll = () => {
+        if (window.innerWidth <= loadingBreakpoint) {
+            const bottom = window.innerHeight + window.scrollY >= document.documentElement.offsetHeight;
+            if (bottom && !loadingRef.current) {
+                loadingRef.current = true; // Prevent multiple fetches
+                setPage((prevPage: any) => prevPage + 1); // Increment page
+                loadingRef.current = false; // Reset loading state
+            }
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    useEffect(() => {
+        setDataUser((prevData: any) => [...prevData, ...data]);
+    }, [data])
+
+    console.log(data, 'deb')
     return (
         <>
-            <div className="px-4 flex flex-col gap-2 w-full mt-4 ">
-                <div className="flex flex-row gap-2 items-center"><DrawerFilterMobile /> <div className="inline-block flex items-center justify-center h-9 w-9 cursor-pointer rounded-full bg-[#4D4D4D] shadow-lg" onClick={() => handleSortChange()}>{sortBy == 'ASC' ? <AscSort /> : <DescSort className="w-[1rem]" />}</div></div>
-                {data.map((user: any, i: any) => {
+            <div className="px-4 flex flex-col gap-2 w-full  ">
+                <div className="mt-2">
+                    <div>
+                        <input placeholder="Cari" value={search} className="w-full bg-transparent border border-white w-full rounded-lg h-12 pl-4" onChange={(e) => handleSearchChange(e.target.value)} />
+                    </div>
+                </div>
+                <div className="flex flex-row gap-2 items-center">
+                    <DrawerFilterMobile
+                        orderBy={orderBy}
+                        handleChangeOrderBy={(e) => {
+                            setDataUser([])
+                            handleChangeOrderBy(e)
+                        }} />
+
+                    <div className="inline-block flex items-center justify-center h-9 w-9 cursor-pointer rounded-full bg-[#4D4D4D] shadow-lg" onClick={() => handleSortChange()}>{order == 'asc' ? <AscSort /> : <DescSort className="w-[1rem]" />}</div></div>
+                {dataUser.map((user: any, i: any) => {
                     return (
                         <div className="bg-[#4D4D4D] py-2 px-4 w-full rounded-lg" key={i}>
                             <div className="flex ">
@@ -70,6 +121,26 @@ export default function ListUserMobile({ data }: ListUserMobileProps) {
                     )
                 })}
 
+            </div>
+        </>
+    )
+}
+
+function BadgeSuccess({ label }: { label: string }) {
+    return (
+        <>
+            <div className="py-1 font-semibold px-4 text-xs rounded-2xl bg-[#D9FFED] text-[#33B679]">
+                {label}
+            </div>
+        </>
+    )
+}
+
+function BadgeSecondary({ label }: { label: string }) {
+    return (
+        <>
+            <div className="py-1 font-semibold px-4 text-xs rounded-2xl bg-[#EFEFEF] text-[#4D4D4D]">
+                {label}
             </div>
         </>
     )

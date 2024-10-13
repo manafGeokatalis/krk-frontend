@@ -6,7 +6,13 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-function DrawerFilterMobile() {
+
+interface DrawerFilterMobileProps {
+    orderBy: string,
+    handleChangeOrderBy: (orderBy: string) => void
+}
+function DrawerFilterMobile(props: DrawerFilterMobileProps) {
+    const { orderBy, handleChangeOrderBy } = props
 
     const [isOpenFilter, setIsOpenFilter] = useState(false)
 
@@ -14,6 +20,12 @@ function DrawerFilterMobile() {
         (state: boolean) => {
             setIsOpenFilter(state)
         };
+
+    const columns = [
+        { id: 'name', label: 'Nama' },
+        { id: 'createdAt', label: 'Tanggal Register' },
+        { id: 'role', label: 'Role' },
+    ];
 
     const list = () => (
         <Box
@@ -26,11 +38,11 @@ function DrawerFilterMobile() {
                 Urutkan berdasarkan
             </div>
             <List>
-                {['Nama', 'Tanggal', 'Jenis Akun'].map((text, index) => (
-                    <ListItem key={index} disablePadding>
+                {columns.map((col, index) => (
+                    <ListItem key={index} disablePadding onClick={() => handleChangeOrderBy(col.id)}>
                         <ListItemButton>
-                            <div className='bg-[#4D4D4D] rounded-xl text-white p-3 flex items-center justify-center w-full'>
-                                <ListItemText className='flex items-center justify-center' primary={text} />
+                            <div className={`${col.id === orderBy ? 'bg-white text-[#4D4D4D]' : 'bg-[#4D4D4D] text-white'} rounded-xl  p-3 flex items-center justify-center w-full`}>
+                                <ListItemText className='flex items-center justify-center' primary={col.label} />
 
                             </div>
                             {/* <ListItemIcon>
@@ -43,9 +55,14 @@ function DrawerFilterMobile() {
 
         </Box>
     );
+
+    function getLabelOrderBy(value: string) {
+        const findOrderBy = columns.find(col => col.id == value)
+        return findOrderBy?.label
+    }
     return (
         <Fragment key={'bottom'}>
-            <Button onClick={() => toggleDrawer(true)}>Tanggal</Button>
+            <Button onClick={() => toggleDrawer(true)}>{getLabelOrderBy(orderBy)}</Button>
             <SwipeableDrawer
                 anchor={'bottom'}
                 open={isOpenFilter}
