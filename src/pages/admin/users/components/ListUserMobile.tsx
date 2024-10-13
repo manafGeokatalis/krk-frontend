@@ -80,7 +80,6 @@ export default function ListUserMobile({ data, setPage, page, orderBy, handleCha
         setDataUser((prevData: any) => [...prevData, ...data]);
     }, [data])
 
-    console.log(data, 'deb')
     return (
         <>
             <div className="px-4 flex flex-col gap-2 w-full  ">

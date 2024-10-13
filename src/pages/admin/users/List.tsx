@@ -63,7 +63,6 @@ function UsersList() {
 
   const getData = async () => {
     try {
-      console.log(search, 'sea')
       const query: any = await axios.get(`/users`, {
         params: {
           page,
