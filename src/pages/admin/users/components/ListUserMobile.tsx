@@ -23,7 +23,7 @@ interface ListUserMobileProps {
 
 
 
-export default function ListUserMobile({ data, setPage, page, orderBy, handleChangeOrderBy, handleChangeOrder, order, search, handleChangeSearch, fetchData }: ListUserMobileProps) {
+export default function ListUserMobile({ data, setPage, orderBy, handleChangeOrderBy, handleChangeOrder, order, search, handleChangeSearch, fetchData }: ListUserMobileProps) {
 
     const [dataUser, setDataUser] = useState<any>([])
     const [debouncedSearch, setDebouncedSearch] = useState(search);

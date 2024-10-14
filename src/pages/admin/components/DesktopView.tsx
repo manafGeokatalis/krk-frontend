@@ -1,5 +1,5 @@
 import ListAttributes from "../../../components/ListAttributes"
-import { Button, LinearProgress, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { Button, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { formatDate } from "../../../utils/Helpers"
 import ButtonPermohonan from "../../public/components/ButtonPermohonan"
 import DialogDownloadFile from "./DialogDownloadFile"
@@ -19,7 +19,7 @@ interface DesktopViewProps {
   process: any
 }
 
-export default function DesktopView({ data, setSearch, setPerPage, setDownloadProgress, downloadProgress, paginate, setPage, downloadForm, setConfirm, downloadFile, process }: DesktopViewProps) {
+export default function DesktopView({ data, setSearch, setPerPage, setDownloadProgress, downloadProgress, paginate, setPage, downloadForm, setConfirm, downloadFile }: DesktopViewProps) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [selectPermohonan, setSelectPermohonan] = useState<any>(null)
 

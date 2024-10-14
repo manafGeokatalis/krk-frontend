@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { formatDate } from "../../../utils/Helpers"
 import ButtonPermohonan from "../../public/components/ButtonPermohonan"
-import { Button, LinearProgress } from "@mui/material"
+import { Button } from "@mui/material"
 
 interface MobileViewProps {
     data: any,
@@ -17,7 +17,7 @@ interface MobileViewProps {
     process: any
 }
 
-export default function MobileView({ data, setDownloadProgress, downloadProgress, downloadForm, setConfirm, downloadFile, process }: MobileViewProps) {
+export default function MobileView({ data, setConfirm }: MobileViewProps) {
     return (
         <>
             <div className="px-4 mt-2 w-full">

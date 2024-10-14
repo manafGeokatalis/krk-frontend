@@ -17,7 +17,7 @@ interface ListUserDesktopProps {
   handleChangeSearch: (search: string) => void,
   handleClickSearch: () => void
 }
-export default function ListUserDesktop({ data, paginate, setPage, setConfirm, order, orderBy, handleRequestSort, search, handleChangeSearch, handleClickSearch }: ListUserDesktopProps) {
+export default function ListUserDesktop({ data, paginate, setPage, order, orderBy, handleRequestSort, search, handleChangeSearch, handleClickSearch }: ListUserDesktopProps) {
 
   const columns = [
     { id: 'name', label: 'Nama' },
@@ -42,11 +42,12 @@ export default function ListUserDesktop({ data, paginate, setPage, setConfirm, o
               <TableHead className="bg-gdarkgray-500">
                 <TableRow>
                   {
-                    columns.map((column, index) => (
+                    columns.map((column) => (
                       <TableCell
                         align="center"
                         key={column.id}
                         sortDirection={orderBy === column.id ? order : false}
+
                       >
                         <TableSortLabel
                           active={orderBy === column.id}

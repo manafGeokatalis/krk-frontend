@@ -6,7 +6,6 @@ import { useRecoilState } from "recoil"
 import { notification } from "../../../utils/Recoils"
 import { createNotifcation } from "../../../utils/Helpers"
 import axios from "axios"
-import ListAttributes from "../../../components/ListAttributes"
 import GButton from "../../../components/GButton"
 import { Add } from "@mui/icons-material"
 import ConfirmDialog from "../../../components/ConfirmDialog"
@@ -16,7 +15,6 @@ import { OrderType } from "../../../data/interface/user"
 import { user } from "../../../utils/Recoils";
 import { useRecoilValue } from "recoil";
 
-let tm: any;
 function UsersList() {
   const [data, setData] = useState<any>([]);
   const [paginate, setPaginate] = useState({
@@ -27,7 +25,7 @@ function UsersList() {
   });
   const [_, setNotif] = useRecoilState(notification);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage] = useState(10);
   const [search, setSearch] = useState('');
   const [_n, setN] = useRecoilState(notification);
   const [confirm, setConfirm] = useState({
