@@ -15,6 +15,7 @@ import TentangKRK from "../pages/TentangKRK"
 import Statistik from "../pages/admin/statistik/Statistik"
 // import TentangTataRuang from "../pages/TentangTataRuang"
 import PermohonanDitolak from "../pages/admin/PermohonanDitolak"
+import DownloadPermohonan from "../pages/admin/DownloadPermohonan"
 function AuthRoutes() {
   const userData: any = useRecoilValue(user);
   return (
@@ -29,6 +30,8 @@ function AuthRoutes() {
         <Route path="/petunjuk-permohonan" element={<PetunjukPermohonan />} />
         <Route path="/permohonan/tambah" element={<Form />} />
         <Route path="/permohonan/:uuid" element={userData.role === 'PUBLIC' ? <StatusPermohonan /> : <StatusPermohonanAdmin />} />
+        <Route path="/permohonan/download/:uuid" element={userData.role === 'PUBLIC' ? <StatusPermohonan /> : <DownloadPermohonan />} />
+
         <Route path="/permohonan/:uuid/edit" element={<Form />} />
         <Route path="/permohonan/ditolak/:uuid" element={<PermohonanDitolak />} />
         <Route path="/profile" element={<Profile />} />

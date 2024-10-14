@@ -98,7 +98,7 @@ function Permohonan() {
     sheet.addRow([1, 'Provinsi', ucwords(dta.lokasi_provinsi.name.toLowerCase())]);
     sheet.addRow([2, 'Kabupaten / Kota', ucwords(dta.lokasi_kabupaten.name.toLowerCase())]);
     sheet.addRow([3, 'Kecamatan', dta.lokasi_kecamatan.name]);
-    sheet.addRow([4, 'Desa / Kelurahan', dta.lokasi_kelurahan.name]);
+    sheet.addRow([4, 'Desa / Kelurahan', dta?.lokasi_kelurahan?.name ?? '']);
     sheet.addRow([5, 'Alamat Lengkap', dta.lokasi_alamat]);
     sheet.addRow([6, 'NPWP wajib pajak', dta.npwp]);
     sheet.addRow([7, 'Koordinat Lokasi', dta.coordinate.split(',').join(', ')]);

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { formatDate } from "../../../utils/Helpers"
 import ButtonPermohonan from "../../public/components/ButtonPermohonan"
 import { Button, LinearProgress } from "@mui/material"
@@ -37,7 +38,7 @@ export default function MobileView({ data, setDownloadProgress, downloadProgress
                                 </div>
                                 <ButtonPermohonan progress={v.permohonan_progresses} uuid={v.uuid} />
                                 <div className="mt-6 flex flex-col gap-2 w-full">
-                                    <div className="w-full">
+                                    {/* <div className="w-full">
                                         <Button size="small" variant="contained" color="info" className="!py-2 w-full !rounded-xl !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => downloadFile(`/download/permohonan/${v.uuid}/berkas`, {
                                             filename: `KerenkaMaBarBerkas[${v.registration_number}].zip`,
                                             onProgress(progress: any) {
@@ -52,8 +53,10 @@ export default function MobileView({ data, setDownloadProgress, downloadProgress
                                         {downloadProgress[v.uuid] > 0 &&
                                             <LinearProgress color="primary" variant="determinate" value={downloadProgress[v.uuid]} className="mt-1" />
                                         }
-                                    </div>
-                                    <Button size="small" variant="contained" color="warning" className="!py-2 !rounded-xl !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => downloadForm(v)} disabled={process[v.uuid]}>Form</Button>
+                                    </div> */}
+                                    <Button size="small" variant="contained" color="warning" className="!py-2 !rounded-xl !px-5 !text-sm !capitalize !whitespace-nowrap"  ><Link to={`/permohonan/download/${v.uuid}`}>Periksa Dokumen</Link></Button>
+
+                                    {/* <Button size="small" variant="contained" color="warning" className="!py-2 !rounded-xl !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => downloadForm(v)} disabled={process[v.uuid]}>Form</Button> */}
                                     <Button size="small" variant="contained" color="error" className="!py-2 !rounded-xl !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => setConfirm({
                                         ...confirm,
                                         show: true,

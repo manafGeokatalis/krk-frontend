@@ -2,6 +2,8 @@ import ListAttributes from "../../../components/ListAttributes"
 import { Button, LinearProgress, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { formatDate } from "../../../utils/Helpers"
 import ButtonPermohonan from "../../public/components/ButtonPermohonan"
+import DialogDownloadFile from "./DialogDownloadFile"
+import { useState } from "react"
 
 interface DesktopViewProps {
   data: any,
@@ -18,8 +20,23 @@ interface DesktopViewProps {
 }
 
 export default function DesktopView({ data, setSearch, setPerPage, setDownloadProgress, downloadProgress, paginate, setPage, downloadForm, setConfirm, downloadFile, process }: DesktopViewProps) {
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [selectPermohonan, setSelectPermohonan] = useState<any>(null)
+
+
   return (
     <div className="flex flex-col gap-2">
+      <DialogDownloadFile show={dialogOpen} data={selectPermohonan} downloadForm={downloadForm} onDownloadAll={() => downloadFile(`/download/permohonan/${selectPermohonan.uuid}/berkas`, {
+        filename: `KerenkaMaBarBerkas[${selectPermohonan?.registration_number}].zip`,
+        onProgress(progress: any) {
+          setDownloadProgress({ ...downloadProgress, [selectPermohonan.uuid]: progress });
+          if (progress == 100) {
+            setTimeout(() => {
+              setDownloadProgress({ ...downloadProgress, [selectPermohonan.uuid]: 0 });
+            }, 1000);
+          }
+        },
+      })} onClose={() => setDialogOpen(!dialogOpen)} />
       <ListAttributes onChange={e => {
         setPerPage(e.perPage);
         setSearch(e.search);
@@ -52,7 +69,7 @@ export default function DesktopView({ data, setSearch, setPerPage, setDownloadPr
                   </TableCell>
                   <TableCell className="!border-b-0 !border-t !border-t-white !border-l !border-l-white w-0" align="center">
                     <div className="flex gap-1">
-                      <div>
+                      {/* <div>
                         <Button size="small" variant="contained" color="info" className="!py-0.5 !rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => downloadFile(`/download/permohonan/${v.uuid}/berkas`, {
                           filename: `KerenkaMaBarBerkas[${v.registration_number}].zip`,
                           onProgress(progress: any) {
@@ -67,8 +84,13 @@ export default function DesktopView({ data, setSearch, setPerPage, setDownloadPr
                         {downloadProgress[v.uuid] > 0 &&
                           <LinearProgress color="primary" variant="determinate" value={downloadProgress[v.uuid]} className="mt-1" />
                         }
-                      </div>
-                      <Button size="small" variant="contained" color="warning" className="!py-0.5 !rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => downloadForm(v)} disabled={process[v.uuid]}>Form</Button>
+                      </div> */}
+                      {/* <Button size="small" variant="contained" color="warning" className="!py-0.5 !rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => downloadForm(v)} disabled={process[v.uuid]}>Form</Button> */}
+                      <Button size="small" variant="contained" color="warning" className="!py-0.5 !rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => {
+                        setSelectPermohonan(v)
+                        setDialogOpen(true)
+                      }} >Periksa Dokumen</Button>
+
                       <Button size="small" variant="contained" color="error" className="!py-0.5 !rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => setConfirm({
                         ...confirm,
                         show: true,
