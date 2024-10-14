@@ -27,16 +27,16 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
   const [rejected, setRejected] = useState(false);
   const [downloadProgress, setDownloadProgress] = useState<number>(0);
   const [status, setStatus] = useState<any>([
-    { title: '0. Permohonan telah diajukan', date: null, checked: false, file: null },
-    { title: '1. Verifikasi dokumen persyaratan', date: null, checked: false, file: null },
-    { title: '2. Verifikasi kesesuaian lokasi izin dengan peraturan yang berlaku', date: null, checked: false, file: null },
-    { title: '3. Persiapan Proses Pengukuran dan Cek Lapangan oleh Petugas', date: null, checked: false, file: null },
-    { title: '4. Selesai Pengukuran dan Cek Lapangan', date: null, checked: false, file: null },
-    { title: '5. Selesai Verifikasi Hasil Pengukuran dan Cek Lapangan', date: null, checked: false, file: null },
-    { title: '6. Nomor Agenda Telah Terbit, Persiapan Pengecekan Mandiri', date: null, checked: false, file: null },
-    { title: '7. Selesai Pengecekan Mandiri', date: null, checked: false, file: null },
-    { title: '8. Verifikasi hasil Pengecekan Mandiri', date: null, checked: false, file: null },
-    { title: '9. Dokumen KRK telah terbit', date: null, checked: false, file: null },
+    { title: 'Permohonan telah diajukan', date: null, checked: false, file: null },
+    { title: 'Proses Verifikasi dokumen persyaratan', date: null, checked: false, file: null },
+    { title: 'Selesai Verifikasi dokumen', date: null, checked: false, file: null },
+    { title: 'Persiapan Proses Pengukuran dan Cek Lapangan oleh Petugas', date: null, checked: false, file: null },
+    { title: 'Selesai Pengukuran dan Cek Lapangan', date: null, checked: false, file: null },
+    // { title: '5. Selesai Verifikasi Hasil Pengukuran dan Cek Lapangan', date: null, checked: false, file: null },
+    // { title: '6. Nomor Agenda Telah Terbit, Persiapan Pengecekan Mandiri', date: null, checked: false, file: null },
+    // { title: '7. Selesai Pengecekan Mandiri', date: null, checked: false, file: null },
+    // { title: '8. Verifikasi hasil Pengecekan Mandiri', date: null, checked: false, file: null },
+    { title: 'Dokumen KRK telah terbit', date: null, checked: false, file: null },
   ])
   const navigate = useNavigate();
 
@@ -56,7 +56,9 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
               <p className="order-2 md:order-1">{event.title}</p>
               <div className="order-1 md:order-2 flex flex-col gap-1 md:justify-end md:text-right">
                 <p className="text-[10px] md:text-[12px]">{event.date ? `Diproses tanggal ${formatDate(event.date, 'DD MM YYYY', 'long')}` : null}</p>
-                {(status.filter((obj: any) => obj.checked === true).length === 10 && index === 9) &&
+                {/* {(status.filter((obj: any) => obj.checked === true).length === 10 && index === 9) && */}
+                {(status.filter((obj: any) => obj.checked === true).length === 6 && index === 5) &&
+
                   <div className="flex gap-1 justify-end items-center">
                     {fileName !== '' &&
                       <p className="font-semibold max-w-xs text-ellipsis overflow-hidden whitespace-nowrap">{fileName}</p>
@@ -118,7 +120,7 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
         status[i].checked = false;
       }
     }
-    if (index == status.length - 1 && status.filter((obj: any, key: number) => obj.file !== null && key === 9).length === 0) {
+    if (index == status.length - 1 && status.filter((obj: any, key: number) => obj.file !== null && key === 5).length === 0) {
       setFileReady(false);
     } else {
       setFileReady(true);
