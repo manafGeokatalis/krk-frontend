@@ -9,7 +9,8 @@ import { createNotifcation, downloadFile, formatDate, getExtension } from "../..
 import axios from "axios";
 import GButton from "../../components/GButton";
 import { Link, useNavigate } from "react-router-dom";
-
+import ConfirmDialog from "../../components/ConfirmDialog";
+import ConfirmDialogSendEmail from "./components/ConfirmDialogSendEmail";
 type Props = {
   title?: string;
 }
@@ -38,6 +39,8 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
     // { title: '8. Verifikasi hasil Pengecekan Mandiri', date: null, checked: false, file: null },
     { title: 'Dokumen KRK telah terbit', date: null, checked: false, file: null },
   ])
+  const [confirmDialog, setConfirmDialog] = useState(false)
+  const [confirmSendEmail, setConfirmSendEmail] = useState(false)
   const navigate = useNavigate();
 
 
@@ -186,6 +189,12 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
     }
   }
 
+  const sendEmailCheckLapangan = async (uuid: any) => {
+    const res: any = await axios.get(`/permohonan/send-cek-lapangan/${uuid}`);
+    setN(createNotifcation('Email pemberitahuan telah dikirimkan ke pemohoan'));
+
+  }
+
   const updateStatus = async () => {
     setIsSubmit(true);
     try {
@@ -193,6 +202,17 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
       if (file) {
         await uploadFile();
       }
+
+      const dataStatus = status.filter((obj: any) => obj.checked === true)
+      const titleCheckLapangan = 'Persiapan Proses Pengukuran dan Cek Lapangan oleh Petugas'
+      const isCheckLapangan = dataStatus[dataStatus.length - 1].title == titleCheckLapangan
+      //check lapangan send email
+      if (isCheckLapangan) {
+        setConfirmSendEmail(true)
+      }
+
+
+
       getData();
       setN(createNotifcation(res?.data?.message));
       setIsSubmit(false);
@@ -225,6 +245,21 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
 
   return (
     <AuthLayout title={title}>
+      <ConfirmDialog show={confirmDialog} title={'Konfirmasi Update Permohonan'} message={`Apakah anda yakin mengupdate permohonan ini?`} rejectLable='Batal' acceptLable='Update Permohonan' onClose={() => {
+        setConfirmDialog(false);
+      }} onSubmit={() => {
+        updateStatus()
+        setConfirmDialog(false);
+      }} />
+      <ConfirmDialogSendEmail
+        show={confirmSendEmail}
+        rejectLable='Tutup' acceptLable='Kirim email' onClose={() => {
+          setConfirmSendEmail(false);
+        }} onSubmit={() => {
+          sendEmailCheckLapangan(params.uuid)
+          setConfirmSendEmail(false);
+        }}
+      />
       <input ref={fileField} type="file" onChange={(e) => {
         if (e.target.files && e.target.files[0]?.name) {
           setFile(e.target.files[0])
@@ -292,7 +327,7 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
           {/* ACTION SECTION DESKTOP */}
           <div className="hidden md:flex md:flex-col">
             <div className="flex justify-end">
-              <GButton color="success" onClick={updateStatus} disabled={isSubmit || !fileReady || rejected}>Simpan</GButton>
+              <GButton color="success" onClick={() => setConfirmDialog(true)} disabled={isSubmit || !fileReady || rejected}>Simpan</GButton>
             </div>
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-1">

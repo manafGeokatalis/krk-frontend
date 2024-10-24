@@ -1,5 +1,5 @@
 import ListAttributes from "../../../components/ListAttributes"
-import { Button, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { Button, Pagination, Table, TableBody, TableCell, Checkbox, TableContainer, TableHead, TableRow } from "@mui/material"
 import { formatDate } from "../../../utils/Helpers"
 import ButtonPermohonan from "../../public/components/ButtonPermohonan"
 import DialogDownloadFile from "./DialogDownloadFile"
@@ -56,6 +56,13 @@ export default function DesktopView({ data, setSearch, setPerPage, setDownloadPr
             <TableBody>
               {data.length > 0 ? data.map((v: any, i: number) => {
                 return <TableRow key={i}>
+                  <TableCell padding="checkbox" className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">
+                    <Checkbox
+                      color="primary"
+                      checked={false}
+
+                    />
+                  </TableCell>
                   <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{v.name}</TableCell>
                   <TableCell className="!border-b-0 !border-t !border-t-white !border-r !border-r-white" align="center">{formatDate(v.createdAt, 'DD MM YYYY', 'long')}</TableCell>
                   <TableCell className="!border-b-0 !border-t !border-t-white !border-r !border-r-white" align="center">{v.registration_number}</TableCell>

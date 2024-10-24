@@ -14,7 +14,7 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: '',
-    id_number: '',
+    // id_number: '',
     address: '',
     wa_number: '',
     email: '',
@@ -23,7 +23,7 @@ function Register() {
   });
   const [errors, setErrors] = useState<any>({
     name: '',
-    id_number: '',
+    // id_number: '',
     address: '',
     wa_number: '',
     email: '',
@@ -92,7 +92,7 @@ function Register() {
                 <CardContent className='flex flex-col gap-3 !p-7'>
                   <Typography variant='h4' className='hidden md:flex !font-quicksand !text-center !pb-2'>Formulir pembuatan akun</Typography>
                   <TextField variant='outlined' color='secondary' label='Nama' name='name' value={form.name} onChange={handleInput} required />
-                  <TextField variant='outlined' color='secondary' label='Nomor Identitas' name='id_number' value={form.id_number} onChange={handleInput} required />
+                  {/* <TextField variant='outlined' color='secondary' label='Nomor Identitas' name='id_number' value={form.id_number} onChange={handleInput} required /> */}
                   <TextField variant='outlined' color='secondary' label='Alamat Sesuai KTP' name='address' value={form.address} onChange={handleInput} required />
                   <TextField type='tel' variant='outlined' color='secondary' label='Nomor Whatsapp Aktif' name='wa_number' value={form.wa_number} onChange={handleInput} required />
                   <TextField type='email' variant='outlined' color='secondary' label='Email' name='email' value={form.email} onChange={handleInput} required error={errors.email != ''} helperText={errors.email} />
