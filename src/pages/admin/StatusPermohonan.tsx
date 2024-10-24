@@ -190,7 +190,7 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
   }
 
   const sendEmailCheckLapangan = async (uuid: any) => {
-    const res: any = await axios.get(`/permohonan/send-cek-lapangan/${uuid}`);
+    await axios.get(`/permohonan/send-cek-lapangan/${uuid}`);
     setN(createNotifcation('Email pemberitahuan telah dikirimkan ke pemohoan'));
 
   }
