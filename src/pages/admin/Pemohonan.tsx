@@ -141,6 +141,7 @@ function Permohonan() {
           setConfirm={setConfirm}
           setDownloadProgress={setDownloadProgress}
           setPage={setPage}
+          getData={getData}
         />
       </div>
       <div className="flex md:hidden mt-10 w-full">

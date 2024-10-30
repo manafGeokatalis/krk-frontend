@@ -34,6 +34,11 @@ function NavBar() {
                 <button className={'w-full font-quicksand p-3 transition-all duration-200 ' + (location.pathname.startsWith('/user') ? 'bg-white text-gdarkgray-800' : 'hover:bg-ggray-300 hover:text-gdarkgray-800')}>User</button>
               </Link>
             }
+            {userData?.role !== 'PUBLIC' &&
+              <Link to={'/statistik'}>
+                <button className={'w-full font-quicksand p-3 transition-all duration-200 ' + (location.pathname.startsWith('/statistik') ? 'bg-white text-gdarkgray-800' : 'hover:bg-ggray-300 hover:text-gdarkgray-800')}>Statistik</button>
+              </Link>
+            }
           </>
           : <Link to={'/pantau'}>
             <button className={'w-full font-quicksand p-3 mt-2 transition-all duration-200 ' + (location.pathname.startsWith('/pantau') ? 'bg-white text-gdarkgray-800' : 'hover:bg-ggray-300 hover:text-gdarkgray-800')}>Pantau Permohonan</button>

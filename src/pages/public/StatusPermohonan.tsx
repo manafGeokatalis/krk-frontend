@@ -87,7 +87,6 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
   }, [])
 
   const TimeLine = ({ events }: { events: Array<any> }) => {
-    console.log(events, 'halo')
     return (
       <div className="relative">
         <DialogFeedback show={openDialogFeedback} onClose={() => setOpenDialogFeedback(!openDialogFeedback)} onSubmit={() => handleDownload(activeEvent)} alreadyFeedback={userAlreadyFeedback} />

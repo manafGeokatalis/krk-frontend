@@ -3,8 +3,9 @@ import { Button, Pagination, Table, TableBody, TableCell, Checkbox, TableContain
 import { formatDate } from "../../../utils/Helpers"
 import ButtonPermohonan from "../../public/components/ButtonPermohonan"
 import DialogDownloadFile from "./DialogDownloadFile"
-import { useState } from "react"
-
+import { useEffect, useState } from "react"
+import ConfirmDialogMultipleDelete from "./ConfirmDialogMultipleDelete"
+import ConfirmDialogMultipleUpdate from "./ConfirmDialogMultipleUpdate"
 interface DesktopViewProps {
   data: any,
   setSearch: React.Dispatch<React.SetStateAction<any>>
@@ -16,12 +17,42 @@ interface DesktopViewProps {
   downloadForm: React.Dispatch<React.SetStateAction<any>>,
   setConfirm: React.Dispatch<React.SetStateAction<any>>,
   downloadFile: any,
-  process: any
+  process: any,
+  getData: () => void
 }
 
-export default function DesktopView({ data, setSearch, setPerPage, setDownloadProgress, downloadProgress, paginate, setPage, downloadForm, setConfirm, downloadFile }: DesktopViewProps) {
+export default function DesktopView({ data, setSearch, setPerPage, setDownloadProgress, downloadProgress, paginate, setPage, downloadForm, setConfirm, downloadFile, getData }: DesktopViewProps) {
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogDeleteMultipleOpen, setDialogDeleteMultipleOpen] = useState(false)
+  const [dialogUpdateMultipleOpen, setDialogUpdateMultipleOpen] = useState(false)
+
   const [selectPermohonan, setSelectPermohonan] = useState<any>(null)
+
+  const [selected, setSelected] = useState<any>([]);
+
+
+  const handleCheckboxClick = (event: any, id: any) => {
+    event.stopPropagation();
+    const newSelected: any = selected.includes(id)
+      ? selected.filter((s: any) => s !== id)
+      : [...selected, id];
+    setSelected(newSelected);
+  };
+
+  const handleSelectAllClick = (event: any) => {
+    if (event.target.checked) {
+      const newSelecteds = data.map((row: any) => row.id); // Assuming each row has a unique 'id'
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
+
+  const isSelected = (id: any) => selected.includes(id);
+
+  useEffect(() => {
+    getData()
+  }, [dialogUpdateMultipleOpen, dialogDeleteMultipleOpen])
 
 
   return (
@@ -37,15 +68,41 @@ export default function DesktopView({ data, setSearch, setPerPage, setDownloadPr
           }
         },
       })} onClose={() => setDialogOpen(!dialogOpen)} />
+      <ConfirmDialogMultipleDelete
+        onClose={() => setDialogDeleteMultipleOpen(false)}
+        selected={selected}
+        show={dialogDeleteMultipleOpen}
+        onClearSelect={() => setSelected([])}
+      />
+      <ConfirmDialogMultipleUpdate
+        onClose={() => setDialogUpdateMultipleOpen(false)}
+        selected={selected}
+        show={dialogUpdateMultipleOpen}
+        onClearSelect={() => setSelected([])}
+      />
       <ListAttributes onChange={e => {
         setPerPage(e.perPage);
         setSearch(e.search);
       }} />
-      <div className="rounded-2xl overflow-hidden border">
+      {selected.length > 0 ? (<div className="px-4 flex  gap-4">
+        <Button size="small" variant="contained" className="!py-3 md:!py-0.5  !rounded-xl md:!rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap !bg-gblue-500" onClick={() => setDialogUpdateMultipleOpen(true)}>Ubah Tahapan Permohonan</Button>
+        <Button size="small" variant="contained" color="error" className="!py-3 md:!py-0.5  !rounded-xl md:!rounded-full !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => setDialogDeleteMultipleOpen(true)}>Hapus Permohonan</Button>
+
+      </div>) : (<></>)}
+      <div className="rounded-2xl overflow-hidden border mt-4">
         <TableContainer>
           <Table size="small">
             <TableHead className="bg-gdarkgray-500">
               <TableRow>
+                <TableCell className="!font-heebo !text-base" align="center">
+                  <Checkbox
+                    color="primary"
+                    checked={data.length > 0 && selected.length === data.length}
+                    onChange={handleSelectAllClick}
+
+                  />
+                </TableCell>
+
                 <TableCell className="!font-heebo !text-base" align="center">Pemohon</TableCell>
                 <TableCell className="!font-heebo !text-base" align="center">Tanggal Pengajuan</TableCell>
                 <TableCell className="!font-heebo !text-base" align="center">Kode Registrasi</TableCell>
@@ -55,11 +112,15 @@ export default function DesktopView({ data, setSearch, setPerPage, setDownloadPr
             </TableHead>
             <TableBody>
               {data.length > 0 ? data.map((v: any, i: number) => {
-                return <TableRow key={i}>
+                const isItemSelected = isSelected(v.id);
+
+                return <TableRow key={i} selected={isItemSelected}
+                >
                   <TableCell padding="checkbox" className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">
                     <Checkbox
                       color="primary"
-                      checked={false}
+                      checked={isItemSelected}
+                      onChange={(event) => handleCheckboxClick(event, v.id)}
 
                     />
                   </TableCell>

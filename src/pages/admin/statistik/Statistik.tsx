@@ -6,10 +6,10 @@ export default function Statistik() {
     return (
         <>
             <AuthLayout title="Permohonan KRK">
-                <div className="hidden md:flex justify-between gap-3 mt-12 items-center">
+                <div className="hidden md:flex  gap-3 mt-12 justify-center items-center">
                     <Typography variant="h4" className="!font-quicksand !font-semibold">Statistik</Typography>
                 </div>
-                <div className="flex md:hidden justify-center mt-12">
+                <div className="flex  justify-center mt-12">
                     <Typography variant="h4" className="!font-quicksand !font-semibold">Statistik Pengguna</Typography>
                 </div>
                 <div className="hidden md:flex">
