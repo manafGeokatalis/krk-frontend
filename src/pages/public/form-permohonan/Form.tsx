@@ -22,30 +22,26 @@ type Props = {}
 const errorMessage = [
   {
     name: 'Harus diisi',
-    email: 'Harus diisi',
+    // email: 'Harus diisi',
     wa: 'Harus diisi',
-    provinsi_id: 'Harus dipilih',
-    kabupaten_id: 'Harus dipilih',
-    kecamatan_id: 'Harus dipilih',
-    desa_id: 'Harus dipilih',
-    lokasi_provinsi_id: 'Harus dipilih',
-    lokasi_kabupaten_id: 'Harus dipilih',
-    lokasi_kecamatan_id: 'Harus dipilih',
-    lokasi_desa_id: 'Harus dipilih',
+    // provinsi_id: 'Harus dipilih',
+    // kabupaten_id: 'Harus dipilih',
+    // kecamatan_id: 'Harus dipilih',
+    // desa_id: 'Harus dipilih',
+    // lokasi_provinsi_id: 'Harus dipilih',
+    // lokasi_kabupaten_id: 'Harus dipilih',
+    // lokasi_kecamatan_id: 'Harus dipilih',
+    // lokasi_desa_id: 'Harus dipilih',
   },
   {
-    npwp: 'Harus diisi',
     coordinate: 'Harus dipilih',
-    luas_tanah: 'Harus diisi',
+    status_tanah: 'Harus diisi',
     fungsi_bangunan: 'Harus diisi',
   },
   {
     ktp: 'Harus diisi',
     pbb: 'Harus diisi',
     sertifikat_tanah: 'Harus diisi',
-    skpt: 'Harus diisi',
-    surat_kuasa_mengurus: 'Harus diisi',
-    suket_tidak_sengketa: 'Harus diisi',
   }
 ];
 
@@ -126,14 +122,31 @@ function DialogFeedback({ show, onClose }: DialogFeedbackProps) {
   )
 }
 
+type FormState = {
+  form: {
+    uuid: string | null,
+    id: string | null
+    name: string;
+    wa: string;
+  };
+  lokasi: string;
+};
+
 function Form({ }: Props) {
   const params = useParams();
   const [data, setData] = useState<any>();
   const [step, setStep] = useState(1);
-  const [form, setForm] = useState<any>({
-    form: {},
+  const [form, setForm] = useState<FormState>({
+    form: {
+      uuid: null,
+      id: null,
+      name: '',
+      wa: ''
+    },
     lokasi: ''
   });
+
+
   const [errors, setErrors] = useState(true);
   const [confirm, setConfirm] = useState({
     show: false,
@@ -155,11 +168,12 @@ function Form({ }: Props) {
   useEffect(() => {
     setErrors(false);
     for (const key of Object.keys(errorMessage[step - 1])) {
-      if (!form.form[key]) {
+
+      if (!form.form[key as keyof typeof form.form]) {
         setErrors(true);
       }
     }
-  }, [form]);
+  }, [form, step]);
 
   const getData = async () => {
     try {
@@ -177,8 +191,11 @@ function Form({ }: Props) {
 
   const handleSubmit = async () => {
     const formData = new FormData;
-    for (const key of Object.keys(form.form)) {
-      formData.append(key, form.form[key]);
+    for (const key of Object.keys(form.form) as Array<keyof typeof form.form>) {
+      const value = form.form[key];
+      if (value != null) { // Only append if value is not null or undefined
+        formData.append(key, value);
+      }
     }
 
     try {
@@ -237,6 +254,17 @@ function Form({ }: Props) {
     )
   }
 
+  const handleUpdateForm = (name: string, value: any) => {
+
+    setForm((prevForm) => ({
+      ...prevForm,
+      form: {
+        ...prevForm.form,
+        [name]: value,
+      }
+    }));
+  };
+
   return (
     <AuthLayout title={params?.uuid ? `Ubah Permohonan` : `Permohonan Baru`}>
       <ConfirmDialog show={confirm.show} title={confirm.title} message={`<center>${confirm.message}</center>`} acceptLable='Ajukan KRK' rejectLable='Cek Kembali' onClose={() => setConfirm({ ...confirm, show: false })} onSubmit={handleSubmit} />
@@ -245,9 +273,9 @@ function Form({ }: Props) {
       </div>
       <Typography variant="h5" mt={5} mb={3} className='!font-quicksand !font-semibold'>Tahap {step} dari 3</Typography>
       <div className="flex flex-col gap-4 p-8 rounded-2xl shadow bg-gdarkgray-500 max-w-4xl">
-        {step == 1 ? <Step1 data={form.form} onChange={data => setForm({ ...form, ...data })} />
-          : step == 2 ? <Step2 data={form} onChange={data => setForm({ ...form, form: { ...form.form, ...data } })} />
-            : <Step3 data={form.form} onChange={data => setForm({ ...form, form: { ...form.form, ...data } })} />}
+        {step == 1 ? <Step1 data={form.form} handleUpdateForm={handleUpdateForm} />
+          : step == 2 ? <Step2 data={form.form} handleUpdateForm={handleUpdateForm} />
+            : <Step3 data={form.form} handleUpdateForm={handleUpdateForm} />}
         <div className="flex mt-5 justify-center">
           <div className="flex justify-between gap-5 w-full max-w-3xl">
             <GButton color='secondary' onClick={_ => {

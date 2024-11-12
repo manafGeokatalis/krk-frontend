@@ -43,26 +43,28 @@ const FormSelect = ({ ...props }) => {
 
 type Props = {
   data?: any;
-  onChange: (data: any) => void
+  handleUpdateForm: (key: string, value: string) => void;
 }
 
-function Step1({ onChange, data }: Props) {
-  const [form, setForm] = useState<any>({
-    name: '',
-    email: '',
-    wa: '',
-    wa_kuasa: '',
-    provinsi_id: null,
-    kabupaten_id: null,
-    kecamatan_id: null,
-    desa_id: null,
-    alamat: '',
-    lokasi_provinsi_id: null,
-    lokasi_kabupaten_id: null,
-    lokasi_kecamatan_id: null,
-    lokasi_desa_id: null,
-    lokasi_alamat: '',
-  });
+function Step1({ handleUpdateForm, data }: Props) {
+
+  const form = data
+  // const [form, setForm] = useState<any>({
+  //   name: '',
+  //   email: '',
+  //   wa: '',
+  //   wa_kuasa: '',
+  //   provinsi_id: null,
+  //   kabupaten_id: null,
+  //   kecamatan_id: null,
+  //   desa_id: null,
+  //   alamat: '',
+  //   lokasi_provinsi_id: null,
+  //   lokasi_kabupaten_id: null,
+  //   lokasi_kecamatan_id: null,
+  //   lokasi_desa_id: null,
+  //   lokasi_alamat: '',
+  // });
   const [provinsi, setProvinsi] = useState<any>([]);
   const [kabupaten, setKabupaten] = useState<any>([]);
   const [kecamatan, setKecamatan] = useState<any>([]);
@@ -73,19 +75,26 @@ function Step1({ onChange, data }: Props) {
   const [lokasikelurahan, setLokasiKelurahan] = useState<any>([]);
   const [lokasi, setLokasi] = useState('');
   const [_N, setN] = useRecoilState(notification);
+  console.log(provinsi)
+  console.log(kabupaten)
+  console.log(kecamatan)
+  console.log(kelurahan)
+
+
+
 
   useEffect(() => {
     getProvinsi();
   }, []);
-  useEffect(() => {
-    if (data?.id) {
-      setForm({ ...form, ...data });
-    }
-  }, [data?.id]);
+  // useEffect(() => {
+  //   if (data?.id) {
+  //     // setForm({ ...form, ...data });
+  //   }
+  // }, [data?.id]);
 
-  useEffect(() => {
-    onChange({ form, lokasi });
-  }, [form, lokasi]);
+  // useEffect(() => {
+  //   onChange({ form, lokasi });
+  // }, [form, lokasi]);
 
   useEffect(() => {
     if (form.provinsi_id) {
@@ -199,17 +208,21 @@ function Step1({ onChange, data }: Props) {
     }
   }
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  // const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setForm({ ...form, [e.target.name]: e.target.value });
+  // }
+
+  const handleFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleUpdateForm(e.target.name, e.target.value)
   }
 
   return (
     <>
       <Typography variant='h4' mb={1} className='!font-quicksand !font-semibold'>Data Pemohon</Typography>
-      <FormInput inputlabel='Nama Pemohon*' type='text' name='name' value={form.name} onChange={handleInput} required />
-      <FormInput inputlabel='Email Pemohon*' type='email' name='email' value={form.email} onChange={handleInput} required />
-      <FormInput inputlabel='Whatsapp*' type='tel' name='wa' value={form.wa} onChange={handleInput} required />
-      <FormInput inputlabel='Whatsapp kuasa' type='tel' name='wa_kuasa' value={form.wa_kuasa} onChange={handleInput} />
+      <FormInput inputlabel='Nama Pemohon*' type='text' name='name' value={form.name} onChange={handleFormInput} required />
+      {/* <FormInput inputlabel='Email Pemohon*' type='email' name='email' value={form.email} onChange={handleInput} required /> */}
+      <FormInput inputlabel='Whatsapp*' type='tel' name='wa' value={form.wa} onChange={handleFormInput} required />
+      {/* <FormInput inputlabel='Whatsapp kuasa' type='tel' name='wa_kuasa' value={form.wa_kuasa} onChange={handleInput} />
       <FormSelect inputlabel='Provinsi*' name='provinsi_id'
         placeholder='Pilih Provinsi'
         options={provinsi}
@@ -248,15 +261,21 @@ function Step1({ onChange, data }: Props) {
         onChange={(_e: React.ChangeEvent<HTMLSelectElement>, value: any) => {
           setForm({ ...form, desa_id: value.id });
         }} disabled={kelurahan.length == 0} required />
-      <FormInput inputlabel='Alamat' multiline rows={4} name='alamat' value={form.alamat} onChange={handleInput} />
-      <Typography variant='h4' mb={1} className='!font-quicksand !font-semibold'>Lokasi Izin</Typography>
+      <FormInput inputlabel='Alamat' multiline rows={4} name='alamat' value={form.alamat} onChange={handleInput} /> */}
+
+
+
+
+
+      <Typography variant='h4' mb={1} className='!font-quicksand !font-semibold'>Lokasi Kegiatan</Typography>
       <FormSelect inputlabel='Provinsi*' name='lokasi_provinsi_id'
         placeholder='Pilih Provinsi'
         options={lokasiprovinsi}
         getOptionLabel={(obj: any) => obj.name}
         value={form.lokasi_provinsi_id ? lokasiprovinsi.filter((obj: any) => obj.id == form.lokasi_provinsi_id)[0] ?? null : null}
         onChange={(_e: React.ChangeEvent<HTMLSelectElement>, value: any) => {
-          setForm({ ...form, lokasi_provinsi_id: value.id, lokasi_kabupaten_id: null, lokasi_kecamatan_id: null, lokasi_desa_id: null });
+          handleUpdateForm('lokasi_provinsi_id', value.id)
+          // setForm({ ...form, lokasi_provinsi_id: value.id, lokasi_kabupaten_id: null, lokasi_kecamatan_id: null, lokasi_desa_id: null });
           setLokasiKabupaten([]);
           setLokasiKecamatan([]);
           setLokasiKelurahan([]);
@@ -267,7 +286,8 @@ function Step1({ onChange, data }: Props) {
         getOptionLabel={(obj: any) => obj.name}
         value={form.lokasi_kabupaten_id ? lokasikabupaten.filter((obj: any) => obj.id == form.lokasi_kabupaten_id)[0] ?? null : null}
         onChange={(_e: React.ChangeEvent<HTMLSelectElement>, value: any) => {
-          setForm({ ...form, lokasi_kabupaten_id: value.id, lokasi_kecamatan_id: null, lokasi_desa_id: null });
+          // setForm({ ...form, lokasi_kabupaten_id: value.id, lokasi_kecamatan_id: null, lokasi_desa_id: null });
+          handleUpdateForm('lokasi_kabupaten_id', value.id)
           setLokasiKecamatan([]);
           setLokasiKelurahan([]);
         }} disabled={lokasikabupaten.length == 0} required />
@@ -277,7 +297,9 @@ function Step1({ onChange, data }: Props) {
         getOptionLabel={(obj: any) => obj.name}
         value={form.lokasi_kecamatan_id ? lokasikecamatan.filter((obj: any) => obj.id == form.lokasi_kecamatan_id)[0] ?? null : null}
         onChange={(_e: React.ChangeEvent<HTMLSelectElement>, value: any) => {
-          setForm({ ...form, lokasi_kecamatan_id: value.id, lokasi_desa_id: null });
+          // setForm({ ...form, lokasi_kecamatan_id: value.id, lokasi_desa_id: null });
+          handleUpdateForm('lokasi_kecamatan_id', value.id)
+
           setLokasiKelurahan([]);
         }} disabled={lokasikecamatan.length == 0} required />
       <FormSelect inputlabel='Desa/Kelurahan*' name='lokasi_desa_id'
@@ -286,9 +308,11 @@ function Step1({ onChange, data }: Props) {
         getOptionLabel={(obj: any) => obj.name}
         value={form.lokasi_desa_id ? lokasikelurahan.filter((obj: any) => obj.id == form.lokasi_desa_id)[0] ?? null : null}
         onChange={(_e: React.ChangeEvent<HTMLSelectElement>, value: any) => {
-          setForm({ ...form, lokasi_desa_id: value.id });
+          // setForm({ ...form, lokasi_desa_id: value.id });
+          handleUpdateForm('lokasi_desa_id', value.id)
+
         }} disabled={lokasikelurahan.length == 0} required />
-      <FormInput inputlabel='Alamat' multiline rows={4} name='lokasi_alamat' value={form.lokasi_alamat} onChange={handleInput} />
+      <FormInput inputlabel='Alamat' multiline rows={4} name='lokasi_alamat' value={form.lokasi_alamat} onChange={handleFormInput} />
     </>
   )
 }

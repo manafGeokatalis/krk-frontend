@@ -3,6 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { Button } from '@mui/material';
 import { getExtension, downloadFile } from '../../../utils/Helpers';
+import { useNavigate } from 'react-router-dom';
 
 interface DialogDownloadFileProps {
     show: boolean;
@@ -14,6 +15,7 @@ interface DialogDownloadFileProps {
 }
 
 const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, show, onClose, data, onDownloadAll }) => {
+    const navigate = useNavigate();
 
     function handleDownload(fileName: string) {
         downloadFile(`/download/${fileName}`, {
@@ -42,7 +44,7 @@ const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, s
                         <div className='flex justify-between'>
                             <div>Form Permohonan</div>
                             <div className='flex flex-row gap-4'>
-                                {/* <Button size="small" variant="contained" color="warning" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => console.log('halo')} >Buka</Button> */}
+                                <Button size="small" variant="contained" color="warning" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => navigate(`/form-permohonan/${data.uuid}`)} >Buka</Button>
                                 <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => downloadForm(data)} >Download</Button>
 
                             </div>

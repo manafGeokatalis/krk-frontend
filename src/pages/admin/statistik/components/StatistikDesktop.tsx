@@ -11,7 +11,7 @@ import { formatDate } from "../../../../utils/Helpers"
 
 
 export default function StatistikDesktop() {
-    const [year, setYear] = useState(2023)
+    const [year, setYear] = useState(2024)
     const [order, setOrder] = useState<OrderType>('asc');
     const [orderBy, setOrderBy] = useState('created_at');
 

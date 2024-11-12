@@ -1,5 +1,5 @@
 import { Button, InputLabel, Typography, styled } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -30,52 +30,47 @@ const FormInput = ({ ...props }) => {
 
 type Props = {
   data?: any;
-  onChange: (data: any) => void
+  handleUpdateForm: (key: string, value: any) => void;
 }
 
-function Step3({ onChange, data }: Props) {
+function Step3({ handleUpdateForm, data }: Props) {
+
   const [form, setForm] = useState<any>({
-    ktp: null,
-    pbb: null,
-    surat_kuasa_mengurus: null,
-    sertifikat_tanah: null,
-    skpt: null,
-    suket_tidak_sengketa: null,
-    surat_perjanjian: null,
-    rekom_ketinggian_bangunan: null,
-    persetujuan_walikota: null
+    ktp: data?.ktp ?? null,
+    pbb: data?.pbb ?? null,
+    surat_kuasa_mengurus: data?.surat_kuasa_mengurus ?? null,
+    sertifikat_tanah: data?.sertifikat_tanah ?? null,
+    surat_perjanjian: data?.surat_perjanjian ?? null,
   });
   const [fileName, setFileName] = useState<any>({
-    ktp: '',
-    pbb: '',
-    surat_kuasa_mengurus: '',
-    sertifikat_tanah: '',
-    skpt: '',
-    suket_tidak_sengketa: '',
-    surat_perjanjian: '',
-    rekom_ketinggian_bangunan: '',
-    persetujuan_walikota: ''
+    ktp: data?.ktp?.name ?? '',
+    pbb: data?.pbb?.name ?? '',
+    surat_kuasa_mengurus: data?.pbb?.surat_kuasa_mengurus ?? '',
+    sertifikat_tanah: data?.pbb?.sertifikat_tanah ?? '',
+    surat_perjanjian: data?.pbb?.surat_perjanjian ?? '',
   });
 
-  useEffect(() => {
-    if (data?.id) {
-      for (const key of Object.keys(fileName)) {
-        if (data[key]) {
-          fileName[key] = 'Klik Browse untuk mengganti file';
-          form[key] = 'null';
-        }
-      }
-      setForm({ ...form });
-      setFileName({ ...fileName });
-    }
-  }, [data?.id]);
-  useEffect(() => {
-    onChange(form);
-  }, [form]);
+  // useEffect(() => {
+  //   if (data?.id) {
+  //     for (const key of Object.keys(fileName)) {
+  //       if (data[key]) {
+  //         fileName[key] = 'Klik Browse untuk mengganti file';
+  //         form[key] = 'null';
+  //       }
+  //     }
+  //     setForm({ ...form });
+  //     setFileName({ ...fileName });
+  //   }
+  // }, [data?.id]);
+  // useEffect(() => {
+  //   console.log('a')
+  //   onChange(form);
+  // }, [form]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.files ? e.target.files[0] : null });
     setFileName({ ...fileName, [e.target.name]: e.target.files ? e.target.files[0].name : '' });
+    handleUpdateForm(e.target.name, e.target.files ? e.target.files[0] : null)
   }
 
   return (
@@ -84,15 +79,15 @@ function Step3({ onChange, data }: Props) {
       <FormInput inputlabel='Scan KTP/Passport/Kitas Pemohon' type='file' name='ktp' namefile={fileName.ktp} onChange={handleInput} accept=".pdf" required />
       <FormInput inputlabel='Scan Dokumen Lunas Pembayaran PBB Tahun Terakhir Asli' type='file' name='pbb' namefile={fileName.pbb} onChange={handleInput} accept=".pdf" required />
       <FormInput inputlabel='Scan Surat Kuasa Mengurus KRK (Jika ada)' type='file' name='surat_kuasa_mengurus' namefile={fileName.surat_kuasa_mengurus} onChange={handleInput} accept=".pdf" required />
-      <Typography variant='h6' className='!font-quicksand'>Jika Pemilik Tanah :</Typography>
-      <FormInput inputlabel='Scan Sertipikat tanah' type='file' name='sertifikat_tanah' namefile={fileName.sertifikat_tanah} onChange={handleInput} accept=".pdf" required />
-      <FormInput inputlabel='Letter C/D SKPT : Arsip Permohonan Hak, Akte Jual Beli Tanah' type='file' name='skpt' namefile={fileName.skpt} onChange={handleInput} accept=".pdf" required />
-      <FormInput inputlabel='Surat Keterangan Penguasaan Tanah dan Surat Keterangan Tidak Sengketa Dengan Pihak Lain, Yang di Terbitkan Lurah Setempat dan diketahui Camat (Tanah tanah negara)' type='file' name='suket_tidak_sengketa' namefile={fileName.suket_tidak_sengketa} onChange={handleInput} accept=".pdf" required />
-      <Typography variant='h6' className='!font-quicksand'>Jika Bukan Pemilik Tanah :</Typography>
+      {/* <Typography variant='h6' className='!font-quicksand'>Jika Pemilik Tanah :</Typography> */}
+      <FormInput inputlabel='Scan Sertipikat Tanah (SHM / HGB / HGU / SHSRS / Lainnya)' type='file' name='sertifikat_tanah' namefile={fileName.sertifikat_tanah} onChange={handleInput} accept=".pdf" required />
+      {/* <FormInput inputlabel='Letter C/D SKPT : Arsip Permohonan Hak, Akte Jual Beli Tanah' type='file' name='skpt' namefile={fileName.skpt} onChange={handleInput} accept=".pdf" required /> */}
+      {/* <FormInput inputlabel='Surat Keterangan Penguasaan Tanah dan Surat Keterangan Tidak Sengketa Dengan Pihak Lain, Yang di Terbitkan Lurah Setempat dan diketahui Camat (Tanah tanah negara)' type='file' name='suket_tidak_sengketa' namefile={fileName.suket_tidak_sengketa} onChange={handleInput} accept=".pdf" required /> */}
+      {/* <Typography variant='h6' className='!font-quicksand'>Jika Bukan Pemilik Tanah :</Typography> */}
       <FormInput inputlabel='Surat Perjanjian/Kontrak (Bila bukan pemilik tanah)' type='file' name='surat_perjanjian' namefile={fileName.surat_perjanjian} onChange={handleInput} accept=".pdf" required />
-      <Typography variant='h6' className='!font-quicksand'>Surat Lain jika ada :</Typography>
-      <FormInput inputlabel='Rekom Ketinggian Bangunan dari Instansi Teknis Terkait (Apabila bangunan ketinggian lebih dari 4 lantai)' type='file' name='rekom_ketinggian_bangunan' namefile={fileName.rekom_ketinggian_bangunan} onChange={handleInput} accept=".pdf" required />
-      <FormInput inputlabel='Persetujuan Prinsip Dari Walikota (Bagi yang dipersyaratkan)' type='file' name='persetujuan_walikota' namefile={fileName.persetujuan_walikota} onChange={handleInput} accept=".pdf" required />
+      {/* <Typography variant='h6' className='!font-quicksand'>Surat Lain jika ada :</Typography> */}
+      {/* <FormInput inputlabel='Rekom Ketinggian Bangunan dari Instansi Teknis Terkait (Apabila bangunan ketinggian lebih dari 4 lantai)' type='file' name='rekom_ketinggian_bangunan' namefile={fileName.rekom_ketinggian_bangunan} onChange={handleInput} accept=".pdf" required /> */}
+      {/* <FormInput inputlabel='Persetujuan Prinsip Dari Walikota (Bagi yang dipersyaratkan)' type='file' name='persetujuan_walikota' namefile={fileName.persetujuan_walikota} onChange={handleInput} accept=".pdf" required /> */}
     </>
   )
 }

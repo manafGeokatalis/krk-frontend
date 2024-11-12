@@ -200,7 +200,7 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
           </table>
         </div>
         <div className=" flex flex-col gap-5">
-          {data?.permohonan_progresses?.length == 1 ?
+          {data?.permohonan_progresses?.length == 0 ?
             <>
               <ConfirmDialog show={confirm.show} title={confirm.title} message={confirm.message} onClose={() => setConfirm({ ...confirm, show: false })} onSubmit={tarikPermohonan} acceptLable="Tarik Permohonan" color="error" />
               <ConfirmDialog show={notif.show} title={notif.title} message={notif.message} onClose={() => { navigate('/permohonan') }} onSubmit={() => false} acceptLable="" rejectLable="Oke" />

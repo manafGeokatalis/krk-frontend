@@ -4,8 +4,17 @@ import Section2 from './partials/Section2'
 import Section3 from './partials/Section3'
 import Section4 from './partials/Section4'
 import Section5 from './partials/Section5'
-
+import ReactGA from "react-ga4";
+import { useEffect } from 'react'
 function Index() {
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: "pageview",
+      page: "/",
+      title: "Landing Page",
+    });
+  });
   return (
     <GuestLayout title='Selamat Datang'>
       <Section1 />

@@ -69,7 +69,7 @@ function Permohonan() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-5 font-heebo mt-8  md:mt-20 md:p-10">
+      <div className="flex flex-col gap-5 font-heebo mt-8  md:mt-16 md:p-10">
         <div className="flex flex-col gap-2 hidden md:flex">
           <ListAttributes onChange={e => {
             setPerPage(e.perPage);
