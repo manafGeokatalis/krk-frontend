@@ -361,11 +361,11 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
               <Link to={`/permohonan/ditolak/${params.uuid}`}>
                 <GButton className="w-full" color="error" type="submit" onClick={handleToRejectPage}>Tolak Permohonan</GButton>
               </Link>
-              <GButton className="w-full" color="success" type="submit" onClick={updateStatus} disabled={isSubmit || !fileReady || rejected}>Simpan</GButton>
+              <GButton className="w-full" color="success" type="submit" onClick={() => setConfirmDialog(true)} disabled={isSubmit || !fileReady || rejected}>Simpan</GButton>
               <GButton className="w-full" color="secondary" type="submit" onClick={() => navigate(-1)} >Batal</GButton>
 
             </div>) : (<div className="flex justify-center mt-3 w-full">
-              <GButton className="w-full" color="success" onClick={updateStatus}>Lanjutkan Permohonan KRK</GButton>
+              <GButton className="w-full" color="success" onClick={() => setConfirmDialog(true)}>Lanjutkan Permohonan KRK</GButton>
             </div>)}
 
           </div>

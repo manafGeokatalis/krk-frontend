@@ -10,7 +10,7 @@ export default function Statistik() {
                     <Typography variant="h4" className="!font-quicksand !font-semibold">Statistik</Typography>
                 </div>
                 <div className="flex  justify-center mt-12">
-                    <Typography variant="h4" className="!font-quicksand !font-semibold">Statistik Pengguna</Typography>
+                    <Typography variant="h4" className="!font-quicksand ">Statistik Pengguna</Typography>
                 </div>
                 <div className="hidden md:flex">
                     <StatistikDesktop />

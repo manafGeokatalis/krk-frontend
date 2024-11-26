@@ -1,20 +1,49 @@
 import * as React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import { Button } from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
 import { getExtension, downloadFile } from '../../../utils/Helpers';
 import { useNavigate } from 'react-router-dom';
-
+import CircularProgress, {
+    CircularProgressProps,
+} from '@mui/material/CircularProgress';
 interface DialogDownloadFileProps {
     show: boolean;
     onClose: () => void;
     data: any;
     onDownloadAll: () => void;
     downloadForm: React.Dispatch<React.SetStateAction<any>>,
+    downloadProgress: any
 
 }
-
-const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, show, onClose, data, onDownloadAll }) => {
+function CircularProgressWithLabel(
+    props: CircularProgressProps & { value: number },
+) {
+    return (
+        <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+            <CircularProgress color='primary' className='!text-blue' variant="determinate" {...props} />
+            <Box
+                sx={{
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    position: 'absolute',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+                <Typography
+                    variant="caption"
+                    component="div"
+                    sx={{ color: 'text.secondary' }}
+                >{`${Math.round(props.value)}%`}</Typography>
+            </Box>
+        </Box>
+    );
+}
+const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, show, onClose, data, onDownloadAll, downloadProgress }) => {
     const navigate = useNavigate();
 
     function handleDownload(fileName: string) {
@@ -116,9 +145,20 @@ const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, s
                     </div>
                     <div className='flex justify-center gap-4'>
                         <Button size="small" variant="contained" color="success" className="!py-0.5 !rounded-xl !px-5 !text-md !capitalize !whitespace-nowrap" onClick={onClose} >Tutup</Button>
-                        <Button size="small" variant="contained" color="error" className="!py-0.5 !rounded-xl !px-5 !text-md !capitalize !whitespace-nowrap" onClick={() => onDownloadAll()} >Download Semua file</Button>
+
+                        <Button size="small" variant="contained" color="error" className="!py-0.5 !rounded-xl !px-5 !text-md !capitalize !whitespace-nowrap" onClick={() => onDownloadAll()} >Download Semua file
+                            {/* {downloadProgress[data?.uuid] > 0 &&
+                                <LinearProgress color="primary" variant="determinate" value={downloadProgress[data?.uuid]} className="mt-1" />
+                            } */}
+
+                            {downloadProgress[data?.uuid] > 0 && <CircularProgressWithLabel size="small" color="primary" variant="determinate" value={downloadProgress[data?.uuid]} className="mt-1 !text-blue !ml-10" />}
+
+
+
+                        </Button>
 
                     </div>
+
                 </DialogContent>
 
             </Dialog>

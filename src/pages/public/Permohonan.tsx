@@ -2,7 +2,7 @@ import { Typography } from "@mui/material"
 import AuthLayout from "../../layouts/AuthLayout"
 import GButton from "../../components/GButton"
 import { Add } from "@mui/icons-material"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 import { notification } from "../../utils/Recoils"
@@ -13,9 +13,10 @@ import DesktopView from "./components/DesktopView"
 import logoLodokMabar from '../../assets/lodok_mabar_logo.svg'
 import kerenka from '../../assets/kerenka.svg'
 import MobileView from "./components/MobileView"
-
+import { trackVisitor } from "../../services/statistik"
 let tm: any;
 function Permohonan() {
+  const location = useLocation()
   const [data, setData] = useState<any>([]);
   const [paginate, setPaginate] = useState({
     total: 0,
@@ -48,6 +49,16 @@ function Permohonan() {
       setNotif(createNotifcation(error?.response?.data.message, 'error'));
     }
   }
+
+  useEffect(() => {
+    const currentPage = location.pathname
+
+    const trackVisit = async () => {
+      await trackVisitor(currentPage)
+    }
+
+    trackVisit()
+  }, [location])
 
   return (
     <AuthLayout title="Permohonan KRK">

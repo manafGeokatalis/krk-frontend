@@ -7,8 +7,14 @@ import { MenuItem } from '../../data/interface/menu';
 
 
 const getMenuByRole = (role: UserRole): MenuItem[] => {
-    if (role === UserRole.SUPERADMIN) {
-        return [...privateMenu]; // Merge both menus for private users
+    console.log(role === UserRole.ADMIN)
+    console.log(role)
+    console.log(UserRole.ADMIN)
+
+
+    if (role == UserRole.SUPERADMIN || role == UserRole.ADMIN) {
+        console.log('a')
+        return privateMenu; // Merge both menus for private users
     }
     return publicMenu; // Only public menu for public users
 };

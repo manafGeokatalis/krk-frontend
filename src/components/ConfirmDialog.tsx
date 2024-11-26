@@ -38,19 +38,19 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ show = false, title = "Ko
         onClose={onClose}
       >
         <DialogContent className='!bg-gdarkgray-700 rounded-xl !flex !flex-col !gap-5 !p-10'>
-          <DialogTitle variant='h4' className='!font-quicksand !p-0 !text-3xl' align='center'>
+          <DialogTitle variant='h4' className='!font-quicksand !p-0 !text-xl md:!text-3xl' align='center'>
             {title}
           </DialogTitle>
           <div dangerouslySetInnerHTML={{ __html: message }}></div>
-          <DialogActions className='!flex !gap-10 !justify-center'>
+          <DialogActions className='!flex gap-4 md:!gap-10 !justify-center !flex-col md:!flex-row'>
             {rejectLable != '' &&
-              <GButton variant='contained' color='secondary' onClick={onClose} autoFocus>{rejectLable}</GButton>
+              <GButton className='w-full md:w-auto' variant='contained' color='secondary' onClick={onClose} autoFocus>{rejectLable}</GButton>
             }
             {acceptLable != '' &&
               <Box sx={{ position: 'relative' }}>
                 {color == 'primary' ?
                   <>
-                    <GButton variant='contained' color='primary' onClick={handleSubmit} disabled={loading}>
+                    <GButton className='w-full md:w-auto' variant='contained' color='primary' onClick={handleSubmit} disabled={loading}>
                       {acceptLable}
                     </GButton>
                     {loading && <CircularProgress

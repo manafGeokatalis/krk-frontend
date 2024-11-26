@@ -1,5 +1,5 @@
 import axios from "axios"
-
+import { formatDate } from "../utils/Helpers"
 
 export async function getSummaryCount() {
     try {
@@ -21,11 +21,34 @@ export async function getListStatistikService(year: number) {
     }
 }
 
+export async function getListVisitorService(year: number) {
+    try {
+        const response = await axios.get(`/statistik/list-visitor?year=${year}`)
+
+        return response.data.data
+    } catch (error) {
+        alert(error)
+    }
+}
+
 export async function getListFeedbackService(page: number, perPage: number, order: string, orderBy: string) {
     try {
         const response = await axios.get(`/statistik/list-feedback?page=${page}&perPage=${perPage}&order=${order}&orderBy=${orderBy}`)
 
         return response.data.data
+    } catch (error) {
+        alert(error)
+    }
+}
+
+export async function trackVisitor(page: string) {
+    try {
+        const response = await axios.post(`/visit`, {
+            page,
+            timestamp: formatDate(new Date(), 'DD-MM-YYYY HH:mm', 'long')
+        })
+
+        return response
     } catch (error) {
         alert(error)
     }

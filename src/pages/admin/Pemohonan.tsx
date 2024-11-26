@@ -9,6 +9,7 @@ import excel from 'exceljs';
 import ConfirmDialog from "../../components/ConfirmDialog"
 import DesktopView from "./components/DesktopView"
 import MobileView from "./components/MobileView"
+import { OrderType } from "../../data/interface/user"
 
 let tm: any;
 function Permohonan() {
@@ -19,6 +20,9 @@ function Permohonan() {
     currentPage: 1,
     totalPages: 0,
   });
+
+  const [order, setOrder] = useState<OrderType>('asc');
+  const [orderBy, setOrderBy] = useState('created_at');
   const [_, setNotif] = useRecoilState(notification);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
@@ -34,7 +38,7 @@ function Permohonan() {
 
   useEffect(() => {
     getData();
-  }, [page, perPage]);
+  }, [page, perPage, order, orderBy]);
 
   useEffect(() => {
     clearTimeout(tm);
@@ -45,7 +49,7 @@ function Permohonan() {
 
   const getData = async () => {
     try {
-      const query: any = await axios.get(`/permohonan?page=${page}&perPage=${perPage}&search=${search}`);
+      const query: any = await axios.get(`/permohonan?page=${page}&perPage=${perPage}&search=${search}&order=${order}&orderBy=${orderBy}`);
       setData(query?.data?.data.data);
       setPaginate(query?.data?.data.pagination);
     } catch (error: any) {
@@ -156,7 +160,12 @@ function Permohonan() {
           process={process}
           setConfirm={setConfirm}
           setDownloadProgress={setDownloadProgress}
-          setPage={setPage} />
+          setPage={setPage}
+          handleChangeOrderBy={setOrderBy}
+          order={order}
+          handleChangeOrder={setOrder}
+          orderBy={orderBy}
+        />
       </div>
     </AuthLayout>
   )

@@ -6,6 +6,7 @@ import DialogDownloadFile from "./DialogDownloadFile"
 import { useEffect, useState } from "react"
 import ConfirmDialogMultipleDelete from "./ConfirmDialogMultipleDelete"
 import ConfirmDialogMultipleUpdate from "./ConfirmDialogMultipleUpdate"
+
 interface DesktopViewProps {
   data: any,
   setSearch: React.Dispatch<React.SetStateAction<any>>
@@ -57,7 +58,8 @@ export default function DesktopView({ data, setSearch, setPerPage, setDownloadPr
 
   return (
     <div className="flex flex-col gap-2">
-      <DialogDownloadFile show={dialogOpen} data={selectPermohonan} downloadForm={downloadForm} onDownloadAll={() => downloadFile(`/download/permohonan/${selectPermohonan.uuid}/berkas`, {
+
+      <DialogDownloadFile show={dialogOpen} data={selectPermohonan} downloadForm={downloadForm} downloadProgress={downloadProgress} onDownloadAll={() => downloadFile(`/download/permohonan/${selectPermohonan.uuid}/berkas`, {
         filename: `KerenkaMaBarBerkas[${selectPermohonan?.registration_number}].zip`,
         onProgress(progress: any) {
           setDownloadProgress({ ...downloadProgress, [selectPermohonan.uuid]: progress });
