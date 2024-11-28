@@ -30,6 +30,7 @@ function NavBar() {
       location.replace('/');
     } catch (error: any) {
       setLoading(false);
+
     }
   }
 

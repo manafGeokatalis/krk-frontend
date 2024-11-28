@@ -4,10 +4,10 @@ import { OrderType } from "../../../../data/interface/user"
 import DrawerFilterStatistik from "./DrawerFilterStatistik"
 import { AscSort, DescSort } from '../../../../components/icons/sort';
 import Rating from "@mui/material/Rating"
-import { getListFeedbackService, getListStatistikService, getListVisitorService, getSummaryCount } from "../../../../services/statistik"
+import { getListFeedbackService, getListStatistikService, getListVisitorService, getSummaryCount, getVisitorDeviceService } from "../../../../services/statistik"
 import excel from 'exceljs';
 import { formatDate } from "../../../../utils/Helpers"
-
+import { PieChart, pieArcClasses } from '@mui/x-charts/PieChart';
 
 export default function StatistikDesktop() {
     const [year, setYear] = useState(2024)
@@ -33,6 +33,7 @@ export default function StatistikDesktop() {
     const [listVisitor, setListVisitor] = useState([])
 
     const [listFeedback, setListFeedback] = useState([])
+    const [deviceVisitor, setDeviceVisitor] = useState([])
 
     const handleSortChange = () => {
         setPage(1)
@@ -68,6 +69,11 @@ export default function StatistikDesktop() {
         setListFeedback(res)
     }
 
+    async function getVisitorDevice() {
+        const res = await getVisitorDeviceService()
+        setDeviceVisitor(res)
+    }
+
     useEffect(() => {
         getListFeedback()
     }, [page, perPage, order, orderBy])
@@ -80,6 +86,7 @@ export default function StatistikDesktop() {
 
     useEffect(() => {
         getSummary()
+        getVisitorDevice()
     }, [])
 
     const downloadDataStatistik = () => {
@@ -221,37 +228,38 @@ export default function StatistikDesktop() {
                                 </Table>
                             </TableContainer>
                         </div>) : (
-                            <div className="rounded-2xl overflow-hidden border mt-4">
-                                <TableContainer >
-                                    <Table size="small">
-                                        <TableHead className="bg-gdarkgray-500">
-                                            <TableRow>
-                                                <TableCell className="!font-heebo !text-base" align="center" width={20}>No</TableCell>
-                                                <TableCell className="!font-heebo !text-base" align="center">Bulan</TableCell>
-                                                <TableCell className="!font-heebo !text-base" align="center">Kunjungan Web</TableCell>
-                                                <TableCell className="!font-heebo !text-base" align="center">Akun Baru</TableCell>
-                                                <TableCell className="!font-heebo !text-base" align="center">Rating Rata-Rata</TableCell>
-
-
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {listVisitor.map((item: any, key: any) => (
+                            <>
+                                <div className="rounded-2xl overflow-hidden border mt-4 mb-4">
+                                    <TableContainer >
+                                        <Table size="small">
+                                            <TableHead className="bg-gdarkgray-500">
                                                 <TableRow>
-                                                    <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{key + 1}</TableCell>
-                                                    <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.bulan}</TableCell>
-                                                    <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.total_visitors}</TableCell>
-                                                    <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.total_user}</TableCell>
-                                                    <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.avg_feedback}</TableCell>
+                                                    <TableCell className="!font-heebo !text-base" align="center" width={20}>No</TableCell>
+                                                    <TableCell className="!font-heebo !text-base" align="center">Bulan</TableCell>
+                                                    <TableCell className="!font-heebo !text-base" align="center">Kunjungan Web</TableCell>
+                                                    <TableCell className="!font-heebo !text-base" align="center">Akun Baru</TableCell>
+                                                    <TableCell className="!font-heebo !text-base" align="center">Rating Rata-Rata</TableCell>
 
 
                                                 </TableRow>
-                                            ))}
+                                            </TableHead>
+                                            <TableBody>
+                                                {listVisitor.map((item: any, key: any) => (
+                                                    <TableRow>
+                                                        <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{key + 1}</TableCell>
+                                                        <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.bulan}</TableCell>
+                                                        <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.total_visitors}</TableCell>
+                                                        <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.total_user}</TableCell>
+                                                        <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.avg_feedback}</TableCell>
+                                                    </TableRow>
+                                                ))}
 
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </div>
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </div>
+                                <VisitorDevice data={deviceVisitor} />
+                            </>
                         )
                     }
 
@@ -268,35 +276,85 @@ export default function StatistikDesktop() {
                         <div className="inline-block flex items-center justify-center h-9 w-9 cursor-pointer rounded-full bg-[#4D4D4D] shadow-lg" onClick={() => handleSortChange()}>{order == 'asc' ? <AscSort /> : <DescSort className="w-[1rem]" />}</div>
                     </div>
                 </div>
-                <div className="mt-4 px-10">
+                <div className="mt-4 px-10 flex flex-col gap-4">
                     {
                         listFeedback.map((item: any, key: any) => (
-                            <div className="bg-[#4D4D4D] py-6 px-6 rounded-xl">
-                                <div className="flex justify-between items-center text-sm " key={key}>
-                                    <div>
-                                        {formatDate(item.created_at, 'DD MM YYYY HH:mm', 'long')}
+                            <>
+                                <div className="bg-[#4D4D4D] py-6 px-6 rounded-xl">
+                                    <div className="flex justify-between items-center text-sm " key={key}>
+                                        <div>
+                                            {formatDate(item.created_at, 'DD MM YYYY HH:mm', 'long')}
+                                        </div>
+                                        <div>
+                                            <Rating size="small" name="read-only" value={item.rating} readOnly />
+
+                                        </div>
+                                    </div>
+                                    <div className="text-lg font-semibold mt-6  text-[#F4BF37]">
+                                        {item.user.name}
+                                    </div>
+                                    <div className=" text-lg font-semibold">
+                                        Ulasan :
                                     </div>
                                     <div>
-                                        <Rating size="small" name="read-only" value={item.rating} readOnly />
-
+                                        {item.feedback}
                                     </div>
-                                </div>
-                                <div className="text-lg font-semibold mt-6  text-[#F4BF37]">
-                                    {item.user.name}
-                                </div>
-                                <div className=" text-lg font-semibold">
-                                    Ulasan :
-                                </div>
-                                <div>
-                                    {item.feedback}
+
                                 </div>
 
-                            </div>
+                            </>
                         ))
                     }
                 </div>
 
 
+            </div>
+        </>
+    )
+}
+
+interface VisitorDeviceProps {
+    data: {
+        value: number,
+        user_agent: string,
+        percent: number,
+        label: string
+    }[]
+}
+
+function VisitorDevice(props: VisitorDeviceProps) {
+    const { data } = props
+    console.log(data, 'data')
+
+
+    const valueFormatter: any = (item: { total: number, value: number }) => `${item.value}`;
+
+
+    return (
+        <>
+            <div className=" text-xl">Device Pengguna</div>
+            <div>
+                <PieChart
+                    sx={{
+                        [`& .${pieArcClasses.root}`]: {
+                            stroke: "white", // Set border color
+                        },
+                    }}
+                    height={300}
+                    series={[
+                        {
+                            data: data,
+                            innerRadius: 50,
+                            arcLabel: (params: any) => `${params.percent}%`,
+                            arcLabelMinAngle: 20,
+                            valueFormatter,
+
+                        },
+
+                    ]}
+                    skipAnimation={false}
+
+                />
             </div>
         </>
     )

@@ -24,7 +24,7 @@ function DrawerFilterPermohonanMobile(props: DrawerFilterPermohonanMobileProps) 
     const columns = [
         { id: 'created_at', label: 'Tanggal' },
         { id: 'name', label: 'Nama Pemohon' },
-        // { id: 'step', label: 'Tahap Permohonan' },
+        { id: 'step', label: 'Tahap Permohonan' },
     ];
 
     const list = () => (

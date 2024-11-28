@@ -5,7 +5,7 @@ import { Button } from "@mui/material"
 import DrawerFilterPermohonanMobile from "./DrawerFilterPermohonanMobile"
 import { AscSort, DescSort } from '../../../components/icons/sort';
 import { OrderType } from "../../../data/interface/user";
-
+import { Document } from "../../../components/icons/common"
 interface MobileViewProps {
     data: any,
     setSearch: React.Dispatch<React.SetStateAction<any>>
@@ -51,7 +51,7 @@ export default function MobileView({ data, setConfirm, order, orderBy, handleCha
                 </div>
                 <div className="bg-[#4D4D4D] rounded-md divide-y-2 divide-slate-400/25">
                     {data.length > 0 ? data.map((v: any, i: number) => (
-                        <div className="py-2 px-4" key={i}>
+                        <div className="py-6 px-4" key={i}>
                             <div className="flex justify-between text-sm ">
                                 <div>
                                     {formatDate(v.createdAt, 'DD MM YYYY', 'long')}
@@ -84,7 +84,7 @@ export default function MobileView({ data, setConfirm, order, orderBy, handleCha
                                             <LinearProgress color="primary" variant="determinate" value={downloadProgress[v.uuid]} className="mt-1" />
                                         }
                                     </div> */}
-                                    <Button size="small" variant="contained" color="warning" className="!py-2 !rounded-xl !px-5 !text-sm !capitalize !whitespace-nowrap relative flex"  ><Link to={`/permohonan/download/${v.uuid}`}> <span className="md:hidden flex mr-2 absolute left-4 items-center"><div className="p-1 rounded-full bg-white flex items-center justify-center w-6 h-6"><img src="src/assets/icons/document.png" /></div></span>Periksa Dokumen</Link></Button>
+                                    <Button size="small" variant="contained" color="warning" className="!py-2 !rounded-xl !px-5 !text-sm !capitalize !whitespace-nowrap relative flex"  ><Link to={`/permohonan/download/${v.uuid}`}> <span className="md:hidden flex mr-2 absolute left-4 items-center"><div className="p-1 rounded-full bg-white flex items-center justify-center w-6 h-6"><Document /></div></span>Periksa Dokumen</Link></Button>
 
                                     {/* <Button size="small" variant="contained" color="warning" className="!py-2 !rounded-xl !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => downloadForm(v)} disabled={process[v.uuid]}>Form</Button> */}
                                     <Button size="small" variant="contained" color="error" className="!py-2 !rounded-xl !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => setConfirm({

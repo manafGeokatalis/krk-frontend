@@ -53,3 +53,14 @@ export async function trackVisitor(page: string) {
         alert(error)
     }
 }
+
+export async function getVisitorDeviceService() {
+    try {
+        const response = await axios.get(`/statistik/get-visitor-device`)
+
+        return response.data.data
+    } catch (error) {
+        alert(error)
+    }
+}
+

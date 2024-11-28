@@ -5,10 +5,10 @@ import ButtonPermohonan from "./ButtonPermohonan"
 export default function MobileView({ data }: any) {
     return (
         <>
-            <div className="px-3 mt-2 ">
-                <div className="bg-[#4D4D4D] rounded-md divide-y-2 divide-slate-400/25">
+            <div className="px-3 mt-2 py-4">
+                <div className="bg-[#4D4D4D] rounded-md divide-y-2 divide-slate-400/25 pb-18">
                     {data.length > 0 ? data.map((v: any, i: number) => (
-                        <div className="py-2 px-4" key={i}>
+                        <div className="py-6 px-4" key={i}>
                             <div className="flex justify-between text-sm ">
                                 <div>
                                     {formatDate(v.createdAt, 'DD MM YYYY', 'long')}

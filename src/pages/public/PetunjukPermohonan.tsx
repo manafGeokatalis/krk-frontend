@@ -49,8 +49,7 @@ function PetunjukPermohonan({ title = 'Daftarkan Permohonan KRK Anda' }: Props) 
 
           <ItemList type="wajib">1. Koordinat geografis lahan yang dimohonkan.</ItemList>
           <ItemList type="wajib">2. Luas Tanah yang dimohonkan dalam m2.</ItemList>
-          <ItemList type="wajib">3. Jenis peruntukan pemanfaatan ruang.</ItemList>
-          <ItemList type="wajib">4. Nomor pokok wajib pajak.</ItemList>
+          <ItemList type="wajib">3. Nomor pokok wajib pajak.</ItemList>
         </div>
         <div className="flex flex-col gap-5">
           <Typography variant="h5" className="md:flex hidden !font-quicksand !font-semibold" mb={2}>Syarat Dokumen:</Typography>
@@ -59,15 +58,15 @@ function PetunjukPermohonan({ title = 'Daftarkan Permohonan KRK Anda' }: Props) 
           <ItemList type="wajib">Scan KTP/PASSPORT/KITAS Pemohon</ItemList>
           <ItemList type="wajib">Scan Dokumen Lunas Pembayaran PBB Tahun Terakhir Asli.</ItemList>
           <ItemList type="tentatif">Scan Surat Kuasa Mengurus KRK</ItemList>
-          <Typography variant="h6" className="!font-quicksand !m-0" mb={2}>Jika Pemilik Tanah</Typography>
+          {/* <Typography variant="h6" className="!font-quicksand !m-0" mb={2}>Jika Pemilik Tanah</Typography> */}
           <ItemList type="wajib">Sertifikat tanah</ItemList>
-          <ItemList type="wajib">Letter C/D SKPT : Arsip Permohonan Hak, Akte Jual Beli Tanah</ItemList>
-          <ItemList type="wajib">Surat Keterangan Penguasaan Tanah dan Surat Keterangan Tidak Sengketa Dengan Pihak Lain, Yang di Terbitkan Lurah Setempat dan diketahui Camat (Tanah tanah negara)</ItemList>
-          <Typography variant="h6" className="!font-quicksand !m-0" mb={2}>Jika Bukan Pemilik Tanah</Typography>
+          {/* <ItemList type="wajib">Letter C/D SKPT : Arsip Permohonan Hak, Akte Jual Beli Tanah</ItemList> */}
+          {/* <ItemList type="wajib">Surat Keterangan Penguasaan Tanah dan Surat Keterangan Tidak Sengketa Dengan Pihak Lain, Yang di Terbitkan Lurah Setempat dan diketahui Camat (Tanah tanah negara)</ItemList> */}
+          {/* <Typography variant="h6" className="!font-quicksand !m-0" mb={2}>Jika Bukan Pemilik Tanah</Typography> */}
           <ItemList type="tentatif">Surat Perjanjian/Kontrak (Bila bukan pemilik tanah)</ItemList>
-          <Typography variant="h6" className="!font-quicksand !m-0" mb={2}>Surat Lain yang dianggap perlu</Typography>
-          <ItemList type="tentatif">Rekom Ketinggian Bangunan dari Instansi Teknis Terkait (Apabila bangunan ketinggian lebih dari 4 lantai)</ItemList>
-          <ItemList type="tentatif">Persetujuan Prinsip Dari Walikota (Bagi yang dipersyaratkan)</ItemList>
+          {/* <Typography variant="h6" className="!font-quicksand !m-0" mb={2}>Surat Lain yang dianggap perlu</Typography> */}
+          {/* <ItemList type="tentatif">Rekom Ketinggian Bangunan dari Instansi Teknis Terkait (Apabila bangunan ketinggian lebih dari 4 lantai)</ItemList> */}
+          {/* <ItemList type="tentatif">Persetujuan Prinsip Dari Walikota (Bagi yang dipersyaratkan)</ItemList> */}
         </div>
         <div className="hidden md:flex justify-center">
           {userData ?
