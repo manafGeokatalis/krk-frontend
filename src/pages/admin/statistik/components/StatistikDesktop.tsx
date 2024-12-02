@@ -345,7 +345,7 @@ function VisitorDevice(props: VisitorDeviceProps) {
                         {
                             data: data,
                             innerRadius: 50,
-                            arcLabel: (params: any) => `${params.percent}%`,
+                            arcLabel: (params: any) => `${params.percent.toFixed(2)}%`,
                             arcLabelMinAngle: 20,
                             valueFormatter,
 
