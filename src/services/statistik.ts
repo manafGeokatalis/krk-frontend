@@ -45,7 +45,7 @@ export async function trackVisitor(page: string) {
     try {
         const response = await axios.post(`/visit`, {
             page,
-            timestamp: formatDate(new Date(), 'DD-MM-YYYY HH:mm', 'long')
+            timestamp: formatDate(new Date(), 'DD-MM-YYYY HH:mm', 'numeric')
         })
 
         return response
