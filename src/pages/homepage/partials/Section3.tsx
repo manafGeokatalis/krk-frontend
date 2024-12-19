@@ -12,7 +12,7 @@ import { Link } from "react-router-dom"
 function Section3() {
   return (
     <div className="flex items-center justify-center">
-      <div className='max-w-[1500px] w-full md:w-[1500px] flex items-center py-0 md:py-16 flex-col px-8 md:px-0'>
+      <div className='max-w-[1120px] w-full md:w-[1120px] flex items-center py-0 md:py-16 flex-col px-8 md:px-0'>
         <hr className="w-full" />
         <div className="flex gap-20 items-center w-full py-8 md:py-20">
           <div className="flex flex-col gap-3 w-full text-center md:text-right">

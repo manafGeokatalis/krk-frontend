@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material"
 import AuthLayout from "../../../layouts/AuthLayout"
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useRecoilState } from "recoil"
 import { notification } from "../../../utils/Recoils"
 import { createNotifcation } from "../../../utils/Helpers"
@@ -41,9 +41,7 @@ function UsersList() {
 
   const isSuperAdmin: boolean = userData?.role === 'SUPERADMIN'
 
-  useEffect(() => {
-    getData();
-  }, [page, perPage, order, orderBy]);
+
 
   // useEffect(() => {
   //   clearTimeout(tm);
@@ -120,6 +118,10 @@ function UsersList() {
               search={search}
               handleChangeSearch={setSearch}
               handleClickSearch={getData}
+              fetchData={getData}
+              page={page}
+              perPage={perPage}
+
 
             />
           </div>

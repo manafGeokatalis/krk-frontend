@@ -20,7 +20,7 @@ import InputLabel from '@mui/material/InputLabel';
 
 function Section1() {
   const [submitting, setSubmitting] = useState(false);
-  const [showPassword,setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -48,7 +48,7 @@ function Section1() {
     }
   }
 
-  const handleClickShowPassword = ()=>setShowPassword((show)=>!show)
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -60,10 +60,10 @@ function Section1() {
 
   return (
     <div className='flex items-center justify-center '>
-      <div className='max-w-[1500px] w-full md:w-[1500px] flex items-center py-16 flex-col md:flex-row'>
+      <div className='max-w-[1120px] w-full md:w-[1120px] flex items-center py-16 flex-col md:flex-row'>
         <div className=" hidden md:flex flex-col gap-7 md:order-1 order-2 justify-center items-center px-24 w-full">
           <div className="flex flex-col gap-2 items-center">
-            <img className='w-56' src={logoLodokMabar} alt='lodok-mabar-logo'/>
+            <img className='w-56' src={logoLodokMabar} alt='lodok-mabar-logo' />
             <img src={kerenka} alt="kerenka-logo" className='w-full max-w-md mt-4' />
             <Typography variant='h1' className='!font-quicksand !text-center !leading-tight !font-thin !text-xl'>Sistem Permohonan Online KRK (Keterangan Rencana Kota)<br />Kabupaten Manggarai Barat</Typography>
           </div>
@@ -92,7 +92,7 @@ function Section1() {
           <div className="w-full max-w-md order-1 md:order-2">
             <Card className='!bg-transparent md:!bg-gdarkgray !rounded-xl py-4'>
               <div className='md:hidden flex justify-center flex-col items-center'>
-                <img className='w-24' src={logoLodokMabar} alt='lodok-mabar-logo'/>
+                <img className='w-24' src={logoLodokMabar} alt='lodok-mabar-logo' />
                 <img src={kerenka} alt="kerenka-logo" className='w-56 mt-4' />
               </div>
               <Box component={'form'} onSubmit={submitLogin}>
@@ -104,35 +104,35 @@ function Section1() {
                         borderColor: "white",
                       },
                     }} />
-                  <FormControl  variant="outlined" color='secondary' disabled={submitting}   required sx={{
+                    <FormControl variant="outlined" color='secondary' disabled={submitting} required sx={{
                       "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
                         borderColor: "white",
                       },
-                      
-                    }}
-                    
-                    >
-                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
 
-                    <OutlinedInput
-                      id="outlined-adornment-password"
-                      type={showPassword ? 'text' : 'password'}
-                      label='Password' name='password' value={form.password} onChange={handleInput}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            onMouseUp={handleMouseUpPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                    />
-                  </FormControl>
+                    }}
+
+                    >
+                      <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+
+                      <OutlinedInput
+                        id="outlined-adornment-password"
+                        type={showPassword ? 'text' : 'password'}
+                        label='Password' name='password' value={form.password} onChange={handleInput}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              onMouseUp={handleMouseUpPassword}
+                              edge="end"
+                            >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
                   </div>
                   <div className="flex justify-center">
                     <div className="flex flex-col gap-2">
@@ -156,7 +156,7 @@ function Section1() {
           </div>
         }
       </div>
-      
+
     </div >
   )
 }

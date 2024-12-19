@@ -46,9 +46,9 @@ function CircularProgressWithLabel(
 const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, show, onClose, data, onDownloadAll, downloadProgress }) => {
     const navigate = useNavigate();
 
-    function handleDownload(fileName: string) {
+    function handleDownload(fileName: string, fileNameDownload: string) {
         downloadFile(`/download/${fileName}`, {
-            filename: `KerenkaMaBar[${data.registration_number}].${getExtension(fileName)}`,
+            filename: fileNameDownload && fileNameDownload.length > 0 ? `${fileNameDownload}.${getExtension(fileName)}` : `KerenkaMaBar[${data.registration_number}].${getExtension(fileName)}`,
             onProgress(progress) { console.log(progress) }
         })
     }
@@ -83,7 +83,7 @@ const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, s
                             <div>KTP</div>
                             <div className='flex flex-row gap-4'>
                                 <Button size="small" variant="contained" color="warning" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleOpenNewTab(data.ktp)} >Buka</Button>
-                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.ktp)} >Download</Button>
+                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.ktp, 'ktp')} >Download</Button>
 
                             </div>
                         </div>) : (<></>)}
@@ -92,7 +92,7 @@ const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, s
                             <div>PBB</div>
                             <div className='flex flex-row gap-4'>
                                 <Button size="small" variant="contained" color="warning" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleOpenNewTab(data.pbb)} >Buka</Button>
-                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.pbb)} >Download</Button>
+                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.pbb, 'pbb')} >Download</Button>
 
                             </div>
                         </div>) : (<></>)}
@@ -101,7 +101,7 @@ const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, s
                             <div>Sertifikat Tanah</div>
                             <div className='flex flex-row gap-4'>
                                 <Button size="small" variant="contained" color="warning" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleOpenNewTab(data.sertifikat_tanah)} >Buka</Button>
-                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.sertifikat_tanah)} >Download</Button>
+                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.sertifikat_tanah, 'sertifikat_tanah')} >Download</Button>
 
                             </div>
                         </div>) : (<></>)}
@@ -110,7 +110,7 @@ const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, s
                             <div>SKPT</div>
                             <div className='flex flex-row gap-4'>
                                 <Button size="small" variant="contained" color="warning" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleOpenNewTab(data.skpt)} >Buka</Button>
-                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.skpt)} >Download</Button>
+                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.skpt, 'skpt')} >Download</Button>
 
                             </div>
                         </div>) : (<></>)}
@@ -119,7 +119,7 @@ const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, s
                             <div>Surat Keterangan Tidak Sengketa</div>
                             <div className='flex flex-row gap-4'>
                                 <Button size="small" variant="contained" color="warning" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleOpenNewTab(data.suket_tidak_sengketa)} >Buka</Button>
-                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.suket_tidak_sengketa)} >Download</Button>
+                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.suket_tidak_sengketa, 'suket_tidak_sengketa')} >Download</Button>
 
                             </div>
                         </div>) : (<></>)}
@@ -128,7 +128,7 @@ const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, s
                             <div>Surat Kuasa Mengurus</div>
                             <div className='flex flex-row gap-4'>
                                 <Button size="small" variant="contained" color="warning" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleOpenNewTab(data.surat_kuasa_mengurus)} >Buka</Button>
-                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.surat_kuasa_mengurus)} >Download</Button>
+                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.surat_kuasa_mengurus, 'surat_kuasa_mengurus')} >Download</Button>
 
                             </div>
                         </div>) : (<></>)}
@@ -137,7 +137,7 @@ const DialogDownloadFile: React.FC<DialogDownloadFileProps> = ({ downloadForm, s
                             <div>Surat Perjanjian</div>
                             <div className='flex flex-row gap-4'>
                                 <Button size="small" variant="contained" color="warning" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleOpenNewTab(data.surat_perjanjian)} >Buka</Button>
-                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.surat_perjanjian)} >Download</Button>
+                                <Button size="small" variant="contained" color="info" className="!py-0.5 !text-white !rounded-md !px-5 !text-sm !capitalize !whitespace-nowrap" onClick={() => handleDownload(data.surat_perjanjian, 'surat_perjanjian')} >Download</Button>
 
                             </div>
                         </div>) : (<></>)}

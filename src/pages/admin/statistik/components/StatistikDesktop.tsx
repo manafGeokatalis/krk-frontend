@@ -324,9 +324,6 @@ interface VisitorDeviceProps {
 
 function VisitorDevice(props: VisitorDeviceProps) {
     const { data } = props
-    console.log(data, 'data')
-
-
     const valueFormatter: any = (item: { total: number, value: number }) => `${item.value}`;
 
 

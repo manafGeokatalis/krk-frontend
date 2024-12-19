@@ -68,7 +68,7 @@ function Permohonan() {
           <GButton className="flex gap-1 items-center"><Add className="!w-4" /> <span>Ajukan Permohonan Baru</span></GButton>
         </Link>
       </div>
-      <div className='md:hidden flex justify-center mt-6 flex-col items-center'>
+      {/* <div className='md:hidden flex justify-center mt-6 flex-col items-center'>
         <img className='w-24' src={logoLodokMabar} alt='lodok-mabar-logo' />
         <img src={kerenka} alt="kerenka-logo" className='w-56 mt-4' />
         <div className="mt-8">
@@ -79,7 +79,7 @@ function Permohonan() {
             Permohonan penerbitan dokumen KRK baru tidak dapat dilakukan pada perangkat handphone. Silahkan mengakses web Kerenka pada PC/Laptop.
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="flex flex-col gap-5 font-heebo mt-8  md:mt-16 md:p-10">
         <div className="flex flex-col gap-2 hidden md:flex">
           <ListAttributes onChange={e => {
@@ -88,9 +88,23 @@ function Permohonan() {
           }} />
           <DesktopView data={data} paginate={paginate} setPage={setPage} />
         </div>
-        <div className="flex md:hidden flex-col">
+        <div className="flex md:hidden flex-col max-h-[65vh] overflow-auto">
+          <div className="flex justify-center mt-6 flex-col items-center">
+            <img className='w-24' src={logoLodokMabar} alt='lodok-mabar-logo' />
+            <img src={kerenka} alt="kerenka-logo" className='w-56 mt-4' />
+            <div className="mt-8">
+              <div className="text-xl text-center">
+                Cara Mengajukan<br /> Permohonan KRK Baru
+              </div>
+              <div className="px-3 text-justify mt-4 text-sm">
+                Permohonan penerbitan dokumen KRK baru tidak dapat dilakukan pada perangkat handphone. Silahkan mengakses web Kerenka pada PC/Laptop.
+              </div>
+            </div>
+          </div>
           <div className="text-center flex justify-center text-xl">PERMOHONAN ANDA</div>
-          <MobileView data={data} />
+          <div>
+            <MobileView data={data} />
+          </div>
         </div>
       </div>
     </AuthLayout>

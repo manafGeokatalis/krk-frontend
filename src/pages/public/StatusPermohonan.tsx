@@ -204,15 +204,15 @@ function StatusPermohonan({ title = 'Status Permohonan' }: Props) {
             <>
               <ConfirmDialog show={confirm.show} title={confirm.title} message={confirm.message} onClose={() => setConfirm({ ...confirm, show: false })} onSubmit={tarikPermohonan} acceptLable="Tarik Permohonan" color="error" />
               <ConfirmDialog show={notif.show} title={notif.title} message={notif.message} onClose={() => { navigate('/permohonan') }} onSubmit={() => false} acceptLable="" rejectLable="Oke" />
-              <div className="w-full rounded-md bg-gblue-300 text-gdarkgray-500 p-9 -mt-10 flex gap-7 items-center font-quicksand">
+              <div className="w-full flex flex-col md:flex-row rounded-md bg-gblue-300 text-gdarkgray-500 p-9 -mt-10 flex gap-7 items-center font-quicksand">
                 <Done className="!w-16 !h-16 !stroke-[3] !stroke-gdarkgray-500" />
                 <div className="flex flex-col gap-1 w-full">
                   <Typography variant="h5">Permohonan KRK telah dikirim</Typography>
                   <Typography className="!font-light !font-heebo">Anda dapat mengubah atau membatalkan permohonan KRK ini sebelum diproses ke tahap verifikasi oleh admin </Typography>
-                  <div className="flex justify-between mt-2">
-                    <GButton color="error" onClick={() => setConfirm({ ...confirm, show: true })}>Tarik Permohonan</GButton>
-                    <Link to={`/permohonan/${data?.uuid}/edit`}>
-                      <GButton color="secondary">Edit Permohonan</GButton>
+                  <div className="flex flex-col items-center w-full gap-4 md:flex-row md:justify-between md:mt-7">
+                    <GButton className="w-full md:w-auto" color="error" onClick={() => setConfirm({ ...confirm, show: true })}>Tarik Permohonan</GButton>
+                    <Link className="w-full md:w-auto" to={`/permohonan/${data?.uuid}/edit`}>
+                      <GButton className="w-full md:w-auto" color="secondary">Edit Permohonan</GButton>
                     </Link>
                   </div>
                 </div>

@@ -1,29 +1,29 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useRecoilState } from "recoil";
 import { user } from "../../utils/Recoils";
-import { publicMenu, privateMenu } from '../../data/config/menu';
+import { publicMenu, privateMenu, publicNoAuthListMenu } from '../../data/config/menu';
 import { UserRole } from '../../data/enum/user';
 import { MenuItem } from '../../data/interface/menu';
 
 
-const getMenuByRole = (role: UserRole): MenuItem[] => {
-    console.log(role === UserRole.ADMIN)
-    console.log(role)
-    console.log(UserRole.ADMIN)
-
+const getMenuByRole = (user?: any): MenuItem[] => {
+    const role = user && user.role ? user.role : undefined
 
     if (role == UserRole.SUPERADMIN || role == UserRole.ADMIN) {
-        console.log('a')
-        return privateMenu; // Merge both menus for private users
+        return privateMenu;
+    } else if (role == UserRole.PUBLIC) {
+        return publicMenu;
+    } else {
+        return publicNoAuthListMenu
     }
-    return publicMenu; // Only public menu for public users
+
 };
 
 function BottomNavigation() {
     const [userData] = useRecoilState<any>(user);
     const location = useLocation();
 
-    const menuItems = getMenuByRole(userData.role)
+    const menuItems = getMenuByRole(userData)
 
     return (
         <>

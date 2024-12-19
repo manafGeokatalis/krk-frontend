@@ -27,7 +27,7 @@ export default function Map({ show = false, lokasi = '', coordinate = '', onSele
   const [mapReady, setMapReady] = useState(false);
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
-  const [zoom, setZoom] = useState(10);
+  const [zoom, setZoom] = useState(9.4);
 
   useEffect(() => {
     setOpen(show);
@@ -46,9 +46,10 @@ export default function Map({ show = false, lokasi = '', coordinate = '', onSele
     if (mapReady) {
       const map: any = new mapboxgl.Map({
         container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/satellite-v9',
-        center: [lng, lat],
-        zoom: zoom
+        // style: 'mapbox://styles/mapbox/satellite-v9',
+        style: '/json/pola_ruang_mapbox.json',
+        center: [119.8309, -8.5952],
+        zoom: zoom,
       });
 
       const geocoderInit = new MapboxGeocoder({

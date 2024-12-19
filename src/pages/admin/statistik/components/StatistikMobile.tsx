@@ -149,7 +149,7 @@ export default function StatistikMobile() {
                         <div className="inline-block flex items-center justify-center h-9 w-9 cursor-pointer rounded-full bg-[#4D4D4D] shadow-lg" onClick={() => handleSortChange()}>{order == 'asc' ? <AscSort /> : <DescSort className="w-[1rem]" />}</div>
                     </div>
                 </div>
-                <div className="mt-4">
+                <div className="mt-4 flex flex-col gap-4">
                     {
                         listFeedback.map((item: any, key: any) => (
                             <div className="bg-[#4D4D4D] py-6 px-6 rounded-xl" key={key}>

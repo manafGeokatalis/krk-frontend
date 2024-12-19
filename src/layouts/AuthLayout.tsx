@@ -22,7 +22,7 @@ function AuthLayout({ title = 'Permohonan', children }: Props) {
           <div>
             {children}
           </div>
-          <div className="flex justify-between items-center pr-8 py-5 mt-20">
+          <div className="flex justify-between items-center pr-8 pb-2 mt-4 md:mt-20 md:pb-7">
             <div>
               <Typography className='!font-heebo !text-xs !font-thin'>Didesain dan dikembangkan oleh Pemerintah Kabupaten Manggarai Barat bekerjasama dengan</Typography>
               <a href="https://geokatalis.com/" target="_blank">

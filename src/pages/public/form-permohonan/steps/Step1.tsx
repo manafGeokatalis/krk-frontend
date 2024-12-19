@@ -75,13 +75,9 @@ function Step1({ handleUpdateForm, data }: Props) {
   const [lokasikelurahan, setLokasiKelurahan] = useState<any>([]);
   const [lokasi, setLokasi] = useState('');
   const [_N, setN] = useRecoilState(notification);
-  console.log(provinsi)
-  console.log(kabupaten)
-  console.log(kecamatan)
-  console.log(kelurahan)
 
-
-
+  const ID_KABUPATEN_MAGGARAI_BARAT = '5315'
+  const ID_PROVINSI_NTT = '53'
 
   useEffect(() => {
     getProvinsi();
@@ -106,12 +102,16 @@ function Step1({ handleUpdateForm, data }: Props) {
       getKecamatan(form.kabupaten_id);
     }
   }, [form.kabupaten_id])
+  // useEffect(() => {
+  //   if (form.kecamatan_id) {
+  //     getKelurahan(form.kecamatan_id);
+  //   }
+  // }, [form.kecamatan_id])
   useEffect(() => {
-    if (form.kecamatan_id) {
-      getKelurahan(form.kecamatan_id);
-    }
-  }, [form.kecamatan_id])
-  useEffect(() => {
+    console.log(provinsi)
+    console.log(kabupaten)
+    console.log(kecamatan)
+    console.log(kelurahan)
     if (form.lokasi_provinsi_id && lokasiprovinsi.length > 0) {
       getKabupaten(form.lokasi_provinsi_id, true);
       const lokasiName = lokasiprovinsi.filter((obj: any) => obj.id == form.lokasi_provinsi_id)[0]?.name;
@@ -131,7 +131,7 @@ function Step1({ handleUpdateForm, data }: Props) {
   }, [lokasikabupaten.length, form.lokasi_kabupaten_id])
   useEffect(() => {
     if (form.lokasi_kecamatan_id && lokasikecamatan.length > 0) {
-      getKelurahan(form.lokasi_kecamatan_id, true);
+      // getKelurahan(form.lokasi_kecamatan_id, true);
       const lokasiName = lokasikecamatan.filter((obj: any) => obj.id == form.lokasi_kecamatan_id)[0]?.name;
       if (lokasiName) {
         setLokasi(lokasi + ',' + lokasiName);
@@ -155,6 +155,7 @@ function Step1({ handleUpdateForm, data }: Props) {
       });
       setProvinsi(convertName);
       setLokasiProvinsi(convertName);
+      handleUpdateForm('lokasi_provinsi_id', ID_PROVINSI_NTT)
     } catch (error: any) {
       setN(createNotifcation(error.message));
     }
@@ -171,6 +172,9 @@ function Step1({ handleUpdateForm, data }: Props) {
           return { ...obj, name: obj.name.toUpperCase() };
         }));
       }
+
+      handleUpdateForm('lokasi_kabupaten_id', ID_KABUPATEN_MAGGARAI_BARAT)
+      getKelurahanByKabupaten(ID_KABUPATEN_MAGGARAI_BARAT, true)
     } catch (error: any) {
       setN(createNotifcation(error.message));
     }
@@ -191,20 +195,41 @@ function Step1({ handleUpdateForm, data }: Props) {
       setN(createNotifcation(error.message));
     }
   }
-  const getKelurahan = async (kecamatan_id: any, lokasi = false) => {
+  // const getKelurahan = async (kecamatan_id: any, lokasi = false) => {
+  //   try {
+  //     const res: any = await axios.get(`/location/kelurahan/${kecamatan_id}`);
+  //     if (!lokasi) {
+  //       setKelurahan(res?.data?.data.map((obj: any) => {
+  //         return { ...obj, name: obj.name.toUpperCase() };
+  //       }));
+  //     } else {
+  //       setLokasiKelurahan(res?.data?.data.map((obj: any) => {
+  //         return { ...obj, name: obj.name.toUpperCase() };
+  //       }));
+  //     }
+  //   } catch (error: any) {
+  //     setN(createNotifcation(error.message));
+  //   }
+  // }
+
+  const getKelurahanByKabupaten = async (kabupaten_id: any, lokasi = false) => {
     try {
-      const res: any = await axios.get(`/location/kelurahan/${kecamatan_id}`);
+      const res: any = await axios.get(`/location/kelurahan/getByKabupaten/${kabupaten_id}`)
+      const data = res?.data?.data?.data
       if (!lokasi) {
-        setKelurahan(res?.data?.data.map((obj: any) => {
-          return { ...obj, name: obj.name.toUpperCase() };
+
+        setKelurahan(data.map((obj: any) => {
+          return { ...obj, id: obj.kelurahan_id, name: obj.kelurahan_name.toUpperCase() };
         }));
       } else {
-        setLokasiKelurahan(res?.data?.data.map((obj: any) => {
-          return { ...obj, name: obj.name.toUpperCase() };
+
+        setLokasiKelurahan(data.map((obj: any) => {
+          return { ...obj, id: obj.kelurahan_id, name: obj.kelurahan_name.toUpperCase() };
         }));
       }
+
     } catch (error: any) {
-      setN(createNotifcation(error.message));
+      setN(createNotifcation(error.message))
     }
   }
 
@@ -215,6 +240,7 @@ function Step1({ handleUpdateForm, data }: Props) {
   const handleFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleUpdateForm(e.target.name, e.target.value)
   }
+
 
   return (
     <>
@@ -268,6 +294,27 @@ function Step1({ handleUpdateForm, data }: Props) {
 
 
       <Typography variant='h4' mb={1} className='!font-quicksand !font-semibold'>Lokasi Kegiatan</Typography>
+      <FormSelect inputlabel='Desa/Kelurahan*' name='lokasi_desa_id'
+        placeholder='Pilih Desa/Kelurahan'
+        options={lokasikelurahan}
+        getOptionLabel={(obj: any) => obj.name}
+        value={form.lokasi_desa_id ? lokasikelurahan.filter((obj: any) => obj.id == form.lokasi_desa_id)[0] ?? null : null}
+        onChange={(_e: React.ChangeEvent<HTMLSelectElement>, value: any) => {
+          handleUpdateForm('lokasi_desa_id', value.id)
+          handleUpdateForm('lokasi_kecamatan_id', value.kecamatan_id)
+
+        }} required />
+      <FormSelect inputlabel='Kecamatan*' name='lokasi_kecamatan_id'
+        placeholder='Pilih Kecamatan'
+        options={lokasikecamatan}
+        getOptionLabel={(obj: any) => obj.name}
+        value={form.lokasi_kecamatan_id ? lokasikecamatan.filter((obj: any) => obj.id == form.lokasi_kecamatan_id)[0] ?? null : null}
+        onChange={(_e: React.ChangeEvent<HTMLSelectElement>, value: any) => {
+          // setForm({ ...form, lokasi_kecamatan_id: value.id, lokasi_desa_id: null });
+          handleUpdateForm('lokasi_kecamatan_id', value.id)
+
+          setLokasiKelurahan([]);
+        }} disabled={true} required />
       <FormSelect inputlabel='Provinsi*' name='lokasi_provinsi_id'
         placeholder='Pilih Provinsi'
         options={lokasiprovinsi}
@@ -279,7 +326,7 @@ function Step1({ handleUpdateForm, data }: Props) {
           setLokasiKabupaten([]);
           setLokasiKecamatan([]);
           setLokasiKelurahan([]);
-        }} disabled={lokasiprovinsi.length == 0} required />
+        }} disabled={true} required />
       <FormSelect inputlabel='Kabupaten/Kota*' name='lokasi_kabupaten_id'
         placeholder='Pilih Kabupaten/Kota'
         options={lokasikabupaten}
@@ -290,28 +337,9 @@ function Step1({ handleUpdateForm, data }: Props) {
           handleUpdateForm('lokasi_kabupaten_id', value.id)
           setLokasiKecamatan([]);
           setLokasiKelurahan([]);
-        }} disabled={lokasikabupaten.length == 0} required />
-      <FormSelect inputlabel='Kecamatan*' name='lokasi_kecamatan_id'
-        placeholder='Pilih Kecamatan'
-        options={lokasikecamatan}
-        getOptionLabel={(obj: any) => obj.name}
-        value={form.lokasi_kecamatan_id ? lokasikecamatan.filter((obj: any) => obj.id == form.lokasi_kecamatan_id)[0] ?? null : null}
-        onChange={(_e: React.ChangeEvent<HTMLSelectElement>, value: any) => {
-          // setForm({ ...form, lokasi_kecamatan_id: value.id, lokasi_desa_id: null });
-          handleUpdateForm('lokasi_kecamatan_id', value.id)
+        }} disabled={true} required />
 
-          setLokasiKelurahan([]);
-        }} disabled={lokasikecamatan.length == 0} required />
-      <FormSelect inputlabel='Desa/Kelurahan*' name='lokasi_desa_id'
-        placeholder='Pilih Desa/Kelurahan'
-        options={lokasikelurahan}
-        getOptionLabel={(obj: any) => obj.name}
-        value={form.lokasi_desa_id ? lokasikelurahan.filter((obj: any) => obj.id == form.lokasi_desa_id)[0] ?? null : null}
-        onChange={(_e: React.ChangeEvent<HTMLSelectElement>, value: any) => {
-          // setForm({ ...form, lokasi_desa_id: value.id });
-          handleUpdateForm('lokasi_desa_id', value.id)
 
-        }} disabled={lokasikelurahan.length == 0} required />
       <FormInput inputlabel='Alamat' multiline rows={4} name='lokasi_alamat' value={form.lokasi_alamat} onChange={handleFormInput} />
     </>
   )

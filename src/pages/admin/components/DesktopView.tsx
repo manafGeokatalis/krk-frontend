@@ -1,11 +1,12 @@
 import ListAttributes from "../../../components/ListAttributes"
-import { Button, Pagination, Table, TableBody, TableCell, Checkbox, TableContainer, TableHead, TableRow } from "@mui/material"
+import { Button, Pagination, Table, TableBody, TableCell, TableSortLabel, Checkbox, TableContainer, TableHead, TableRow } from "@mui/material"
 import { formatDate } from "../../../utils/Helpers"
 import ButtonPermohonan from "../../public/components/ButtonPermohonan"
 import DialogDownloadFile from "./DialogDownloadFile"
 import { useEffect, useState } from "react"
 import ConfirmDialogMultipleDelete from "./ConfirmDialogMultipleDelete"
 import ConfirmDialogMultipleUpdate from "./ConfirmDialogMultipleUpdate"
+import { OrderType } from "../../../data/interface/user"
 
 interface DesktopViewProps {
   data: any,
@@ -19,10 +20,13 @@ interface DesktopViewProps {
   setConfirm: React.Dispatch<React.SetStateAction<any>>,
   downloadFile: any,
   process: any,
-  getData: () => void
+  getData: () => void,
+  handleRequestSort: (column: string) => void,
+  order: OrderType,
+  orderBy: string,
 }
 
-export default function DesktopView({ data, setSearch, setPerPage, setDownloadProgress, downloadProgress, paginate, setPage, downloadForm, setConfirm, downloadFile, getData }: DesktopViewProps) {
+export default function DesktopView({ data, setSearch, setPerPage, setDownloadProgress, order, orderBy, downloadProgress, paginate, setPage, downloadForm, setConfirm, downloadFile, getData, handleRequestSort }: DesktopViewProps) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogDeleteMultipleOpen, setDialogDeleteMultipleOpen] = useState(false)
   const [dialogUpdateMultipleOpen, setDialogUpdateMultipleOpen] = useState(false)
@@ -105,10 +109,38 @@ export default function DesktopView({ data, setSearch, setPerPage, setDownloadPr
                   />
                 </TableCell>
 
-                <TableCell className="!font-heebo !text-base" align="center">Pemohon</TableCell>
-                <TableCell className="!font-heebo !text-base" align="center">Tanggal Pengajuan</TableCell>
+                <TableCell className="!font-heebo !text-base" align="center">
+                  <TableSortLabel
+                    active={orderBy === 'name'}
+                    direction={orderBy === 'name' ? order : 'asc'}
+                    onClick={() => handleRequestSort('name')}
+                  >
+                    Pemohon
+                  </TableSortLabel>
+
+                </TableCell>
+                <TableCell className="!font-heebo !text-base" align="center">
+                  <TableSortLabel
+                    active={orderBy === 'created_at'}
+                    direction={orderBy === 'created_at' ? order : 'asc'}
+                    onClick={() => handleRequestSort('created_at')}
+                  >
+                    Tanggal Pengajuan
+                  </TableSortLabel>
+
+
+                </TableCell>
                 <TableCell className="!font-heebo !text-base" align="center">Kode Registrasi</TableCell>
-                <TableCell className="!font-heebo !text-base" align="center">Tahap</TableCell>
+                <TableCell className="!font-heebo !text-base" align="center">
+                  <TableSortLabel
+                    active={orderBy === 'step'}
+                    direction={orderBy === 'step' ? order : 'asc'}
+                    onClick={() => handleRequestSort('step')}
+                  >
+                    Tahap
+                  </TableSortLabel>
+
+                </TableCell>
                 <TableCell className="!font-heebo !text-base" align="center">Download</TableCell>
               </TableRow>
             </TableHead>

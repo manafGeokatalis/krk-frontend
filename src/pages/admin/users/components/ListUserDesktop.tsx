@@ -2,7 +2,7 @@
 import { Button, Pagination, Table, TableBody, TableSortLabel, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { Link } from "react-router-dom"
 import { formatDate, ucwords } from "../../../../utils/Helpers"
-
+import { useEffect } from "react"
 import { OrderType } from "../../../../data/interface/user"
 
 interface ListUserDesktopProps {
@@ -15,15 +15,22 @@ interface ListUserDesktopProps {
   search: string,
   handleRequestSort: (column: string) => void,
   handleChangeSearch: (search: string) => void,
-  handleClickSearch: () => void
+  handleClickSearch: () => void,
+  fetchData: () => void,
+  page: number,
+  perPage: number
 }
-export default function ListUserDesktop({ data, paginate, setPage, order, orderBy, handleRequestSort, search, handleChangeSearch, handleClickSearch }: ListUserDesktopProps) {
+export default function ListUserDesktop({ data, paginate, setPage, order, orderBy, handleRequestSort, search, handleChangeSearch, handleClickSearch, fetchData, page, perPage }: ListUserDesktopProps) {
 
   const columns = [
     { id: 'name', label: 'Nama' },
     { id: 'createdAt', label: 'Tanggal Register' },
     { id: 'role', label: 'Role' },
   ];
+
+  useEffect(() => {
+    fetchData();
+  }, [page, perPage, order, orderBy]);
   return (
     <>
       <div>

@@ -50,6 +50,8 @@ function Permohonan() {
   const getData = async () => {
     try {
       const query: any = await axios.get(`/permohonan?page=${page}&perPage=${perPage}&search=${search}&order=${order}&orderBy=${orderBy}`);
+
+
       setData(query?.data?.data.data);
       setPaginate(query?.data?.data.pagination);
     } catch (error: any) {
@@ -71,7 +73,9 @@ function Permohonan() {
 
   const downloadForm = (dta: any) => {
     setProcess({ ...process, [dta.uuid]: true });
-    const filename = (`KerenkaMaBarForm[${dta.registration_number}]`);
+    // const filename = (`KerenkaMaBarForm[${dta.registration_number}]`);
+    const filename = (`form_permohonan[${dta.registration_number}]`);
+
     const wb = new excel.Workbook();
     const sheet = wb.addWorksheet(dta.registration_number);
     sheet.addRow(['', 'Form Permohonan Penerbitan Dokumen KRK (Keterangan Rencana Kabupaten)']);
@@ -122,6 +126,12 @@ function Permohonan() {
     });
   }
 
+  const handleRequestSort = (property: string) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
   return (
     <AuthLayout title="Permohonan KRK">
       <ConfirmDialog color="error" show={confirm.show} title={confirm.title} message={confirm.message} acceptLable="Ya, Hapus Data" rejectLable="Tidak, Batalkan" onClose={() => setConfirm({ ...confirm, show: false })} onSubmit={deleteData} />
@@ -146,9 +156,12 @@ function Permohonan() {
           setDownloadProgress={setDownloadProgress}
           setPage={setPage}
           getData={getData}
+          handleRequestSort={handleRequestSort}
+          order={order}
+          orderBy={orderBy}
         />
       </div>
-      <div className="flex md:hidden mt-10 w-full">
+      <div className="flex md:hidden mt-10 w-full max-h-[55vh] overflow-auto">
         <MobileView
           data={data}
           setSearch={setSearch}

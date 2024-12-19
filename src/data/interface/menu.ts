@@ -4,3 +4,8 @@ export interface MenuItem {
   iconDefault: React.FC<{}>
   iconActive: React.FC<{}>
 }
+
+export interface ListMenuItem {
+  path: string,
+  label: string,
+}
