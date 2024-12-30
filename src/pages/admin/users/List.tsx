@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material"
 import AuthLayout from "../../../layouts/AuthLayout"
 import { Link } from "react-router-dom"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRecoilState } from "recoil"
 import { notification } from "../../../utils/Recoils"
 import { createNotifcation } from "../../../utils/Helpers"
@@ -26,7 +26,7 @@ function UsersList() {
   const [_, setNotif] = useRecoilState(notification);
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(null);
   const [_n, setN] = useRecoilState(notification);
   const [confirm, setConfirm] = useState({
     show: false,
@@ -38,10 +38,23 @@ function UsersList() {
   const [order, setOrder] = useState<OrderType>('asc');
   const [orderBy, setOrderBy] = useState('name');
   const userData = useRecoilValue<any>(user);
+  const [isMobile, setIsMobile] = useState(false);
 
   const isSuperAdmin: boolean = userData?.role === 'SUPERADMIN'
 
 
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const handleResize = () => setIsMobile(mediaQuery.matches);
+
+    handleResize(); // Check on component mount
+    mediaQuery.addEventListener("change", handleResize);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleResize);
+    };
+  }, []);
 
   // useEffect(() => {
   //   clearTimeout(tm);

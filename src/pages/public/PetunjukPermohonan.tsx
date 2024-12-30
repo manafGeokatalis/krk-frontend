@@ -37,6 +37,10 @@ function PetunjukPermohonan({ title = 'Daftarkan Permohonan KRK Anda' }: Props) 
 
   return (
     <AuthLayout title={title}>
+      <div className="md:hidden flex flex-col items-center gap-3 mt-6 md:mt-12 pl-4 md:pl-10 justify-center">
+        <Typography variant="h5" className="flex md:hidden text-center !font-quicksand !font-semibold">Cara Mengajukan Permohonan KRK Baru </Typography>
+        <div>Permohonan penerbitan dokumen KRK baru tidak dapat dilakukan pada perangkat handpohone. Silahkan mengakses web KRK pada PC/Laptop</div>
+      </div>
       <div className="flex justify-between gap-3 mt-6 md:mt-12 pl-4 md:pl-10 items-center">
         <Typography variant="h4" className="hidden md:flex !font-quicksand !font-semibold">{title}</Typography>
         <Typography variant="h5" className="flex md:hidden !font-quicksand !font-semibold">{title}</Typography>

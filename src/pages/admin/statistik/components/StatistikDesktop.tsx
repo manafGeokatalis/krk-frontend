@@ -90,7 +90,7 @@ export default function StatistikDesktop() {
     }, [])
 
     const downloadDataStatistik = () => {
-        const filename = 'Statistika_KRK'; // You can customize the filename
+        const filename = `Data Kunjungan Web KRK ${year}`; // You can customize the filename
         const wb = new excel.Workbook();
         const sheet = wb.addWorksheet('Data Pengajuan');
 

@@ -41,15 +41,17 @@ export default function ListUserMobile({ data, setPage, orderBy, handleChangeOrd
     };
 
     useEffect(() => {
-        setDataUser([])
-        const handler = setTimeout(() => {
-            setPage(1)
-            fetchData()
-        }, 500); // Debounce delay of 500ms
+        if (debouncedSearch !== null) {
+            setDataUser([])
+            const handler = setTimeout(() => {
+                setPage(1)
+                fetchData()
+            }, 500); // Debounce delay of 500ms
 
-        return () => {
-            clearTimeout(handler);
-        };
+            return () => {
+                clearTimeout(handler);
+            };
+        }
     }, [debouncedSearch]); // Trigger the effect when debouncedSearch changes
 
     const handleSearchChange = (value: string) => {

@@ -12,17 +12,17 @@ function AuthLayout({ title = 'Permohonan', children }: Props) {
   document.title = `${title || 'Beranda'} - ${import.meta.env.VITE_APP_NAME}`;
 
   return (
-    <div className="flex bg-ggray-500 text-white">
+    <div className="flex bg-ggray-500 h-full text-white">
       <div className="hidden md:flex">
         <NavBar />
       </div>
-      <div className="w-full  md:pl-72 flex flex-col min-h-screen relative">
+      <div className="w-full   md:pl-72 flex flex-col min-h-screen relative">
         <Header />
-        <div className="px-4">
+        <div className="px-4 pb-24">
           <div>
             {children}
           </div>
-          <div className="flex justify-between items-center pr-8 pb-2 mt-4 md:mt-20 md:pb-7">
+          <div className="flex bottom-0 bg-ggray-500 py-2 md:fixed md:w-[calc(100%-320px)] justify-between items-center pr-8 pb-2 mt-4 md:mt-20 md:pb-7">
             <div>
               <Typography className='!font-heebo !text-xs !font-thin'>Didesain dan dikembangkan oleh Pemerintah Kabupaten Manggarai Barat bekerjasama dengan</Typography>
               <a href="https://geokatalis.com/" target="_blank">
