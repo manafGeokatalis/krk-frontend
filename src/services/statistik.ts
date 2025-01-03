@@ -31,6 +31,16 @@ export async function getListVisitorService(year: number) {
     }
 }
 
+export async function getListRatingService(year: number) {
+    try {
+        const response = await axios.get(`/statistik/list-rating?year=${year}`)
+
+        return response.data.data
+    } catch (error) {
+        alert(error)
+    }
+}
+
 export async function getListFeedbackService(page: number, perPage: number, order: string, orderBy: string) {
     try {
         const response = await axios.get(`/statistik/list-feedback?page=${page}&perPage=${perPage}&order=${order}&orderBy=${orderBy}`)

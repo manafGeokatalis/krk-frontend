@@ -4,11 +4,13 @@ import { OrderType } from "../../../../data/interface/user"
 import DrawerFilterStatistik from "./DrawerFilterStatistik"
 import { AscSort, DescSort } from '../../../../components/icons/sort';
 import Rating from "@mui/material/Rating"
-import { getListFeedbackService, getListStatistikService, getSummaryCount } from "../../../../services/statistik"
+import { getListFeedbackService, getListVisitorService, getListStatistikService, getSummaryCount } from "../../../../services/statistik"
 import { formatDate } from "../../../../utils/Helpers"
 
+
+
 export default function StatistikMobile() {
-    const [year, setYear] = useState(2023)
+    const [year, setYear] = useState(2024)
     const [order, setOrder] = useState<OrderType>('asc');
     const [orderBy, setOrderBy] = useState('created_at');
 
@@ -21,7 +23,23 @@ export default function StatistikMobile() {
         feedback: 0
     })
     const [listStatistik, setListStatistik] = useState([])
+    const [listVisitor, setListVisitor] = useState([])
     const [listFeedback, setListFeedback] = useState([])
+    const [activeTabMenu, setActiveMenu] = useState('permohonan')
+    const tabMenu = [
+        {
+            key: 'permohonan',
+            label: 'Permohonan'
+        },
+        {
+            key: 'kunjungan',
+            label: 'Kunjungan'
+        },
+        {
+            key: 'rating',
+            label: 'Rating'
+        }
+    ]
 
 
     const handleSortChange = () => {
@@ -47,6 +65,11 @@ export default function StatistikMobile() {
         setListStatistik(res)
     }
 
+    async function getListVisitor() {
+        const res = await getListVisitorService(year)
+        setListVisitor(res)
+    }
+
     async function getListFeedback() {
         const res = await getListFeedbackService(page, perPage, order, orderBy)
         setListFeedback(res)
@@ -58,6 +81,7 @@ export default function StatistikMobile() {
 
     useEffect(() => {
         getListStatistik()
+        getListVisitor()
     }, [year])
 
 
@@ -108,34 +132,30 @@ export default function StatistikMobile() {
                         <MenuItem key={2022} value={2022}>{2022}</MenuItem>
                         <MenuItem key={2023} value={2023}>{2023}</MenuItem>
                         <MenuItem key={2024} value={2024}>{2024}</MenuItem>
+                        <MenuItem key={2024} value={2025}>{2025}</MenuItem>
+
 
                     </Select>
                 </div>
+                <div className="mt-4 flex gap-2  justify-center">
+                    {tabMenu.map((menu) => (
+                        <div className={`w-full justify-center items-center text-center border ${menu.key == activeTabMenu ? 'border-[#F4BF37] text-[#F4BF37]' : 'border-white text-white'} p-2 rounded-full cursor-pointer"`} onClick={() => setActiveMenu(menu.key)}>
+                            {menu.label}
+                        </div>
+                    ))}
+                </div>
                 <div className="mt-4 bg-[#4D4D4D] p-4 rounded-xl">
-                    <TableContainer className="border border-[#B3B3B3]">
-                        <Table size="small">
-                            <TableHead className="bg-[#6666]">
-                                <TableRow>
-                                    <TableCell className="!font-heebo !text-base" align="center">Bulan</TableCell>
-                                    <TableCell className="!font-heebo !text-base" align="center">Baru</TableCell>
-                                    <TableCell className="!font-heebo !text-base" align="center">Selesai</TableCell>
+                    {activeTabMenu == 'permohonan' ? (
+                        <StatistikaTable data={listStatistik} />
+                    ) : (<></>)}
 
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {listStatistik.map((item: any, key: any) => (
-                                    <TableRow>
-                                        <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{key + 1}</TableCell>
-                                        <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.bulan}</TableCell>
-                                        <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.pengajuan_masuk}</TableCell>
-                                        <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.pengajuan_selesai}</TableCell>
+                    {activeTabMenu == 'kunjungan' ? (
+                        <KunjunganTable data={listVisitor} />
+                    ) : (<></>)}
 
-                                    </TableRow>
-                                ))}
-
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                    {activeTabMenu == 'rating' ? (
+                        <RatingTable data={listVisitor} />
+                    ) : (<></>)}
                 </div>
                 <div className="mt-8">
                     <div className="flex justify-center text-xl font-semibold">Ulasan Pengguna Kerenka</div>
@@ -178,5 +198,88 @@ export default function StatistikMobile() {
                 </div>
             </div>
         </>
+    )
+}
+
+function StatistikaTable({ data }: any) {
+    return (
+        <TableContainer className="border border-[#B3B3B3]">
+            <Table size="small">
+                <TableHead className="bg-[#6666]">
+                    <TableRow>
+                        <TableCell className="!font-heebo !text-base" align="center">Bulan</TableCell>
+                        <TableCell className="!font-heebo !text-base" align="center">Baru</TableCell>
+                        <TableCell className="!font-heebo !text-base" align="center">Selesai</TableCell>
+
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {data.map((item: any, key: any) => (
+                        <TableRow>
+                            <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.bulan}</TableCell>
+                            <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.pengajuan_masuk}</TableCell>
+                            <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.pengajuan_selesai}</TableCell>
+
+                        </TableRow>
+                    ))}
+
+                </TableBody>
+            </Table>
+        </TableContainer>
+    )
+}
+
+function KunjunganTable({ data }: any) {
+    return (
+        <TableContainer className="border border-[#B3B3B3]">
+            <Table size="small">
+                <TableHead className="bg-[#6666]">
+                    <TableRow>
+                        <TableCell className="!font-heebo !text-base" align="center">Bulan</TableCell>
+                        <TableCell className="!font-heebo !text-base" align="center">Kunjungan</TableCell>
+                        <TableCell className="!font-heebo !text-base" align="center">Akun Baru</TableCell>
+
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {data.map((item: any, key: any) => (
+                        <TableRow>
+                            <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.bulan}</TableCell>
+                            <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.total_visitors}</TableCell>
+                            <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.total_user}</TableCell>
+
+                        </TableRow>
+                    ))}
+
+                </TableBody>
+            </Table>
+        </TableContainer>
+    )
+}
+
+
+function RatingTable({ data }: any) {
+    return (
+        <TableContainer className="border border-[#B3B3B3]">
+            <Table size="small">
+                <TableHead className="bg-[#6666]">
+                    <TableRow>
+                        <TableCell className="!font-heebo !text-base" align="center">Bulan</TableCell>
+                        <TableCell className="!font-heebo !text-base" align="center">Rating rata-rata</TableCell>
+
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {data.map((item: any, key: any) => (
+                        <TableRow>
+                            <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.bulan}</TableCell>
+                            <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.avg_feedback}</TableCell>
+
+                        </TableRow>
+                    ))}
+
+                </TableBody>
+            </Table>
+        </TableContainer>
     )
 }
