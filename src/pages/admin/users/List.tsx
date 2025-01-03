@@ -26,7 +26,7 @@ function UsersList() {
   const [_, setNotif] = useRecoilState(notification);
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState('');
   const [_n, setN] = useRecoilState(notification);
   const [confirm, setConfirm] = useState({
     show: false,
@@ -45,6 +45,7 @@ function UsersList() {
 
 
   useEffect(() => {
+    console.log(isMobile)
     const mediaQuery = window.matchMedia("(max-width: 768px)");
     const handleResize = () => setIsMobile(mediaQuery.matches);
 

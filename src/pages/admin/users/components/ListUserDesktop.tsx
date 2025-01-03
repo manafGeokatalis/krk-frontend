@@ -14,7 +14,7 @@ interface ListUserDesktopProps {
   orderBy: string,
   search: string,
   handleRequestSort: (column: string) => void,
-  handleChangeSearch: (search: string) => void,
+  handleChangeSearch: (search: any) => void,
   handleClickSearch: () => void,
   fetchData: () => void,
   page: number,

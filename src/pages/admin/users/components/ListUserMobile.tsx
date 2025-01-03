@@ -17,7 +17,7 @@ interface ListUserMobileProps {
     order: string,
     handleChangeOrder: (order: OrderType) => void,
     search: string,
-    handleChangeSearch: (search: string) => void,
+    handleChangeSearch: (search: any) => void,
     fetchData: () => void
 }
 

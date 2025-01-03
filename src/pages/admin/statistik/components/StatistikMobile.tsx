@@ -215,7 +215,7 @@ function StatistikaTable({ data }: any) {
                 </TableHead>
                 <TableBody>
                     {data.map((item: any, key: any) => (
-                        <TableRow>
+                        <TableRow key={key}>
                             <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.bulan}</TableCell>
                             <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.pengajuan_masuk}</TableCell>
                             <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.pengajuan_selesai}</TableCell>
@@ -243,7 +243,7 @@ function KunjunganTable({ data }: any) {
                 </TableHead>
                 <TableBody>
                     {data.map((item: any, key: any) => (
-                        <TableRow>
+                        <TableRow key={key}>
                             <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.bulan}</TableCell>
                             <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.total_visitors}</TableCell>
                             <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.total_user}</TableCell>
@@ -271,7 +271,7 @@ function RatingTable({ data }: any) {
                 </TableHead>
                 <TableBody>
                     {data.map((item: any, key: any) => (
-                        <TableRow>
+                        <TableRow key={key}>
                             <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.bulan}</TableCell>
                             <TableCell className="!border-b-0 !border-t !border-r !border-r-white !border-t-white" align="center">{item?.avg_feedback}</TableCell>
 
