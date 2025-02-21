@@ -12,7 +12,7 @@ function GuestLayout(props: Props) {
   return (
     <>
       <NavBar />
-      <div className="px-20 bg-ggray !text-white">
+      <div className=" bg-ggray !text-white">
         {props.children}
         <Footer />
       </div>

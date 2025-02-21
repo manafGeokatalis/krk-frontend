@@ -1,17 +1,20 @@
-import { Button, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
+import { Typography } from "@mui/material"
 import AuthLayout from "../../../layouts/AuthLayout"
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
 import { useRecoilState } from "recoil"
 import { notification } from "../../../utils/Recoils"
-import { createNotifcation, formatDate, ucwords } from "../../../utils/Helpers"
+import { createNotifcation } from "../../../utils/Helpers"
 import axios from "axios"
-import ListAttributes from "../../../components/ListAttributes"
 import GButton from "../../../components/GButton"
 import { Add } from "@mui/icons-material"
 import ConfirmDialog from "../../../components/ConfirmDialog"
+import ListUserDesktop from "./components/ListUserDesktop"
+import ListUserMobile from "./components/ListUserMobile"
+import { OrderType } from "../../../data/interface/user"
+import { user } from "../../../utils/Recoils";
+import { useRecoilValue } from "recoil";
 
-let tm: any;
 function UsersList() {
   const [data, setData] = useState<any>([]);
   const [paginate, setPaginate] = useState({
@@ -22,7 +25,7 @@ function UsersList() {
   });
   const [_, setNotif] = useRecoilState(notification);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage] = useState(10);
   const [search, setSearch] = useState('');
   const [_n, setN] = useRecoilState(notification);
   const [confirm, setConfirm] = useState({
@@ -32,20 +35,53 @@ function UsersList() {
     uuid: null,
   });
 
-  useEffect(() => {
-    getData();
-  }, [page, perPage]);
+  const [order, setOrder] = useState<OrderType>('asc');
+  const [orderBy, setOrderBy] = useState('name');
+  const userData = useRecoilValue<any>(user);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const isSuperAdmin: boolean = userData?.role === 'SUPERADMIN'
+
+
 
   useEffect(() => {
-    clearTimeout(tm);
-    tm = setTimeout(getData, 500);
+    console.log(isMobile)
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const handleResize = () => setIsMobile(mediaQuery.matches);
 
-    return () => clearTimeout(tm);
-  }, [search]);
+    handleResize(); // Check on component mount
+    mediaQuery.addEventListener("change", handleResize);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleResize);
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   clearTimeout(tm);
+  //   tm = setTimeout(getData, 500);
+
+  //   return () => clearTimeout(tm);
+  // }, [search]);
+
+  // Handle sorting
+  const handleRequestSort = (property: string) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
 
   const getData = async () => {
     try {
-      const query: any = await axios.get(`/users?page=${page}&perPage=${perPage}&search=${search}`);
+      const query: any = await axios.get(`/users`, {
+        params: {
+          page,
+          perPage,
+          search,
+          order,
+          orderBy
+        }
+      });
       setData(query?.data?.data.data);
       setPaginate(query?.data?.data.pagination);
     } catch (error: any) {
@@ -67,19 +103,60 @@ function UsersList() {
   return (
     <AuthLayout title="Daftar User">
       <ConfirmDialog show={confirm.show} title={confirm.title} message={confirm.message} onClose={() => setConfirm({ ...confirm, show: false })} onSubmit={deleteData} color="error" />
-      <div className="flex justify-between gap-3 mt-12 items-center">
+      {isSuperAdmin ? (<div className=" hidden md:flex justify-between gap-3 mt-4 md:mt-12 items-center md:px-8">
         <Typography variant="h4" className="!font-quicksand !font-semibold">Daftar User</Typography>
         <Link to={'/users/tambah'}>
           <GButton className="flex gap-1 items-center"><Add className="!w-4" /> <span>Tambah Data</span></GButton>
         </Link>
+      </div>) : (<></>)}
+      <div className="flex md:hidden mt-4 md:mt-12 justify-center">
+        <Typography variant="h4" className="hidden md:flex !font-quicksand !font-semibold">USER</Typography>
+        <Typography variant="h5" className="flex md:hidden !font-quicksand !font-semibold">User</Typography>
+
       </div>
-      <div className="flex flex-col gap-5 font-heebo  mt-20">
+      <div className="flex flex-col gap-5 font-heebo mt-4  md:mt-20 md:px-8">
         <div className="flex flex-col gap-2">
-          <ListAttributes onChange={e => {
+          {/* <ListAttributes onChange={e => {
             setPerPage(e.perPage);
             setSearch(e.search);
-          }} />
-          <div className="rounded-2xl overflow-hidden border">
+          }} /> */}
+          <div className="hidden md:flex w-full flex-col">
+            <ListUserDesktop
+              data={data}
+              paginate={paginate}
+              setConfirm={setConfirm}
+              setPage={setPage}
+              order={order}
+              orderBy={orderBy}
+              handleRequestSort={handleRequestSort}
+              search={search}
+              handleChangeSearch={setSearch}
+              handleClickSearch={getData}
+              fetchData={getData}
+              page={page}
+              perPage={perPage}
+
+
+            />
+          </div>
+          <div className="flex md:hidden">
+            <ListUserMobile
+              data={data}
+              page={page}
+              paginate={paginate}
+              setConfirm={setConfirm}
+              setPage={setPage}
+              orderBy={orderBy}
+              handleChangeOrderBy={setOrderBy}
+              order={order}
+              handleChangeOrder={setOrder}
+              search={search}
+              handleChangeSearch={setSearch}
+              fetchData={getData}
+
+            />
+          </div>
+          {/* <div className="rounded-2xl overflow-hidden border">
             <TableContainer>
               <Table size="small">
                 <TableHead className="bg-gdarkgray-500">
@@ -118,7 +195,7 @@ function UsersList() {
           </div>
           <div className="flex justify-center mt-3">
             <Pagination color='secondary' variant="outlined" count={paginate.totalPages} page={paginate.currentPage} onChange={(_, p) => setPage(p)} />
-          </div>
+          </div> */}
         </div>
       </div>
     </AuthLayout>

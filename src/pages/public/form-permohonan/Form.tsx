@@ -11,46 +11,142 @@ import ConfirmDialog from '../../../components/ConfirmDialog';
 import { useRecoilState } from 'recoil';
 import { notification } from '../../../utils/Recoils';
 import { createNotifcation } from '../../../utils/Helpers';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Rating from '@mui/material/Rating';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 type Props = {}
 const errorMessage = [
   {
     name: 'Harus diisi',
-    email: 'Harus diisi',
+    // email: 'Harus diisi',
     wa: 'Harus diisi',
-    provinsi_id: 'Harus dipilih',
-    kabupaten_id: 'Harus dipilih',
-    kecamatan_id: 'Harus dipilih',
-    desa_id: 'Harus dipilih',
-    lokasi_provinsi_id: 'Harus dipilih',
-    lokasi_kabupaten_id: 'Harus dipilih',
-    lokasi_kecamatan_id: 'Harus dipilih',
-    lokasi_desa_id: 'Harus dipilih',
+    // provinsi_id: 'Harus dipilih',
+    // kabupaten_id: 'Harus dipilih',
+    // kecamatan_id: 'Harus dipilih',
+    // desa_id: 'Harus dipilih',
+    // lokasi_provinsi_id: 'Harus dipilih',
+    // lokasi_kabupaten_id: 'Harus dipilih',
+    // lokasi_kecamatan_id: 'Harus dipilih',
+    // lokasi_desa_id: 'Harus dipilih',
   },
   {
-    npwp: 'Harus diisi',
     coordinate: 'Harus dipilih',
-    luas_tanah: 'Harus diisi',
+    status_tanah: 'Harus diisi',
     fungsi_bangunan: 'Harus diisi',
   },
   {
     ktp: 'Harus diisi',
     pbb: 'Harus diisi',
     sertifikat_tanah: 'Harus diisi',
-    skpt: 'Harus diisi',
-    surat_kuasa_mengurus: 'Harus diisi',
-    suket_tidak_sengketa: 'Harus diisi',
   }
 ];
 
+interface DialogFeedbackProps {
+  show: boolean;
+  onClose: () => void;
+  onSubmit: () => void;
+}
+function DialogFeedback({ show, onClose }: DialogFeedbackProps) {
+  const [open, setOpen] = useState(show)
+  const [rating, setRating] = useState<number | null>(0)
+  const [feedback, setFeedback] = useState('')
+  const [userAlreadyFeedback, setUserAlreadyFeedback] = useState(false)
+  const [_n, setN] = useRecoilState(notification);
+
+  async function checkUserAlreadyFeedback() {
+    const res: any = await axios.get('/feedback/check');
+    if (res?.data?.data) {
+      setUserAlreadyFeedback(true)
+    }
+
+  }
+
+  async function submitFeedback() {
+    const res: any = await axios.post('/feedback', {
+      "feedback": feedback,
+      "rating": rating
+    });
+    if (res?.data?.data) {
+      onClose()
+      setN(createNotifcation('Feedback berhasil di submit'));
+    }
+  }
+
+  useEffect(() => {
+    setOpen(show)
+    checkUserAlreadyFeedback()
+  }, [show])
+
+  function submitButton() {
+    submitFeedback()
+    // 
+
+    // console.log(rating)
+    // console.log(feedback)
+
+  }
+
+  return (
+    <>
+      <Dialog open={open} maxWidth={'md'} fullWidth={true}>
+        <DialogContent className='!bg-black w-full flex justify-center flex-col items-center'>
+          <DialogTitle className='w-full flex justify-center !text-[30px]'>Ulas Pelayanan Web KRK</DialogTitle>
+          <div>Silahkan beri rating layanan kami</div>
+          <div className='font-semibold mt-4 mb-4'>Beri Rating</div>
+          <div >
+            <Rating name="size-large" defaultValue={0} value={rating} size="large" onChange={(_, newValue) => { setRating(newValue) }} />
+          </div>
+          <div className='p-6 w-full'>
+            <div className='w-full flex items-left'>
+              Ulas pengalaman permohonan KRK :
+            </div>
+            <div className='w-full mt-2'>
+              <TextareaAutosize value={feedback} onChange={e => setFeedback(e.target.value)} className='bg-black w-full text-white p-3 border border-white' maxRows={4} minRows={4} />
+            </div>
+          </div>
+          <DialogActions className='gap-8 flex flex-row'>
+            {userAlreadyFeedback ? (<GButton variant='contained' color='secondary' onClick={onClose}>
+              Tutup
+            </GButton>) : (<></>)}
+            <GButton variant='contained' color='success' disabled={rating == 0 && feedback.length == 0} onClick={submitButton}>
+              Submit
+            </GButton>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}
+
+type FormState = {
+  form: {
+    uuid: string | null,
+    id: string | null
+    name: string;
+    wa: string;
+  };
+  lokasi: string;
+};
+
 function Form({ }: Props) {
   const params = useParams();
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<any>();
   const [step, setStep] = useState(1);
-  const [form, setForm] = useState<any>({
-    form: {},
+  const [form, setForm] = useState<FormState>({
+    form: {
+      uuid: null,
+      id: null,
+      name: '',
+      wa: ''
+    },
     lokasi: ''
   });
+
+
   const [errors, setErrors] = useState(true);
   const [confirm, setConfirm] = useState({
     show: false,
@@ -61,6 +157,8 @@ function Form({ }: Props) {
   const navigate = useNavigate();
   const [isCopied, setIsCopied] = useState(false);
 
+  const [openDialogFeedback, setOpenDialogFeedback] = useState(true)
+
   useEffect(() => {
     if (params?.uuid) {
       getData();
@@ -70,11 +168,12 @@ function Form({ }: Props) {
   useEffect(() => {
     setErrors(false);
     for (const key of Object.keys(errorMessage[step - 1])) {
-      if (!form.form[key]) {
+
+      if (!form.form[key as keyof typeof form.form]) {
         setErrors(true);
       }
     }
-  }, [form]);
+  }, [form, step]);
 
   const getData = async () => {
     try {
@@ -92,8 +191,11 @@ function Form({ }: Props) {
 
   const handleSubmit = async () => {
     const formData = new FormData;
-    for (const key of Object.keys(form.form)) {
-      formData.append(key, form.form[key]);
+    for (const key of Object.keys(form.form) as Array<keyof typeof form.form>) {
+      const value = form.form[key];
+      if (value != null) { // Only append if value is not null or undefined
+        formData.append(key, value);
+      }
     }
 
     try {
@@ -124,6 +226,8 @@ function Form({ }: Props) {
   if (data) {
     return (
       <AuthLayout title={params?.uuid ? `Ubah Permohonan` : `Permohonan Baru`}>
+        <DialogFeedback show={openDialogFeedback} onClose={() => setOpenDialogFeedback(!openDialogFeedback)} onSubmit={() => console.log('a')
+        } />
         <div className="flex justify-between gap-3 mt-12 items-center">
           <Typography variant="h4" className="!font-quicksand !font-semibold">Permohonan KRK</Typography>
         </div>
@@ -140,7 +244,7 @@ function Form({ }: Props) {
             </div>
             <Typography mb={1} className='!font-quicksand !font-semibold'>Silahkan pantau terus proses penerbitan dokumen KRK yang anda ajukan langsung dari aplikasi</Typography>
             <div className="flex justify-center">
-              <Link to={`/permohonan/${data?.uuid}`}>
+              <Link to={`/permohonan/${data?.uuid}?`}>
                 <GButton color='success'>Selesai</GButton>
               </Link>
             </div>
@@ -150,6 +254,17 @@ function Form({ }: Props) {
     )
   }
 
+  const handleUpdateForm = (name: string, value: any) => {
+
+    setForm((prevForm) => ({
+      ...prevForm,
+      form: {
+        ...prevForm.form,
+        [name]: value,
+      }
+    }));
+  };
+
   return (
     <AuthLayout title={params?.uuid ? `Ubah Permohonan` : `Permohonan Baru`}>
       <ConfirmDialog show={confirm.show} title={confirm.title} message={`<center>${confirm.message}</center>`} acceptLable='Ajukan KRK' rejectLable='Cek Kembali' onClose={() => setConfirm({ ...confirm, show: false })} onSubmit={handleSubmit} />
@@ -158,9 +273,9 @@ function Form({ }: Props) {
       </div>
       <Typography variant="h5" mt={5} mb={3} className='!font-quicksand !font-semibold'>Tahap {step} dari 3</Typography>
       <div className="flex flex-col gap-4 p-8 rounded-2xl shadow bg-gdarkgray-500 max-w-4xl">
-        {step == 1 ? <Step1 data={form.form} onChange={data => setForm({ ...form, ...data })} />
-          : step == 2 ? <Step2 data={form} onChange={data => setForm({ ...form, form: { ...form.form, ...data } })} />
-            : <Step3 data={form.form} onChange={data => setForm({ ...form, form: { ...form.form, ...data } })} />}
+        {step == 1 ? <Step1 data={form.form} handleUpdateForm={handleUpdateForm} />
+          : step == 2 ? <Step2 data={form.form} handleUpdateForm={handleUpdateForm} />
+            : <Step3 data={form.form} handleUpdateForm={handleUpdateForm} />}
         <div className="flex mt-5 justify-center">
           <div className="flex justify-between gap-5 w-full max-w-3xl">
             <GButton color='secondary' onClick={_ => {

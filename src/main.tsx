@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
@@ -7,6 +6,7 @@ import { ThemeProvider } from '@emotion/react'
 import { createTheme } from '@mui/material/styles'
 import axios from 'axios'
 import Notification from './components/Notification.tsx'
+import ReactGA from "react-ga4";
 
 const theme = createTheme({
   palette: {
@@ -42,13 +42,14 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
+ReactGA.initialize("G-0XSNGDFWWJ");
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <Notification />
-        <App />
-      </ThemeProvider>
-    </RecoilRoot>
-  </React.StrictMode>,
+  <RecoilRoot>
+    <ThemeProvider theme={theme}>
+      <Notification />
+      <App />
+    </ThemeProvider>
+  </RecoilRoot>
+  ,
 )

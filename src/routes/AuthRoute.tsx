@@ -12,8 +12,11 @@ import Profile from "../pages/Profile"
 import UsersList from '../pages/admin/users/List';
 import UserForm from "../pages/admin/users/Form"
 import TentangKRK from "../pages/TentangKRK"
-import TentangTataRuang from "../pages/TentangTataRuang"
-
+import Statistik from "../pages/admin/statistik/Statistik"
+// import TentangTataRuang from "../pages/TentangTataRuang"
+import PermohonanDitolak from "../pages/admin/PermohonanDitolak"
+import DownloadPermohonan from "../pages/admin/DownloadPermohonan"
+import FormPermohonan from "../pages/admin/permohonan/ForrmPermohonan"
 function AuthRoutes() {
   const userData: any = useRecoilValue(user);
   return (
@@ -28,11 +31,15 @@ function AuthRoutes() {
         <Route path="/petunjuk-permohonan" element={<PetunjukPermohonan />} />
         <Route path="/permohonan/tambah" element={<Form />} />
         <Route path="/permohonan/:uuid" element={userData.role === 'PUBLIC' ? <StatusPermohonan /> : <StatusPermohonanAdmin />} />
+        <Route path="/permohonan/download/:uuid" element={userData.role === 'PUBLIC' ? <StatusPermohonan /> : <DownloadPermohonan />} />
+        <Route path="/form-permohonan/:uuid" element={userData.role !== 'PUBLIC' ? <FormPermohonan /> : <Navigate to={'/'} />} />
         <Route path="/permohonan/:uuid/edit" element={<Form />} />
+        <Route path="/permohonan/ditolak/:uuid" element={<PermohonanDitolak />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/pantau" element={<Navigate to={'/permohonan'} />} />
         <Route path="/tentang-krk" element={<TentangKRK />} />
-        <Route path="/tentang-tataruang" element={<TentangTataRuang />} />
+        <Route path="/statistik" element={<Statistik />} />
+        {/* <Route path="/tentang-tataruang" element={<TentangTataRuang />} /> */}
         <Route path="*" element={<Navigate to={'/'} />} />
       </Routes>
     </BrowserRouter>

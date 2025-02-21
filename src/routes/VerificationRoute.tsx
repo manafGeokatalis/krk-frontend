@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import HomePage from "../pages/homepage/Index"
 import PetunjukPermohonan from "../pages/public/PetunjukPermohonan"
 import TentangKRK from "../pages/TentangKRK"
-import TentangTataRuang from "../pages/TentangTataRuang"
+// import TentangTataRuang from "../pages/TentangTataRuang"
 import EmailVerification from "../pages/homepage/EmailVerification"
 
 function VerificationRoute() {
@@ -22,7 +22,7 @@ function VerificationRoute() {
         <Route path="/profile" element={<Navigate to={'/verifikasi-email'} />} />
         <Route path="/pantau" element={<Navigate to={'/permohonan'} />} />
         <Route path="/tentang-krk" element={<TentangKRK />} />
-        <Route path="/tentang-tataruang" element={<TentangTataRuang />} />
+        {/* <Route path="/tentang-tataruang" element={<TentangTataRuang />} /> */}
         <Route path="/verifikasi-email" element={<EmailVerification />} />
         <Route path="*" element={<Navigate to={'/'} />} />
       </Routes>
